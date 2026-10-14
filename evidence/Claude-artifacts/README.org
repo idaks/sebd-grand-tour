@@ -1,0 +1,75 @@
+#+TITLE: SEBD Experiments (Claude artifacts)
+#+OPTIONS: toc:nil
+
+Datalog / ASP playground built around the 34 SEBD conference editions
+(1993 Gizzeria Lido … 2026 Senigallia). Used as running examples for the
+SEBD'26 talk (provenance + argumentation + TAIR).
+
+* Files
+| File                | Engine        | What it is                                           |
+|---------------------+---------------+------------------------------------------------------|
+| =sebd.pl=           | SWI-Prolog    | =sebd(No,Year,City,Lat,Long)= + =sebd_repeat= views  |
+| =sebd.lp=           | clingo/ASP    | same facts (coords in *centidegrees*) + views        |
+| =trip.py=           | Python 3      | generator/solver: distances, routes, certificate     |
+| =distance.pl/.lp=   | Prolog/clingo | =distance(I,J,Km)=, I<J, symmetric stored once (561) |
+| =route_inorder.pl=  | Prolog        | trip 1→2→…→34 in order + =total_inorder=             |
+| =route_optimized.pl=| Prolog        | path-TSP 1→…→34 + =visit/2= + =total_optimized=      |
+| =verify.pl=         | SWI-Prolog    | independent certificate checker (validity + length)  |
+| =exact_tsp.py=      | Python/HiGHS  | exact branch-and-cut: PROVES optimum = 3527 km       |
+| =tsp.lp=            | clingo/ASP    | clingo path-TSP model (weak generic cross-check)     |
+
+* Coordinates & distances
+- Coordinates: town centroids, decimal degrees (=.pl=) / centidegrees ×100
+  (=.lp=, since clingo has no floats).  Verified against OpenStreetMap/Nominatim
+  2026-08-01; editions 1, 15, 25, 26 corrected then (each had drifted inland from
+  its coastal frazione to the parent comune; Torre Canne was 22 km off).  The other
+  30 agree to within 1.5 km.
+- Distance: equirectangular projection to a local km plane (ref. lat 42°N,
+  R=6371 km), then 2-D Euclidean, rounded to whole km.  The real-valued metric is a
+  true plane embedding so the triangle inequality holds exactly; the shipped *rounded*
+  matrix violates it in 22 of 35904 ordered triples, by 1 km each.  Nothing downstream
+  depends on it — the certificate is a claim about the integer matrix as shipped.
+  Straight-line only: ignores roads, ferries (Sicily/Sardinia!), terrain.
+
+* Results
+| Route                  | Total km | Note          |
+|------------------------+----------+---------------|
+| (a) in order  1→2→…→34 |    15209 | baseline      |
+| (b) optimized 1→…→34   |     3527 | 76.8% shorter |
+
+Optimized visiting order (edition numbers):
+: 1 29 21 25 24 15 26 19 11 16 12 32 28 33 22 3 23 8 27 10 4 30 17 7 13 5 31 9 20 2 18 6 14 34
+
+** How (b) was found and checked
+- *Found:* multi-restart 2-opt + Or-opt local search (=trip.py=), milliseconds.
+- *Stress-tested:* iterated local search, 3000 double-bridge kicks — cannot beat
+  3527.  Exactly 16 co-optimal tours exist (enumerated 2026-08-01 by repeated
+  no-good cuts; next-best cost 3529): two structurally distinct routes, differing
+  only in whether they end …Rimini→Ancona→Portonovo→Senigallia or
+  …Rimini→Portonovo→Ancona→Senigallia, each in 2³ twin relabellings, since
+  Rimini(2,18), Venice(9,20) and Villasimius(28,32) repeat at identical coords.
+- *Verified:* =verify.pl= independently recomputes the length from =distance/3=
+  and checks it is a valid 1..34 permutation starting at 1, ending at 34 → PASS,
+  recomputed = published = 3527 km.
+- *Optimality:* PROVEN optimal = 3527 km (=exact_tsp.py=, branch-and-cut with the
+  HiGHS MILP solver): degree-2 constraints + lazy subtour-elimination cuts; the
+  lower bound climbs 2881 → 3273 → 3439 → 3475 → 3477 → 3527, where it meets a
+  feasible tour ⇒ lower = upper = optimum (a DFJ / Concorde-style optimality
+  certificate), in <1 s.  Note the six solves are integer programs, not LP
+  relaxations: the trusted component is HiGHS's branch-and-bound.  The path is closed
+  into a cycle by a zero-cost dummy node joined to editions 1 and 34.  Generic
+  optimizers are far weaker here (clingo B&B 6709 km / 90 s; networkx SA 4596 km)
+  — corroborating, not proving.
+
+The talk's *computational-asymmetry / TAIR* point in miniature, now with *two*
+certificates: the tour is trivial to *check* (=verify.pl=), and optimality carries
+its own *lower-bound* certificate (the subtour cuts) — harder to produce than to
+check, but still externally verifiable. Finding the tour is the hard part;
+trusting it no longer requires trusting the solver.
+
+* Reproduce
+: python3 trip.py                       # regenerate all artifacts + print routes
+: swipl -q -g run -t halt verify.pl     # independent certificate check (PASS)
+: clingo sebd.lp                        # sebd_repeat views
+: clingo tsp.lp distance.lp --time-limit=90 -t4   # ASP optimization (slow; weak)
+: python3 exact_tsp.py                  # PROVE optimum = 3527 km (branch-and-cut)

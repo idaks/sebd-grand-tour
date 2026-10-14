@@ -1,0 +1,90 @@
+{
+  "artifact": "SEBD trip planning evidence and provenance bundle",
+  "created_utc": "2026-06-18T03:53:58.133582+00:00",
+  "input": {
+    "records": 34,
+    "source_schema": "sebd(Number, Year, City, Lat, Long)",
+    "coordinate_note": "Approximate representative latitude/longitude points for conference localities.",
+    "special_cases": {
+      "1996": "San_Miniato used as the specific proceedings locality rather than the broader Pisa label.",
+      "2014": "Sorrento_Coast represented approximately by coordinates near Sorrento.",
+      "repeated_locations": "Edition-number-prefixed location atoms distinguish repeated cities."
+    }
+  },
+  "distance_model": {
+    "name": "equirectangular planar approximation",
+    "earth_radius_km": 6371.0088,
+    "formula": {
+      "x": "R * delta_longitude_radians * cos(mean_latitude_radians)",
+      "y": "R * delta_latitude_radians",
+      "distance": "sqrt(x^2 + y^2)"
+    },
+    "semantics": "Approximate straight-line Euclidean distance; not a road, rail, or ferry distance.",
+    "pair_count": 561,
+    "symmetry_storage": "Only one fact for each unordered pair."
+  },
+  "routes": {
+    "chronological": {
+      "constraint": "Visit editions in numerical order 1..34.",
+      "reported_total_km": 15263.9
+    },
+    "optimized": {
+      "constraints": [
+        "Start at edition 1.",
+        "End at edition 34.",
+        "Visit each edition 2..33 exactly once."
+      ],
+      "algorithm": [
+        "Multistart nearest-neighbor construction",
+        "Multistart cheapest-insertion construction",
+        "Fixed-endpoint 2-opt",
+        "Seeded iterated local search"
+      ],
+      "random_seed": 20260618,
+      "ils_iterations": 4000,
+      "reported_total_km": 3546.9,
+      "reported_order": [
+        1,
+        29,
+        21,
+        25,
+        24,
+        15,
+        26,
+        19,
+        11,
+        16,
+        12,
+        32,
+        28,
+        33,
+        22,
+        3,
+        23,
+        8,
+        27,
+        10,
+        4,
+        30,
+        17,
+        7,
+        13,
+        5,
+        31,
+        20,
+        9,
+        18,
+        2,
+        6,
+        14,
+        34
+      ],
+      "optimality_claim": "Heuristic result only; no certificate of global optimality."
+    }
+  },
+  "reproduction": {
+    "command": "./run.sh",
+    "python_dependencies": "Python 3 standard library only",
+    "output_directory": "reproduced/"
+  }
+}

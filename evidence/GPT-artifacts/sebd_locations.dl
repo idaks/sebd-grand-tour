@@ -1,0 +1,37 @@
+% Schema: sebd(Number, Year, City, Lat, Long).
+% Coordinates are approximate representative points.
+
+sebd(1, 1993, Gizzeria_Lido, 38.96, 16.21).
+sebd(2, 1994, Rimini, 44.07, 12.57).
+sebd(3, 1995, Ravello, 40.65, 14.61).
+sebd(4, 1996, San_Miniato, 43.68, 10.85).
+sebd(5, 1997, Verona, 45.44, 10.99).
+sebd(6, 1998, Ancona, 43.62, 13.52).
+sebd(7, 1999, Como, 45.81, 9.09).
+sebd(8, 2000, LAquila, 42.35, 13.40).
+sebd(9, 2001, Venice, 45.44, 12.32).
+sebd(10, 2002, Portoferraio, 42.81, 10.32).
+sebd(11, 2003, Cetraro, 39.52, 15.94).
+sebd(12, 2004, Santa_Margherita_di_Pula, 38.97, 8.97).
+sebd(13, 2005, Bressanone, 46.72, 11.66).
+sebd(14, 2006, Portonovo, 43.56, 13.60).
+sebd(15, 2007, Torre_Canne, 40.84, 17.47).
+sebd(16, 2008, Mondello, 38.20, 13.33).
+sebd(17, 2009, Camogli, 44.35, 9.15).
+sebd(18, 2010, Rimini, 44.07, 12.57).
+sebd(19, 2011, Maratea, 40.00, 15.72).
+sebd(20, 2012, Venice, 45.44, 12.32).
+sebd(21, 2013, Roccella_Ionica, 38.32, 16.40).
+sebd(22, 2014, Sorrento_Coast, 40.63, 14.38).
+sebd(23, 2015, Gaeta, 41.21, 13.57).
+sebd(24, 2016, Ugento, 39.93, 18.16).
+sebd(25, 2017, Squillace_Lido, 38.78, 16.57).
+sebd(26, 2018, Castellaneta_Marina, 40.56, 16.93).
+sebd(27, 2019, Castiglione_della_Pescaia, 42.76, 10.88).
+sebd(28, 2020, Villasimius, 39.14, 9.52).
+sebd(29, 2021, Pizzo_Calabro, 38.73, 16.16).
+sebd(30, 2022, Tirrenia, 43.63, 10.29).
+sebd(31, 2023, Galzignano_Terme, 45.31, 11.73).
+sebd(32, 2024, Villasimius, 39.14, 9.52).
+sebd(33, 2025, Ischia, 40.74, 13.95).
+sebd(34, 2026, Senigallia, 43.71, 13.22).

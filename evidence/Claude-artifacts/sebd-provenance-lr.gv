@@ -1,0 +1,139 @@
+// sebd-provenance-lr.gv
+// Meta-provenance of the SEBD experiment, in the concept-flow / paper-review
+// workflow-trace style (rankdir=LR, Helvetica, note-shaped sources, pale
+// clusters, dashed edges for verification / implicit dependencies).
+// Render:  dot -Tsvg sebd-provenance-lr.gv -o sebd-provenance-lr.svg
+digraph sebd_provenance {
+  rankdir=LR;
+  compound=true;
+  newrank=true;
+  ranksep=0.65;
+  nodesep=0.32;
+  fontname="Helvetica";
+  labelloc="t";
+  fontsize=14;
+  label=<<b>Meta-provenance — SEBD experiment</b>  ·  2026-06-18<br/><font point-size="10">sources → relational encodings → trip / path-TSP → independent verification → map → meta</font>>;
+  node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=9,
+        margin="0.12,0.06"];
+  edge [fontname="Helvetica", fontsize=7, color="#555555"];
+
+  // origin (talk prep) — the experiment branched off from here
+  origin [shape=note, style="filled,dashed", fillcolor="#f7f7f7",
+          color="#bbbbbb", fontcolor="#888888",
+          label="talk prep:\nSEBD26-outline.org"];
+
+  // ---- base sources (raw roots) -------------------------------------------
+  subgraph cluster_src {
+    label="base sources";
+    style="rounded,filled"; color="#cccccc"; fillcolor="#fafafa";
+    fontname="Helvetica-Bold"; fontsize=10;
+    src_dblp [shape=note, fillcolor="#fde8d0", label="DBLP conf/sebd\n(raw HTML)"];
+    src_seni [shape=note, fillcolor="#fde8d0", label="user: 2026\nSenigallia"];
+    src_ll   [shape=note, fillcolor="#fde8d0", label="Claude: lat/long\nestimates (±2 km)"];
+    src_proj [shape=note, fillcolor="#fde8d0", label="method:\nequirectangular\nprojection"];
+  }
+
+  // ---- seed data + relational encodings -----------------------------------
+  subgraph cluster_data {
+    label="seed data + relational encodings";
+    style="rounded,filled"; color="#cccccc"; fillcolor="#fafafa";
+    fontname="Helvetica-Bold"; fontsize=10;
+    list34  [fillcolor="#d5f5d5", label="sebd-list-34\n34 editions, 1993–2026"];
+    sebd_pl [fillcolor="#d5f5d5", label="sebd.pl\nsebd/5 + sebd_repeat"];
+    sebd_lp [fillcolor="#d5f5d5", label="sebd.lp\nclingo views"];
+  }
+
+  // ---- trip / path-TSP ----------------------------------------------------
+  subgraph cluster_trip {
+    label="trip / path-TSP";
+    style="rounded,filled"; color="#cccccc"; fillcolor="#fafafa";
+    fontname="Helvetica-Bold"; fontsize=10;
+    trip_py [fillcolor="#d1ecf1", label="trip.py\nproject + 2-opt / Or-opt"];
+    dist    [fillcolor="#d5f5d5", label="distance.pl / .lp\n561 pairs (I<J)"];
+    r_in    [fillcolor="#d5f5d5", label="route_inorder.pl\n15 209 km"];
+    r_opt   [fillcolor="#d5f5d5", label="route_optimized.pl\n3 527 km"];
+  }
+
+  // ---- independent verification -------------------------------------------
+  subgraph cluster_verify {
+    label="independent verification";
+    style="rounded,filled"; color="#cccccc"; fillcolor="#fafafa";
+    fontname="Helvetica-Bold"; fontsize=10;
+    verify_pl [fillcolor="#fff3cd", label="verify.pl\nrecompute ✓ = 3 527 km"];
+    exact     [fillcolor="#d5f5d5", penwidth=2.0, color="#1e7d32",
+               label="exact_tsp.py (HiGHS branch-and-cut)\nPROVED optimal = 3 527 km"];
+    tsp_lp    [fillcolor="#fff3cd", label="tsp.lp (clingo B&B)\n7 592 km — weak, corroborating"];
+    xcheck    [shape=note, fillcolor="#fff3cd",
+               label="corroborating cross-checks:\nnetworkx SA 4 596\nILS 3 000 kicks → 3 527"];
+  }
+
+  // ---- map ----------------------------------------------------------------
+  subgraph cluster_map {
+    label="map";
+    style="rounded,filled"; color="#cccccc"; fillcolor="#fafafa";
+    fontname="Helvetica-Bold"; fontsize=10;
+    map_py  [fillcolor="#d1ecf1", label="make_map.py"];
+    png_opt [fillcolor="#e8d5f5", label="sebd_route_optimized.png"];
+    png_cmp [fillcolor="#e8d5f5", label="sebd_route_compare.png"];
+  }
+
+  // ---- meta-provenance ----------------------------------------------------
+  subgraph cluster_meta {
+    label="meta-provenance";
+    style="rounded,filled"; color="#cccccc"; fillcolor="#fafafa";
+    fontname="Helvetica-Bold"; fontsize=10;
+    readme   [fillcolor="#e2e3e5", label="README.org"];
+    metaprov [fillcolor="#e2e3e5", label="meta-provenance.org"];
+    prov_pl  [fillcolor="#e2e3e5", label="provenance.pl\nqueryable why / lineage"];
+  }
+
+  // ---- dataflow (solid) ----------------------------------------------------
+  origin   -> list34  [style=dashed, color="#bbbbbb", label="branches"];
+  src_dblp -> list34  [label="curl + grep\n(distrust summary)"];
+  src_seni -> list34;
+  list34   -> sebd_pl [label="+ lat/long"];
+  src_ll   -> sebd_pl;
+  sebd_pl  -> sebd_lp [label="port → centidegrees"];
+  sebd_pl  -> trip_py;
+  src_proj -> trip_py;
+  trip_py  -> dist    [label="keyed by stop #"];
+  trip_py  -> r_in;
+  trip_py  -> r_opt   [label="2-opt / Or-opt"];
+
+  // ---- verification (dashed) ----------------------------------------------
+  r_opt -> verify_pl [style=dashed, color="#999999", label="recompute = published"];
+  dist  -> verify_pl [style=dashed, color="#999999"];
+  dist  -> tsp_lp    [style=dashed, color="#999999"];
+  r_opt -> tsp_lp    [style=dashed, color="#999999"];
+  r_opt -> xcheck    [style=dashed, color="#999999"];
+  dist  -> exact     [style=dashed, color="#1e7d32"];
+  r_opt -> exact     [style=dashed, color="#1e7d32", label="prove optimal"];
+
+  // ---- map (solid + dotted baseline) --------------------------------------
+  r_opt   -> map_py  [label="verified order"];
+  trip_py -> map_py  [style=dotted, color="#aaaaaa", label="projection"];
+  map_py  -> png_opt;
+  map_py  -> png_cmp;
+  r_in    -> png_cmp [style=dotted, color="#aaaaaa"];
+
+  // ---- meta (dashed: summarizes / records) --------------------------------
+  r_opt    -> readme   [style=dashed, color="#999999"];
+  r_in     -> readme   [style=dashed, color="#999999"];
+  readme   -> metaprov [style=dashed, color="#999999", label="logs run"];
+  metaprov -> prov_pl;
+  png_opt  -> prov_pl  [style=dashed, color="#999999", label="why(·)?"];
+
+  // ---- legend -------------------------------------------------------------
+  subgraph cluster_legend {
+    label="legend";
+    style="rounded,filled"; color="#cccccc"; fillcolor="#ffffff";
+    fontname="Helvetica-Bold"; fontsize=9;
+    lg_src  [shape=note, fillcolor="#fde8d0", label="source"];
+    lg_data [fillcolor="#d5f5d5", label="data / facts"];
+    lg_code [fillcolor="#d1ecf1", label="code"];
+    lg_ver  [fillcolor="#fff3cd", label="verification"];
+    lg_img  [fillcolor="#e8d5f5", label="image"];
+    lg_doc  [fillcolor="#e2e3e5", label="doc / meta"];
+    lg_src -> lg_data -> lg_code -> lg_ver -> lg_img -> lg_doc [style=invis];
+  }
+}

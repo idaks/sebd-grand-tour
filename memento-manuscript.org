@@ -1,0 +1,737 @@
+#+TITLE: The SEBD Grand Tour — with Provenance and a Certificate — manuscript
+#+SUBTITLE: Editing surface for index.html — edit here, then apply back
+#+OPTIONS: toc:2 num:nil
+#+STARTUP: content
+
+# Generated from index.html by make_manuscript.py.  This file is the place to
+# EDIT the words; index.html is the artifact that gets deployed.  The coupling is
+# loose and manual on purpose: no build step, no templating, the page keeps its
+# own design.  After editing here, ask Claude Code to apply the edits to
+# index.html (or do it by hand), then review the page in a browser.
+#
+# Regenerating OVERWRITES this file.  Re-run make_manuscript.py after the page
+# changes to see, via git diff, where page and manuscript have drifted apart.
+#
+# Markers used below:
+#   [badge:...]   an epistemic badge on the page
+#   # VERBATIM    quoted tool output -- do NOT edit; it is a transcript
+#   # TABLE       a page table, flattened to bullets (row, then columns)
+#   # FIGURE      an image kept in index.html; only the caption is editable
+
+** The SEBD Grand Tour 🍾
+The SEBD grand tour, 1993–2026 — with provenance and a certificate. From Bertram
+Ludäscher & two AI toolchains, the morning of the SEBD'26 closing talk.
+
+[badge:AI prose] Thirty-four editions ago, SEBD — founded by
+[[https://dblp.org/pid/s/DomenicoSacca.html][Domenico Saccà]] — began in Gizzeria Lido;
+this year it reached Senigallia, where the closing talk was about /trustworthy AI
+results/: answers that arrive with evidence, not just confidence. The morning of the
+talk, as a small self-referential demo, we asked: /what is the shortest grand tour
+visiting every SEBD edition, from the first to the thirty-fourth?/ This page is the
+keepsake version of that demo — and, in the spirit of the talk, it does not ask you to
+believe it. Every number below carries the means to check it. Let it make you smile —
+and let you verify.
+
+[badge:primary source] The 34 editions and their host cities come from the
+[[https://dblp.org/db/conf/sebd/index.html][DBLP index of SEBD proceedings]] (2026
+Senigallia supplied by hand — DBLP doesn't have the future yet). Their coordinates come
+from [[https://nominatim.openstreetmap.org/][OpenStreetMap/Nominatim]], checked place by
+place on 2026-08-01 — see [[#coords][the coordinate audit]] for why that sentence used
+to read differently, and what it cost.
+
+The page has two parts. [[#part1][Part I]] is the /provenance/: how the answer came
+about, from DBLP through two AI toolchains to a post-talk audit that found four wrong
+coordinates. [[#part2][Part II]] is the /evidence/: a tree of what the final claim
+actually rests on, and how to check each piece yourself. The two are related but not the
+same, and the difference is the point of the page.
+
+* The question (Q)
+:PROPERTIES:
+:CUSTOM_ID: q
+:END:
+Visit all 34 SEBD editions exactly once, starting at edition 1 (Gizzeria Lido, 1993) and
+ending at edition 34 (Senigallia, 2026), minimizing total distance. Cities that hosted
+twice — Rimini, Venice, Villasimius — count once per /edition/, which is why everything
+downstream is keyed by edition number, not city name. [badge:modeling choice]
+
+# FIGURE (kept in index.html; caption is editable)
+*Caption:* The optimized grand tour. [badge:AI-generated, verified] — rendered from the
+/certified/ route file =route_optimized.pl=, not a fresh solve.
+
+* The answer (A)
+[badge:AI-generated, verified] The optimal tour is *3,527 km* — versus *15,209 km* in
+chronological order (76.8% shorter; time travel is inefficient travel). The visiting
+order, by edition number:
+
+# VERBATIM -- transcript of an actual run; do not edit the block below.
+#+begin_example
+1 29 21 25 24 15 26 19 11 16 12 32 28 33 22 3 23 8
+27 10 4 30 17 7 13 5 31 9 20 2 18 6 14 34
+#+end_example
+
+[badge:modeling choice] Honesty about the metric: distances are /straight lines/ on an
+equirectangular km-plane (reference parallel 42°N, R = 6371 km), rounded to whole
+kilometres — not roads, not rail, and pointedly /not ferries/, though the Sicily and
+Sardinia editions cross open water. Because that projection is a genuine plane
+embedding, the underlying real-valued metric satisfies the triangle inequality exactly.
+The /rounded/ matrix we actually ship inherits it only to within the rounding: 22 of the
+35,904 ordered triples violate it, every one of them by a single kilometre. Nothing
+downstream cares — the certificate below is a claim about the shipped integer matrix,
+whatever its geometry — but a page about checkable claims should not round a number and
+keep the adjective. Should you actually take the trip, budget extra for the sea legs.
+
+# --- div.part ---
+Who computed what, from which sources, and what went wrong along the way.
+
+* Two toolchains, three numbers
+:PROPERTIES:
+:CUSTOM_ID: three
+:END:
+# --- div.centerpiece ---
+On the morning of the talk, "the" tour length was reported three ways:
+
+# TABLE -- one bullet per row; the sub-bullets are the columns.
+- Bertram, on stage
+  - /Length:/ ≈ 3,000 km
+  - /Status:/ A round number for the audience. [badge:unverified]
+- GPT toolchain
+  - /Length:/ 3,546.9 km
+  - /Status:/ Deterministic heuristic (seed 20260618); its own bundle says: /not/ an
+    optimality certificate. [badge:verified]
+- Claude toolchain
+  - /Length:/ 3,527 km
+  - /Status:/ *Proven optimal* by branch-and-cut (lower bound = upper bound).
+    [badge:verified]
+
+The two AI toolchains found /essentially the same tour/ — the orders differ only by
+swapping the twin editions held at identical coordinates (Venice 9↔20, Rimini 2↔18),
+which sit at distance zero from each other. Better still, and neither toolchain claimed
+it at the time: we later proved that GPT's tour is /also/ optimal, for GPT's own
+coordinates under GPT's own formula. Both narrators were right about their own world.
+[badge:verified]
+
+So why two numbers? The honest decomposition is more interesting than the one this page
+carried until 2026-08-01, which blamed "pure arithmetic" — floating point versus integer
+rounding, and earth radius 6371.0088 versus 6371. Measured on the identical visiting
+order, that story was simply false: the radius accounts for *5 metres*. Here is the real
+ledger:
+
+# TABLE -- one bullet per row; the sub-bullets are the columns.
+- Projection: GPT scales longitude by the cosine of each pair's /mean latitude/; we use
+  one fixed reference parallel (42°N)
+  - /Contribution:/ *+20.51 km*
+- Our rounding of each leg to whole kilometres
+  - /Contribution:/ −2.01 km
+- Coordinates the two bundles still disagree on
+  - /Contribution:/ +1.44 km
+- Earth radius 6371.0088 vs 6371 km
+  - /Contribution:/ +0.005 km
+- /total/
+  - /Contribution:/ /+19.9 km/ (3,546.9 − 3,527)
+
+Almost all of it is one documented modeling choice, which is the outcome you want. But
+note what the old page reported: a gap of only *5.9 km*, and it was smaller for a bad
+reason. Our coordinates were then wrong enough to pull the tour /12.3 km shorter/, which
+happened to cancel most of the 20 km projection difference. The two narrators looked
+like they nearly agreed; in truth two errors were quietly offsetting. Correcting the
+data made the disagreement /larger/ and, for the first time, fully explained.
+[badge:verified] (the arithmetic; see [[#coords][the coordinate audit]])
+
+What turned "almost" into "provably" was neither narrator — it was the *certificate*
+([[#part2][Part II]]): an exact solver whose lower bound climbs 2881 → 3273 → 3439 →
+3475 → 3477 → 3527, meeting a feasible tour exactly there. Lower = upper = optimum.
+
+/The model didn't make this trustworthy. The workflow did — and the workflow only caught
+the data error because a second, disagreeing witness was kept in the room./
+
+* The lineage graph — where every artifact came from
+:PROPERTIES:
+:CUSTOM_ID: lineage
+:END:
+# FIGURE (kept in index.html; caption is editable)
+*Caption:* The lineage graph — *every node is clickable* and opens the actual artifact
+it names (code, data, or the derivation log). Everything on this page derives from
+=dblp:conf/sebd/index= + coordinate estimates, through distances and routes, to
+certificates and maps. Machine-queryable versions:
+[[file:evidence/Claude-artifacts/provenance.pl][provenance.pl]] (Prolog) and
+[[file:evidence/GPT-artifacts/provenance.json][provenance.json]] (JSON). Diagram source:
+[[file:assets/sebd-provenance-clickable.gv][the .gv file]].
+
+*And how do you know this graph reflects what actually happened?* Mostly, you don't —
+and it would be against the spirit of this page to pretend otherwise. The graph is
+/self-reported/: drawn by the same agent that did the work, from its own derivation log
+([[file:evidence/Claude-artifacts/meta-provenance.org][meta-provenance.org]]). It is a
+record, not a tamper-evident trace — nothing cryptographic binds the arrows to the
+events. Three things still separate it from a just-so story: every node names an
+artifact that /exists/ and is consistent with its claimed inputs (click and compare); an
+/independent/ toolchain reached the same visiting order from the same edition list (the
+GPT bundle, with its own
+[[file:evidence/GPT-artifacts/provenance.json][provenance.json]] and file hashes) —
+though emphatically /not/ from the same coordinates, which each toolchain estimated for
+itself and which disagreed on 17 of 34 rows, the disagreement that eventually exposed
+our data error; and the whole pipeline is re-runnable from DBLP forward, so the graph's
+claims are reproducible even if its history is unprovable. What would upgrade it:
+append-only signed logs. (Hashes over the Claude-side artifacts used to be listed here
+as missing; they now ship as [[file:evidence/Claude-artifacts/SHA256SUMS][SHA256SUMS]].)
+[badge:honest limitation]
+
+[badge:primary source] One trust moment deserves telling straight: the /first/ attempt
+to gather the editions used an AI web-summarizer, which quietly *dropped the older
+editions*. It was distrusted and discarded; the list was re-derived from the raw DBLP
+HTML instead. The data on this page was never "just known" by an AI — it was fetched,
+checked (34 editions = 2026−1993+1), and its lineage recorded. The blow-by-blow
+derivation log is
+[[file:evidence/Claude-artifacts/meta-provenance.org][meta-provenance.org]].
+
+* The coordinate audit — where this page was wrong
+:PROPERTIES:
+:CUSTOM_ID: coords
+:END:
+Until 2026-08-01 this page claimed its coordinates were "town centroids, accurate to a
+couple of km," and invited you to spot-check them against any map. Nobody had. When
+someone finally did — geocoding all 34 stops against
+[[https://nominatim.openstreetmap.org/][OpenStreetMap/Nominatim]] — four were wrong, one
+of them badly:
+
+# TABLE -- one bullet per row; the sub-bullets are the columns.
+- 15 · Torre Canne
+  - /Was:/ 40.84, 17.73
+  - /Should be:/ 40.84, 17.47
+  - /Error:/ *22.3 km*
+- 26 · Castellaneta Marina
+  - /Was:/ 40.55, 16.94
+  - /Should be:/ 40.47, 16.94
+  - /Error:/ 8.9 km
+- 1 · Gizzeria Lido
+  - /Was:/ 38.97, 16.17
+  - /Should be:/ 38.93, 16.22
+  - /Error:/ 6.1 km
+- 25 · Squillace Lido
+  - /Was:/ 38.78, 16.53
+  - /Should be:/ 38.78, 16.57
+  - /Error:/ 3.6 km
+
+The errors are not random, which is the interesting part. All four stops are coastal
+/frazioni/ — a Lido, a Marina, a beach hamlet — and in every case the coordinate had
+drifted inland toward the parent comune that shares the name. That is exactly the
+failure mode you would predict of a language model recalling a place from its name
+rather than looking it up, and exactly what a gazetteer catches in one pass. The other
+30 stops came back within 1.5 km. [badge:primary source]
+
+What it cost: the certified optimum was *3,541 km* and is now *3,527 km*; the
+chronological comparison moved 15,245 → 15,209 km. What it did /not/ cost: the visiting
+order is unchanged, and every structural claim on this page — the sandwich argument, the
+six cuts, the 16 co-optima — survived verbatim. A certificate proves the tour is
+shortest /for the numbers it was given/. It has nothing whatever to say about whether
+those numbers describe Italy. That is not a flaw in the method; it is the precise
+boundary of what the method claims, and this page spent two weeks demonstrating it by
+accident.
+
+The GPT bundle, for its part, had Torre Canne and Squillace Lido right all along, and
+Castellaneta Marina wrong by 10.0 km and Gizzeria Lido by 3.5 km — so neither toolchain
+was trustworthy on coordinates, and neither was checkable without a third source.
+[badge:verified]
+
+# --- div.bridge ---
+/Provenance tells you where a number came from, not whether it is true./ The lineage
+graph is the history of this page, mistakes included. Part II sets that history aside
+and asks only what the final claim rests on — and what you would have to check in order
+to believe it.
+
+# --- div.part ---
+What the claim rests on, which parts are checked, and which you must simply trust.
+
+* The evidence (E) — what you actually have to believe
+:PROPERTIES:
+:CUSTOM_ID: tree
+:END:
+Part I traced how each artifact came about. The tree below asks a different question:
+which of those artifacts does the claim /depend on/? Read it bottom-up. The yellow
+leaves are what you must take on trust; above them sit data files you can open and
+checks you can re-run; the pink root is the claim. Nodes with a thick border are
+clickable and open the file they name.
+
+# FIGURE (kept in index.html; caption is editable)
+*Caption:* The evidence tree for the tour. Solid arrows mean /supports/; dashed arrows
+record how something was /found/, corroborated, or corrected. Diagram source:
+[[file:assets/evidence-tree-SEBD-tour.gv][the .gv file]].
+
+The tree's central distinction is between /found/ and /trusted/. The 2-opt search found
+the tour; HiGHS found the proofs, first the cutting-plane run and then the 226-leaf
+certificate. All of them appear only as grey, dashed helpers. Nothing above them depends
+on their being correct, because two short Prolog checkers re-verify what they produced.
+That is why the trust base is small: seven leaves, two of them about Prolog.
+
+Some things are deliberately /not/ in the support structure. The ChatGPT bundle
+corroborates the result but supports nothing; remove it and the claim still stands. The
+AI-recalled coordinates appear only as what OpenStreetMap corrected: the one leaf that
+failed, and the reason for [[#coords][the coordinate audit]]. And most of Part I is
+absent altogether. The lineage graph records how things happened; the tree records what
+the claim depends on. The evidence would stand even if the history were misreported.
+
+The sections below take the tree apart: the two green claims ([[#sandwich][the
+sandwich]]), the blue checks ([[#trustbase][the trust table]]), the certificate branch
+([[#nosolver][a proof with no solver in it]]), and the yellow leaves ([[#gaps][known
+gaps]]).
+
+* Why believe "optimal" without trying every tour?
+:PROPERTIES:
+:CUSTOM_ID: sandwich
+:END:
+A fair objection: nobody enumerated the alternatives. With endpoints fixed, the 32
+intermediate editions can be ordered in 32! ≈ 2.6 × 10^{35} ways. At a billion tours
+checked per second, exhaustive search would take about 8 × 10^{18} years — some 600
+million times the age of the universe. Exhaustion is not merely slow; it is not a thing
+that happens. [badge:verified] (arithmetic you can redo on a napkin)
+
+The proof works differently — it is a /sandwich/, not a search. Two independent facts
+are produced:
+
+- *An upper bound:* a concrete valid tour of length 3,527 km exists (check it: sum its
+  legs — =verify.pl= does exactly this).
+- *A lower bound:* /no/ tour — seen or unseen — can be shorter than 3,527 km.
+
+The lower bound comes from /relaxation/: drop the requirement "the edges form one
+connected tour" and demand only "every stop touches exactly 2 edges." (A path has two
+endpoints of degree 1, so =exact_tsp.py= first closes ours into a cycle with a zero-cost
+dummy stop joined to editions 1 and 34 — degree 2 then forces both free edges in, and
+the cheapest cycle is exactly the cheapest path.) Every real tour satisfies these weaker
+constraints, so the minimum over this larger set can only be ≤ the best tour — a valid
+bound. The first relaxation yields 2,881 km, but its "solution" is six disconnected
+mini-loops. So a /subtour-elimination cut/ is added — a linear inequality saying "at
+least 2 edges must cross this mini-loop's boundary," which is self-evidently true of
+every genuine tour, so the bound stays valid — and the relaxation is re-solved. Six
+iterations (2881 → 3273 → 3439 → 3475 → 3477 → 3527) replace 10^{35} evaluations; at
+3,527 the relaxation's own solution /is/ a single tour, so lower = upper = optimum. This
+is the Dantzig–Fulkerson–Johnson method (1954), the engine inside the record-holding
+Concorde TSP solver. [badge:verified]
+
+And a footnote the proof itself supplies: the optimal /value/ is unique, the optimal
+/tour/ is not. Rimini (editions 2, 18), Venice (9, 20), and Villasimius (28, 32) each
+repeat at identical coordinates, so swapping any twin pair changes nothing — 2³ = 8
+relabellings of any optimal tour. This page used to stop there and admit it had not
+checked for others. It has now been enumerated, which took about a minute: re-solve with
+a /no-good cut/ forbidding each optimum already found, until the solver's best answer
+exceeds 3,527. It does so at 3,529, and the complete list is *exactly 16 optimal tours*
+— two genuinely different routes, each in 8 twin-relabellings. The second route differs
+only at the very end, arriving Rimini → Portonovo → Ancona → Senigallia instead of
+Rimini → Ancona → Portonovo → Senigallia; Ancona and Portonovo are 9 km apart and the
+detour cancels exactly. [badge:verified]
+
+Which is why, if you run =exact_tsp.py= yourself, its last line prints a visiting order
+that is /not/ the one published above. Both are in the 16. The solver reports whichever
+optimum it reaches first; the route file records the one the heuristic found. Nothing is
+wrong — but it is exactly the kind of discrepancy that should be stated in advance
+rather than discovered by a suspicious reader.
+
+* "But how do I trust the /code/?"
+:PROPERTIES:
+:CUSTOM_ID: trustbase
+:END:
+The right question — and the answer is that the workflow is arranged so you have to
+trust remarkably little of it — the blue nodes of [[#tree][the tree]]. Sorted from
+easiest to hardest:
+
+# TABLE -- one bullet per row; the sub-bullets are the columns.
+- the tour is valid and 3,527 km
+  - /You need to trust…:/ [[file:evidence/Claude-artifacts/verify.pl][verify.pl]] — 22
+    lines of Prolog
+  - /How to shrink that trust:/ Read it (it only sums =distance/3= facts and checks a
+    permutation), or ignore it and sum the
+    [[file:evidence/GPT-artifacts/sebd_distances.csv][561-row CSV]] in a spreadsheet.
+- the distance table itself
+  - /You need to trust…:/ the equirectangular formula + coordinates
+  - /How to shrink that trust:/ Recompute any entry from the published lat/longs with
+    any tool; spot-check coordinates against any map — which is precisely the check that
+    caught four wrong ones. See [[#coords][the coordinate audit]].
+- the tour is /optimal/
+  - /You need to trust…:/ NOT the /search/ in
+    [[file:evidence/Claude-artifacts/exact_tsp.py][exact_tsp.py]] — but you do need (a)
+    the ~25 lines that build the model (edge list, cost vector, degree matrix, dummy
+    node), (b) that each subtour cut is a valid inequality, and (c) that HiGHS correctly
+    solves each of the six integer programs
+  - /How to shrink that trust:/ (a) and (b) are checkable by eye, and (a) is the part
+    this page previously — and wrongly — claimed you could skip. (c) /was/ the genuine
+    residual until 2026-08-04, when it was removed: the lower bound now ships as a
+    [[#nosolver][solver-free certificate]] that 161 lines of Prolog check in 0.6 s, using
+    integer arithmetic and nothing else.
+
+That is the asymmetry the talk turns on: the /solver/ may be a thousand lines of
+heuristics and floating point — irrelevant, because what it emits is a witness whose
+checking burden is tiny. How the tour was /found/ (2-opt? simulated annealing? divine
+inspiration?) never enters the argument. Trust the certificate, not the solver.
+
+* A proof with no solver in it
+:PROPERTIES:
+:CUSTOM_ID: nosolver
+:END:
+"Trust the certificate, not the solver" was, until 2026-08-04, an /aspiration/ on this
+page: the tour was checkable by hand, but /optimality/ still went through HiGHS. That
+residual is now closed. In [[file:evidence/certificate/][evidence/certificate/]] there
+is a proof object that needs no solver, no linear algebra, no floating point — only
+integer arithmetic:
+
+# VERBATIM -- transcript of an actual run; do not edit the block below.
+#+begin_example
+cd evidence/certificate
+swipl -q -g run -t halt check_certificate.pl
+#+end_example
+
+Actual output on 2026-08-04 (macOS, SWI-Prolog 9.0.4, 0.6 s):
+
+# VERBATIM -- transcript of an actual run; do not edit the block below.
+#+begin_example
+PASS (1) 563 edges = 561 published distances + 2 dummy edges
+PASS (2) node 35 joins only stops 1 and 34, at zero cost
+PASS (3) all 34 cuts are proper subsets (2 =< |S| =< 33)
+PASS (4) the 226 leaves form a complete binary tree -- exhaustive
+PASS (5) all 226 leaves bound every tour above 3526 km, so >= 3527 km
+PASS (6) the published route is a valid 1..34 tour of 3527 km
+
+VERIFIED: no tour of the 34 SEBD editions is shorter than 3527 km,
+and a tour of exactly 3527 km exists.  3527 km is optimal.
+#+end_example
+
+The whole thing rests on one inequality. Give every stop a number /y_{v}/ (any numbers)
+and every subtour cut a weight /z_{S}/ ≥ 0 (any weights), and give each edge a /reduced
+cost/
+
+# VERBATIM -- transcript of an actual run; do not edit the block below.
+#+begin_example
+d_e  =  c_e - y_u - y_v - (sum of z_S over the cuts that edge e crosses)
+#+end_example
+
+Then /every/ tour costs at least
+
+# VERBATIM -- transcript of an actual run; do not edit the block below.
+#+begin_example
+2*(sum of all y_v)  +  2*(sum of all z_S)  +  (sum of min(0, d_e) over all edges)
+#+end_example
+
+Why: every stop has exactly two tour edges, every tour crosses every cut at least twice,
+and a 0/1 variable can only hurt you where /d_{e}/ is negative. Three lines of algebra —
+and, crucially, /no assumption about where the numbers came from/. A certificate that
+would break if its numbers came from a liar is not a certificate. [badge:verified]
+
+One such inequality is not enough, and the shortfall is worth knowing: the best bound
+any single page of potentials can give — 35 numbers and 7 cuts, the full Held–Karp
+relaxation — is *3,447 km*, some 80 km short. So the proof becomes a case analysis: a
+binary tree splitting on "this edge is used / is not used," where each branch is closed
+by its own inequality. Ours has *226 leaves*, maximum depth 16, a pool of 34 cuts, about
+16,000 integers, 99 KB. [badge:verified]
+
+That size /is/ the finding, and it sharpens the talk's thesis rather than softening it:
+a napkin proves the tour exists; a small book proves that nothing beats it; and checking
+the small book still takes 0.6 seconds against 8 × 10^{18} years of exhaustive search.
+Note what check (4) does — it verifies the case analysis has no /hole/. A missing leaf
+is not an error in a proof; it is an unexamined case, which is exactly the failure a
+plausible-looking certificate would hide.
+
+And to answer the obvious suspicion — does the checker actually bite, or does it pass
+everything? Six tampered copies were run against it:
+
+# TABLE -- one bullet per row; the sub-bullets are the columns.
+- delete one leaf
+  - /Response:/ =FAIL (4) the case analysis has a hole=
+- zero out one leaf's potentials
+  - /Response:/ =FAIL (5) a leaf does not close=
+- make a cut multiplier negative
+  - /Response:/ =FAIL (5) a leaf does not close=
+- claim 3,528 km instead
+  - /Response:/ =FAIL (5) a leaf does not close=
+- falsify one edge cost (645 → 545 km)
+  - /Response:/ =FAIL (1) an edge disagrees with distance.pl=
+- enlarge a cut to the whole node set
+  - /Response:/ =FAIL (3) a cut set is not a proper subset=
+
+One tampering is /accepted/, and should be: nudge a potential by a few units and you
+still have a valid proof, just a different one. A checker that rejected that would be
+policing provenance, not validity. [badge:verified] (all seven runs; see
+[[file:evidence/certificate/README.org][README.org]])
+
+What is still trusted, stated plainly: SWI-Prolog's integer arithmetic; the 161-line
+checker itself (short enough to read, but written by the same agent that wrote the
+generator — a second checker in another language, by another author, is the next honest
+step); and, as ever, the 561 distances, which are a claim about a model, not about
+Italy.
+
+* How to distrust this page
+:PROPERTIES:
+:CUSTOM_ID: distrust
+:END:
+Please do. Both artifact bundles are included under [[file:evidence/][evidence/]],
+byte-for-byte as hashed on 2026-08-01, with one documented exception: three files of the
+Claude bundle were corrected on 2026-10-12, and
+[[file:evidence/Claude-artifacts/CORRECTIONS.org][CORRECTIONS.org]] says which, why, and
+with which hashes before and after; the originals are kept beside them. Re-run the
+checkers; don't take our word:
+
+# VERBATIM -- transcript of an actual run; do not edit the block below.
+#+begin_example
+# 1. Check the tour certificate (SWI-Prolog) — recomputes the length
+#    from the distance table and validates the permutation:
+cd evidence/Claude-artifacts
+swipl -q -g run -t halt verify.pl
+#+end_example
+
+Actual output on 2026-08-01 (macOS, SWI-Prolog):
+
+# VERBATIM -- transcript of an actual run; do not edit the block below.
+#+begin_example
+PASS: valid 1..34 permutation; recomputed = published = 3527 km
+#+end_example
+
+# VERBATIM -- transcript of an actual run; do not edit the block below.
+#+begin_example
+# 2. Prove optimality yourself (Python + scipy/HiGHS, <1 s):
+python3 exact_tsp.py
+#+end_example
+
+Actual output on 2026-08-01 (tail):
+
+# VERBATIM -- transcript of an actual run; do not edit the block below.
+#+begin_example
+  iter  6: cost   3527.0  subtours 1
+
+=== EXACT RESULT ===
+proven optimum (lower = upper bound): 3527 km
+recovered optimal path length check : 3527 km   (start 1, end 34)
+heuristic tour (route_optimized.pl) : 3527 km
+==> heuristic is OPTIMAL: True
+optimal order: 1 29 21 25 24 15 26 19 11 16 12 28 32 33 22 3 23 8 27
+10 4 30 17 7 13 5 31 9 20 2 18 14 6 34
+#+end_example
+
+That last line is one of the other 15 optimal tours, not the one published above — see
+the co-optimality footnote. Both are 3,527 km.
+
+# VERBATIM -- transcript of an actual run; do not edit the block below.
+#+begin_example
+# 3. Check optimality WITHOUT trusting any solver (SWI-Prolog, 0.6 s):
+cd ../certificate
+swipl -q -g run -t halt check_certificate.pl
+#+end_example
+
+Actual output on 2026-08-04 — six checks, quoted in full [[#nosolver][above]], ending:
+
+# VERBATIM -- transcript of an actual run; do not edit the block below.
+#+begin_example
+VERIFIED: no tour of the 34 SEBD editions is shorter than 3527 km,
+and a tour of exactly 3527 km exists.  3527 km is optimal.
+#+end_example
+
+This is the one to run if you believe only arithmetic. Try breaking it, too — the
+[[file:evidence/certificate/README.org][README]] lists six tamperings and what each one
+trips.
+
+# VERBATIM -- transcript of an actual run; do not edit the block below.
+#+begin_example
+# 4. Reproduce the independent GPT bundle (fixed seed 20260618),
+#    and check its file hashes:
+cd ../GPT-artifacts
+shasum -a 256 -c SHA256SUMS
+./run.sh
+#+end_example
+
+Actual output on 2026-08-01: all 11 files =OK=, then:
+
+# VERBATIM -- transcript of an actual run; do not edit the block below.
+#+begin_example
+Chronological total: 15263.9 km
+Optimized total:     3546.9 km
+#+end_example
+
+— and the freshly reproduced route tables matched the shipped ones exactly. (The GPT
+bundle is untouched by the coordinate correction: it was always keyed to its own
+coordinate estimates, and its numbers stand exactly as first published.)
+
+# VERBATIM -- transcript of an actual run; do not edit the block below.
+#+begin_example
+# 4. Check the Claude bundle's own hashes (added 2026-08-01):
+cd ../Claude-artifacts
+shasum -a 256 -c SHA256SUMS
+#+end_example
+
+Actual output on 2026-08-01: all 23 files =OK=. On 2026-10-12 the map script and its two
+renderings were corrected and their three entries re-stamped (see
+[[file:evidence/Claude-artifacts/CORRECTIONS.org][CORRECTIONS.org]]); re-run that day,
+all 23 files =OK= again. Note what that does and does not show. A hash list proves the
+files match the list, not that the list is original: whoever edits a file can re-stamp
+its hash. So the original three files and the original =SHA256SUMS= are kept in
+[[file:evidence/Claude-artifacts/original-2026-08-01/][original-2026-08-01/]], where
+they still check.
+
+Still suspicious? Good — that's the right instinct. The distance tables are plain text
+([[file:evidence/Claude-artifacts/distance.pl][561 Prolog facts]],
+[[file:evidence/GPT-artifacts/sebd_distances.csv][561 CSV rows]]); sum any tour by hand.
+If this page and its evidence ever disagree, believe the evidence.
+
+* Known gaps — and whether they matter
+:PROPERTIES:
+:CUSTOM_ID: gaps
+:END:
+A trust artifact should list what it /doesn't/ establish. Most gaps are leaves of
+[[#tree][the evidence tree]]; the one that isn't is worth noticing. Our ledger:
+
+# TABLE -- one bullet per row; the sub-bullets are the columns.
+- +*No machine-checked proof of the lower bound.* The optimality certificate rests on
+  HiGHS's arithmetic — no dual certificates extracted, no Lean/Coq check.+ *Closed
+  2026-08-04:* the lower bound is now a [[#nosolver][solver-free certificate]] — 226
+  leaves of node potentials, checked by 161 lines of Prolog in integer arithmetic.
+  - /In the tree:/ HiGHS — now a grey helper
+  - /Does it matter?:/ It mattered: this was the one link where "trust the certificate"
+    quietly included "trust a solver." Closing it cost 99 KB of proof for a 4-digit answer
+    — which is the honest exchange rate, and worth knowing before you promise anyone a
+    one-page proof.
+- *The Claude bundle was edited after it was hashed.* Three files (the map script and
+  its two renderings) changed on 2026-10-12, and their hashes were re-stamped.
+  - /In the tree:/ — (packaging; the map supports nothing in the tree)
+  - /Does it matter?:/ Not for any number: the change is one title string, and every
+    plotted point is identical. It matters on principle. A re-stamped hash is exactly what
+    a quiet edit looks like, so the change is logged in
+    [[file:evidence/Claude-artifacts/CORRECTIONS.org][CORRECTIONS.org]] with both hashes,
+    and the originals are kept. Signed or externally timestamped hashes (a DOI-archived
+    snapshot, say) would close this properly.
+- *The new checker was written by the same agent as the generator*, and SWI-Prolog's
+  integer arithmetic is now the trusted base.
+  - /In the tree:/ leaves: /Prolog validator rules/, /SWI-Prolog/
+  - /Does it matter?:/ Smaller than what it replaced — bignum addition and comparison,
+    versus a MILP solver — but it is the residual that remains. A second checker, in
+    another language, by another author, would close it; the certificate format is public
+    and 161 lines is not a large ask.
+- *The optimum is of the model, not of Italy.* Distances are straight lines — ferries,
+  roads, and the Apennines are ignored.
+  - /In the tree:/ leaf: /Distance model/
+  - /Does it matter?:/ Matters if you book tickets; not for the demonstration. The
+    certificate proves "shortest /given these 561 numbers/." Change the numbers and the
+    proof machinery re-runs unchanged — that portability is the point, and on 2026-08-01
+    we got to prove it the hard way. See [[#coords][the coordinate audit]].
+- *Coordinates are now gazetteer-checked, but only once, and only against one
+  gazetteer.* All 34 were geocoded against OpenStreetMap; four were corrected. The
+  remaining 30 agree to within 1.5 km, but "OSM says so" is a second opinion, not ground
+  truth, and no coordinate here has been checked against a national cadastral source.
+  - /In the tree:/ leaf: /OpenStreetMap/
+  - /Does it matter?:/ Small. A 1 km coordinate error moves the total by well under the
+    2 km rounding already acknowledged. But this /was/ the gap that actually bit, so it is
+    now the gap most worth watching.
+- *Provenance is self-reported* (see [[#lineage][Part I]]): no cryptographic or
+  append-only trail binds the lineage graph to the actual session.
+  - /In the tree:/ not in the tree: history, not support
+  - /Does it matter?:/ Matters for the strong claim "this is what happened"; mitigated
+    by artifact consistency, an independent second witness, and reproducibility.
+- *The remaining leaves:* DBLP's edition list, the problem formulation, Python's
+  floating point.
+  - /In the tree:/ leaves: /DBLP/, /Problem formulation/, /Python float arithmetic/
+  - /Does it matter?:/ Small. The edition list is checked by count (34 = 2026−1993+1)
+    and was reproduced by the independent GPT bundle; the fixed endpoints are stated in
+    [[#q][the question]]; floating point touches only the projection, where its error is
+    many orders of magnitude below the whole-kilometre rounding.
+- +*The LP arithmetic is unaudited* — the six solves are integer programs, so the
+  trusted component is HiGHS's branch-and-bound, not just its simplex.+ *Superseded
+  2026-08-04:* HiGHS is no longer on the critical path. It still /found/ the numbers;
+  nothing now depends on it having found them correctly.
+  - /In the tree:/ HiGHS — now a grey helper
+  - /Does it matter?:/ The distinction is the whole thesis in one row: a solver that
+    produces a checkable witness needs no audit, and one that produces only an answer
+    needs a complete one.
+- +*Integrity hashes cover only the GPT bundle.*+ *Closed 2026-08-01:* the Claude bundle
+  now ships [[file:evidence/Claude-artifacts/SHA256SUMS][SHA256SUMS]] too (23 files).
+  - /In the tree:/ — (packaging)
+  - /Does it matter?:/ It was a three-second fix listed as a known gap for two weeks,
+    which is its own small lesson about ledgers.
+- +*The set of optimal tours is not enumerated.*+ *Closed 2026-08-01:* there are exactly
+  16.
+  - /In the tree:/ root note: “one of exactly 16”
+  - /Does it matter?:/ Didn't matter — the certified /value/ is unique — but it was
+    cheap to settle, and settling it turned up the discrepancy between the published route
+    and the one =exact_tsp.py= prints.
+- *The prose is unverified* — dedication, jokes, this very sentence.
+  - /In the tree:/ — (not evidence)
+  - /Does it matter?:/ That's why the badges exist. Charm is not evidence; here they are
+    kept visibly distinct.
+
+* Legend — what kind of claim is this?
+# --- div.legend ---
+[badge:primary source] — fact from an external primary source (DBLP), checkable there.
+
+[badge:modeling choice] — a documented approximation (centroid coordinates,
+straight-line metric); not wrong, but a choice you should know about.
+
+[badge:AI-generated, verified] — produced by an AI, then independently checked by a
+program whose output is quoted verbatim above.
+
+[badge:AI prose, unverified] — narrative flavor. Charming, we hope; evidence, it is not.
+
+These badges label the /epistemic status of a sentence/. The colours in [[#tree][the
+evidence tree]] label something else: a node's /role in the argument/ — assumption,
+data, check, claim, or helper.
+
+* Appendix: a side experiment from the ASP world
+:PROPERTIES:
+:CUSTOM_ID: asp
+:END:
+One cross-check deserves a footnote: a generic clingo (answer-set programming) encoding
+of the tour problem ([[file:evidence/Claude-artifacts/tsp.lp][tsp.lp]]) reached only
+6,709 km after 90 seconds — corroborating, never competing. That feebleness is a known
+/encoding/ issue, not an ASP one: Bertagnon & Gavanelli (Univ. Ferrara) give new TSP
+encodings in clingo[DL] — constraint ASP over difference logic — that are orders of
+magnitude faster, with a further geometric speedup for exactly our case, Euclidean
+instances with known coordinates ([[https://doi.org/10.1093/logcom/exaf072][/J. Logic
+and Computation/ 36(2), 2026, open access]]). [badge:primary source] (the paper's
+claim).
+
+In this page's spirit, we ran the experiment rather than just citing it (2026-07-18,
+same laptop; files in [[file:evidence/DL-experiment/][evidence/DL-experiment/]]) — and
+report an honest /negative/: our adaptation of the paper's SDLT and DLEB encodings
+([[file:evidence/DL-experiment/sdlt.lp][sdlt.lp]],
+[[file:evidence/DL-experiment/dleb.lp][dleb.lp]], transcribed from Listings 1+5+6 and
+1+7+8) returned =UNKNOWN= in every 90-second run — unable even to /confirm/ a tour of
+3,541 km exists, where naive clingo at least reached 7,592 km. (Those two runs used the
+pre-correction distance table; the corrected instance re-runs naive clingo to 6,709 km,
+but =clingo-dl= is no longer installed on this machine, so the SDLT/DLEB runs have /not/
+been repeated and their numbers are quoted as of 2026-07-18. [badge:stale]) This does
+*not* refute the paper; it measures the gap between citing a method and reproducing one.
+Known differences: our clingo-dl 1.5 build lacks the =--minimize-variable= option their
+tooling uses (we substituted an outer binary search on the bound); our instance is a
+/path/-TSP closed by a zero-cost dummy node; and we implemented none of their geometric
+(convex-hull) enhancements. Any of these may be decisive — finding out is a conversation
+to have with the authors, which seems fitting for a memento. [badge:AI-generated,
+verified] (the runs happened as described) [badge:unverified] (any explanation of /why/)
+
+# --- div.colophon ---
+From the SEBD'26 closing talk, /"Towards Explainable & Trustworthy AI: Database
+Provenance meets Computational Argumentation"/ (Bertram Ludäscher, UIUC). The tour is
+the talk's first trust regime — formal certificates — in miniature; the talk's second
+half pairs it with defeasible argumentation. The demo drinks its own champagne: the
+provenance system's provenance is itself on this page.
+
+Provenance of this page — reported precisely, since it preaches precision: drafted by
+Claude Code under *Opus 4.8* (=claude-opus-4-8=) on 2026-07-17 (the session had been
+asked to run Fable 5 but fell back for billing reasons — even bylines need provenance);
+revised — optimality argument, trust-boundary table, clickable lineage graph, gaps
+ledger — by *Fable 5* (=claude-fable-5=) on 2026-07-18; audited and corrected by *Opus
+5* (=claude-opus-5[1m]=) on 2026-08-01, which re-derived every number on the page,
+geocoded all 34 stops against OpenStreetMap, found four bad coordinates and a false
+explanation of the GPT/Claude gap, enumerated the 16 co-optima, and rewrote the affected
+passages; extended on 2026-08-04 by the same model, which built the
+[[#nosolver][solver-free certificate]] and its Prolog checker after Bertram asked what,
+exactly, would convince a skeptic. Built from the artifact bundles in
+[[file:evidence/][evidence/]]; reviewed by Bertram Ludäscher before publication. All
+verification outputs above were produced by actually running the commands on the dates
+given, not copied from documentation. This public edition (2026-10-12, Claude Code under
+*Opus 5.5*, =claude-opus-5-5=) drops a personal dedication, splits the page into
+provenance (Part I) and evidence (Part II), and adds [[#tree][the evidence tree]]. It
+also fixed one leftover of the audit: the map's title still said 3,541 km, hard-coded in
+=make_map_italy.py= although the plotted coordinates were already corrected. The map was
+re-rendered, its three =SHA256SUMS= entries were updated, and the change is logged in
+[[file:evidence/Claude-artifacts/CORRECTIONS.org][CORRECTIONS.org]] with the originals
+kept beside it; no other number changed. Two stale mentions of 3,541 km inside the
+bundle (=tsp.lp=, =provenance.pl=) were deliberately left untouched and are explained in
+the same file.
+
+Four drafts in, the page has been wrong about a coordinate, wrong about why two
+toolchains disagreed, and wrong about how many optimal tours exist — while the one thing
+it staked its argument on, the certificate, was right every time, and has now been put
+beyond the reach of the solver that found it. Make of that what you will; we think it is
+the whole point.
+

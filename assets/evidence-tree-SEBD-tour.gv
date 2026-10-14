@@ -1,0 +1,80 @@
+// Evidence tree for the SEBD Grand Tour: what supports "T is an optimal tour of 3,527 km".
+// Root = derived claim; leaves = what you have to believe; inner nodes = checks/computations.
+// Grey dashed = untrusted helpers: they FOUND something that a trusted check then re-verifies.
+// Build: dot -Tsvg evidence-tree-SEBD-tour.gv -o evidence-tree-SEBD-tour.svg
+// Links are relative to this folder (evidence/...).
+// Thick border (penwidth=2.2) = clickable node (has a URL).
+digraph evidence {
+  rankdir=BT; newrank=true; nodesep=0.35; ranksep=0.55;
+  bgcolor="transparent";
+  node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=11,
+        color="#7a7a7a", penwidth=1.0, margin="0.14,0.07"];
+  edge [color="#6b6b6b", arrowsize=0.7, fontname="Helvetica", fontsize=9, fontcolor="#555555"];
+
+  // ---------- root ----------
+  root [label=<<b>Tour <font face="Times-Roman"><i>T</i></font></b>: Gizzeria Lido (1993) → … → Senigallia (2026), all 34 editions<br/><b><font face="Times-Roman">|<i>T</i>|</font> = 3,527 km, and no tour is shorter</b><br/><font point-size="9">(lower bound = upper bound ⇒ optimal; one of exactly 16 co-optimal tours)</font>>,
+        fillcolor="#f8d7e3", color="#b0607e", fontsize=12];
+
+  // ---------- derived claims ----------
+  c_valid [label=<<b>T is a valid tour</b>&#160;(1 … 34, each edition once)<br/>of length 3,527 km>, fillcolor="#d5efd9"];
+  c_lower [label=<<b>Every tour is ≥ 3,527 km</b><br/><font point-size="9">lower bound</font>>, fillcolor="#d5efd9"];
+
+  // ---------- trusted checks (runs) ----------
+  verify [tooltip="verify.pl: recomputes the tour length and checks the permutation", label=<<b>verify.pl</b>&#160;(Prolog, 22 lines)<br/><font point-size="9">recomputes the length from d(i,j);<br/>checks the permutation and endpoints</font>>,
+          fillcolor="#d6e6f7", URL="evidence/Claude-artifacts/verify.pl", penwidth=2.2];
+  checkcert [tooltip="check_certificate.pl: checks the optimality certificate, integer arithmetic only", label=<<b>check_certificate.pl</b>&#160;(Prolog, 161 lines)<br/><font point-size="9">integer arithmetic, no solver;<br/>PASS (1)–(6) in &lt; 1 s</font>>,
+             fillcolor="#d6e6f7", URL="evidence/certificate/check_certificate.pl", penwidth=2.2];
+
+  // ---------- artifacts (data) ----------
+  route [tooltip="route_optimized.pl: the published tour", label=<<b>route_optimized.pl</b><br/><font point-size="9">the tour T, 33 legs</font>>, fillcolor="#e6def5",
+         URL="evidence/Claude-artifacts/route_optimized.pl", penwidth=2.2];
+  cert [tooltip="certificate.pl: the 226-leaf lower-bound proof", label=<<b>certificate.pl</b>&#160;(99 KB)<br/><font point-size="9">226-leaf branch-and-bound tree:<br/>node potentials + subtour cuts</font>>, fillcolor="#e6def5",
+        URL="evidence/certificate/certificate.pl", penwidth=2.2];
+  dist [tooltip="distance.pl: the 561 distances", label=<<b>distance.pl</b><br/><font point-size="9">561 distances d(i,j), whole km</font>>, fillcolor="#e6def5",
+        URL="evidence/Claude-artifacts/distance.pl", penwidth=2.2];
+  coords [tooltip="sebd.pl: editions, cities, coordinates", label=<<b>sebd(No, Year, City, Lat, Long)</b><br/><font point-size="9">34 facts (sebd.pl; same table in trip.py)</font>>, fillcolor="#e6def5",
+          URL="evidence/Claude-artifacts/sebd.pl", penwidth=2.2];
+
+  // ---------- trusted computation ----------
+  project [tooltip="trip.py: projection and rounding", label=<<b>trip.py</b>: project + round<br/><font point-size="9">equirectangular at 42°N, R = 6371 km,<br/>Euclidean, rounded to km</font>>,
+           fillcolor="#d6e6f7", URL="evidence/Claude-artifacts/trip.py", penwidth=2.2];
+
+  // ---------- untrusted helpers (found, not trusted) ----------
+  node [style="rounded,filled,dashed", fillcolor="#eeeeee", color="#9a9a9a", fontcolor="#555555"];
+  search [tooltip="trip.py: the 2-opt search that found the tour", label=<<b>trip.py</b>: 2-opt / Or-opt search<br/><font point-size="9">proposed T; not trusted</font>>,
+          URL="evidence/Claude-artifacts/trip.py", penwidth=2.2];
+  mkcert [tooltip="make_certificate.py: generated the certificate with HiGHS", label=<<b>make_certificate.py</b> + HiGHS<br/><font point-size="9">found the proof; not trusted</font>>,
+          URL="evidence/certificate/make_certificate.py", penwidth=2.2];
+  exact [tooltip="exact_tsp.py: the first optimality proof", label=<<b>exact_tsp.py</b> + HiGHS<br/><font point-size="9">first optimality proof (2026-06-18);<br/>also finds a co-optimal tour;<br/>superseded by the certificate</font>>,
+         URL="evidence/Claude-artifacts/exact_tsp.py", penwidth=2.2];
+  gpt [tooltip="ChatGPT bundle: EVIDENCE.md", label=<<b>ChatGPT bundle</b><br/><font point-size="9">independent run: same visiting order<br/>(own metric: 3,546.9 km)</font>>,
+       URL="evidence/GPT-artifacts/EVIDENCE.md", penwidth=2.2];
+  airecall [label=<<b>AI-recalled coordinates</b><br/><font point-size="9">2026-06-18; 4 of 34 wrong (up to 22 km)</font>>];
+
+  // ---------- leaves: what you have to believe ----------
+  node [style="rounded,filled", fillcolor="#fbf0c4", color="#b39b3c", fontcolor="#333333"];
+  dblp [tooltip="DBLP: SEBD proceedings index", label=<<b>DBLP</b> SEBD index<br/><font point-size="9">editions, years, cities</font>>, URL="https://dblp.org/db/conf/sebd/index.html", penwidth=2.2];
+  osm [tooltip="OpenStreetMap", label=<<b>OpenStreetMap</b><br/><font point-size="9">34 coordinates (checked 2026-08-01)</font>>, URL="https://www.openstreetmap.org/", penwidth=2.2];
+  model [label=<<b>Distance model</b><br/><font point-size="9">straight lines, not roads or ferries;<br/>whole-km rounding</font>>];
+  pyarith [label=<<b>Python float arithmetic</b><br/><font point-size="9">(projection only)</font>>];
+  formulation [label=<<b>Problem formulation</b><br/><font point-size="9">Hamiltonian path, fixed start 1993,<br/>fixed end 2026</font>>];
+  swipl [label=<<b>SWI-Prolog</b><br/><font point-size="9">integer arithmetic, list ops</font>>];
+  checkers [label=<<b>Prolog validator rules are correct</b><br/><font point-size="9">183 lines, same author as the generators</font>>];
+
+  // ---------- support edges (from evidence up to claim) ----------
+  c_valid -> root; c_lower -> root;
+  verify -> c_valid; checkcert -> c_valid [label="PASS (6)"]; checkcert -> c_lower [label="PASS (1)–(5)"];
+  route -> verify; dist -> verify;
+  cert -> checkcert; dist -> checkcert; route -> checkcert;
+  swipl -> verify; swipl -> checkcert; formulation -> verify; formulation -> checkcert; checkers -> verify; checkers -> checkcert;
+  project -> dist; coords -> project; model -> project; pyarith -> project;
+  dblp -> coords; osm -> coords [label="lat/long"];
+
+  // ---------- found-by edges (dashed: provenance, not support) ----------
+  edge [style=dashed, color="#a0a0a0"];
+  search -> route [label="found"]; mkcert -> cert [label="found"];
+  exact -> c_lower [label="superseded"]; gpt -> root [label="corroborates"];
+  airecall -> osm [label="corrected by", dir=none];
+
+  { rank=same; dblp; osm; model; pyarith; formulation; swipl; checkers; }
+}

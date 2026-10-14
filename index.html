@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>The SEBD Grand Tour — with Provenance and a Certificate</title>
+<meta name="generator" content="Claude Code — drafted Opus 4.8 2026-07-17, revised Fable 5 2026-07-18, audited/corrected Opus 5 (claude-opus-5[1m]) 2026-08-01, public edition Opus 5.5 (claude-opus-5-5) 2026-10-12">
+<style>
+  :root {
+    --ink: #2b2b2b; --paper: #faf8f4; --accent: #8b2635; --soft: #6b6257;
+    --card: #ffffff; --line: #e2ddd4; --code-bg: #f2efe9;
+    --primary: #2d6a4f; --model: #b07d2b; --verified: #1d5c8f; --prose: #8a8078;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: Georgia, 'Times New Roman', serif; color: var(--ink);
+         background: var(--paper); line-height: 1.6; }
+  main { max-width: 46rem; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  h1 { font-size: 1.9rem; line-height: 1.25; color: var(--accent); margin: .5rem 0 .25rem; }
+  h2 { font-size: 1.3rem; margin-top: 2.5rem; border-bottom: 1px solid var(--line); padding-bottom: .3rem; }
+  .subtitle { color: var(--soft); font-style: italic; margin-top: 0; }
+  figure { margin: 1.5rem 0; text-align: center; }
+  figure img { max-width: 100%; height: auto; border: 1px solid var(--line); background: #fff; }
+  figcaption { font-size: .85rem; color: var(--soft); margin-top: .4rem; }
+  table { border-collapse: collapse; width: 100%; margin: 1rem 0; font-size: .95rem; }
+  th, td { border: 1px solid var(--line); padding: .45rem .6rem; text-align: left; vertical-align: top; }
+  th { background: var(--code-bg); }
+  code, pre { font-family: "SF Mono", Menlo, Consolas, monospace; font-size: .85em; }
+  code { background: var(--code-bg); padding: .1em .3em; border-radius: 3px; }
+  pre { background: var(--code-bg); border: 1px solid var(--line); border-radius: 6px;
+        padding: .8rem 1rem; overflow-x: auto; line-height: 1.45; }
+  pre code { background: none; padding: 0; }
+  a { color: var(--verified); }
+  .badge { display: inline-block; font-family: Menlo, monospace; font-size: .68rem;
+           padding: .08em .5em; border-radius: 999px; color: #fff; vertical-align: middle;
+           letter-spacing: .02em; }
+  .b-primary { background: var(--primary); }
+  .b-model { background: var(--model); }
+  .b-verified { background: var(--verified); }
+  .b-prose { background: var(--prose); }
+  .legend { background: var(--card); border: 1px solid var(--line); border-radius: 8px;
+            padding: 1rem 1.2rem; font-size: .9rem; }
+  .legend p { margin: .35rem 0; }
+  .centerpiece { background: var(--card); border-left: 4px solid var(--accent);
+                 border-radius: 0 8px 8px 0; padding: .1rem 1.2rem .5rem; margin: 1.5rem 0; }
+  .colophon { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line);
+              font-size: .85rem; color: var(--soft); }
+  .order { word-spacing: .15em; }
+  .part { margin: 3.5rem 0 0; padding: .6rem 0 .4rem; border-top: 3px double var(--accent);
+          border-bottom: 1px solid var(--line); }
+  .part .num { font-variant: small-caps; letter-spacing: .08em; color: var(--accent); font-size: .95rem; }
+  .part .name { display: block; font-size: 1.55rem; line-height: 1.25; }
+  .part p { margin: .3rem 0 0; color: var(--soft); font-style: italic; font-size: .95rem; }
+  .bridge { margin: 2.5rem 0 0; padding: .8rem 1.2rem; background: var(--card);
+            border-left: 4px solid var(--accent); border-radius: 0 8px 8px 0; }
+  /* The evidence tree is wider than the text column: let it break out, scroll on phones. */
+  figure.wide { width: min(calc(100vw - 2rem), 76rem); position: relative; left: 50%;
+                transform: translateX(-50%); }
+  .tree-plate { background: #fdfcf9; border: 1px solid var(--line); border-radius: 10px;
+                padding: .6rem; overflow-x: auto; }
+  .tree-plate svg { display: block; width: 100%; min-width: 56rem; height: auto; }
+  ul.treelegend { list-style: none; padding: 0; margin: .8rem 0 0; display: flex; flex-wrap: wrap;
+                  gap: .4rem 1.1rem; font-size: .85rem; justify-content: center; }
+  ul.treelegend span { display: inline-block; width: 1.4rem; height: .8rem; border-radius: 3px;
+                       border: 1px solid #8a8a8a; vertical-align: -1px; margin-right: .35rem; }
+</style>
+</head>
+<body>
+<main>
+
+<h1>The SEBD Grand Tour&nbsp;🍾</h1>
+<p class="subtitle">The SEBD grand tour, 1993–2026 — with provenance and a certificate.<br>
+From Bertram Ludäscher &amp; two AI toolchains, the morning of the SEBD'26 closing talk.</p>
+
+<p><span class="badge b-prose">AI prose</span> Thirty-four editions ago,
+SEBD — founded by
+<a href="https://dblp.org/pid/s/DomenicoSacca.html">Domenico Saccà</a> — began in Gizzeria Lido; this year it reached Senigallia, where the closing talk
+was about <em>trustworthy AI results</em>: answers that arrive with evidence, not
+just confidence. The morning of the talk, as a small self-referential demo, we asked:
+<em>what is the shortest grand tour visiting every SEBD edition, from the first to the
+thirty-fourth?</em> This page is the keepsake version of that demo — and, in the spirit
+of the talk, it does not ask you to believe it. Every number below carries the means to
+check it. Let it make you smile — and let you verify.</p>
+
+<p><span class="badge b-primary">primary source</span> The 34 editions and their host
+cities come from the
+<a href="https://dblp.org/db/conf/sebd/index.html">DBLP index of SEBD proceedings</a>
+(2026 Senigallia supplied by hand — DBLP doesn't have the future yet). Their
+coordinates come from
+<a href="https://nominatim.openstreetmap.org/">OpenStreetMap/Nominatim</a>, checked
+place by place on 2026-08-01 — see <a href="#coords">the coordinate audit</a> for why
+that sentence used to read differently, and what it cost.</p>
+
+<p>The page has two parts. <a href="#part1">Part&nbsp;I</a> is the <em>provenance</em>:
+how the answer came about, from DBLP through two AI toolchains to a post-talk audit that
+found four wrong coordinates. <a href="#part2">Part&nbsp;II</a> is the <em>evidence</em>:
+a tree of what the final claim actually rests on, and how to check each piece yourself.
+The two are related but not the same, and the difference is the point of the page.</p>
+
+<h2 id="q">The question (Q)</h2>
+<p>Visit all 34 SEBD editions exactly once, starting at edition&nbsp;1
+(Gizzeria Lido, 1993) and ending at edition&nbsp;34 (Senigallia, 2026), minimizing
+total distance. Cities that hosted twice — Rimini, Venice, Villasimius — count once
+per <em>edition</em>, which is why everything downstream is keyed by edition number,
+not city name. <span class="badge b-model">modeling choice</span></p>
+
+<figure>
+  <img src="assets/sebd_route_italy.svg" alt="Map of Italy with the optimized SEBD tour drawn over all 34 edition locations" width="547">
+  <figcaption>The optimized grand tour. <span class="badge b-verified">AI-generated, verified</span>
+  — rendered from the <em>certified</em> route file <code>route_optimized.pl</code>, not a fresh solve.</figcaption>
+</figure>
+
+<h2>The answer (A)</h2>
+<p><span class="badge b-verified">AI-generated, verified</span>
+The optimal tour is <strong>3,527&nbsp;km</strong> — versus
+<strong>15,209&nbsp;km</strong> in chronological order (76.8% shorter; time travel is
+inefficient travel). The visiting order, by edition number:</p>
+<pre class="order"><code>1 29 21 25 24 15 26 19 11 16 12 32 28 33 22 3 23 8
+27 10 4 30 17 7 13 5 31 9 20 2 18 6 14 34</code></pre>
+
+<p><span class="badge b-model">modeling choice</span> Honesty about the metric:
+distances are <em>straight lines</em> on an equirectangular km-plane (reference
+parallel 42°N, R&nbsp;=&nbsp;6371&nbsp;km), rounded to whole kilometres — not roads,
+not rail, and pointedly <em>not ferries</em>, though the Sicily and Sardinia editions
+cross open water. Because that projection is a genuine plane embedding, the underlying
+real-valued metric satisfies the triangle inequality exactly. The <em>rounded</em>
+matrix we actually ship inherits it only to within the rounding: 22 of the 35,904
+ordered triples violate it, every one of them by a single kilometre. Nothing downstream
+cares — the certificate below is a claim about the shipped integer matrix, whatever its
+geometry — but a page about checkable claims should not round a number and keep the
+adjective. Should you actually take the trip, budget extra for the sea legs.</p>
+
+<div class="part" id="part1"><span class="num">Part I</span>
+<span class="name">How it came about — provenance</span>
+<p>Who computed what, from which sources, and what went wrong along the way.</p></div>
+
+<h2 id="three">Two toolchains, three numbers</h2>
+<div class="centerpiece">
+<p>On the morning of the talk, "the" tour length was reported three ways:</p>
+<table>
+<tr><th>Who said it</th><th>Length</th><th>Status</th></tr>
+<tr><td>Bertram, on stage</td><td>≈ 3,000 km</td><td>A round number for the audience. <span class="badge b-prose">unverified</span></td></tr>
+<tr><td>GPT toolchain</td><td>3,546.9 km</td><td>Deterministic heuristic (seed 20260618); its own bundle says: <em>not</em> an optimality certificate. <span class="badge b-verified">verified</span></td></tr>
+<tr><td>Claude toolchain</td><td>3,527 km</td><td><strong>Proven optimal</strong> by branch-and-cut (lower bound = upper bound). <span class="badge b-verified">verified</span></td></tr>
+</table>
+<p>The two AI toolchains found <em>essentially the same tour</em> — the orders differ
+only by swapping the twin editions held at identical coordinates (Venice 9↔20,
+Rimini 2↔18), which sit at distance zero from each other. Better still, and neither
+toolchain claimed it at the time: we later proved that GPT's tour is <em>also</em>
+optimal, for GPT's own coordinates under GPT's own formula. Both narrators were right
+about their own world. <span class="badge b-verified">verified</span></p>
+<p>So why two numbers? The honest decomposition is more interesting than the one this
+page carried until 2026-08-01, which blamed "pure arithmetic" — floating point versus
+integer rounding, and earth radius 6371.0088 versus 6371. Measured on the identical
+visiting order, that story was simply false: the radius accounts for
+<strong>5&nbsp;metres</strong>. Here is the real ledger:</p>
+<table>
+<tr><th>Source of difference</th><th>Contribution</th></tr>
+<tr><td>Projection: GPT scales longitude by the cosine of each pair's <em>mean latitude</em>; we use one fixed reference parallel (42°N)</td><td><strong>+20.51 km</strong></td></tr>
+<tr><td>Our rounding of each leg to whole kilometres</td><td>−2.01 km</td></tr>
+<tr><td>Coordinates the two bundles still disagree on</td><td>+1.44 km</td></tr>
+<tr><td>Earth radius 6371.0088 vs 6371 km</td><td>+0.005 km</td></tr>
+<tr><td><em>total</em></td><td><em>+19.9 km</em> (3,546.9 − 3,527)</td></tr>
+</table>
+<p>Almost all of it is one documented modeling choice, which is the outcome you want.
+But note what the old page reported: a gap of only <strong>5.9&nbsp;km</strong>, and it
+was smaller for a bad reason. Our coordinates were then wrong enough to pull the tour
+<em>12.3&nbsp;km shorter</em>, which happened to cancel most of the 20&nbsp;km
+projection difference. The two narrators looked like they nearly agreed; in truth two
+errors were quietly offsetting. Correcting the data made the disagreement <em>larger</em>
+and, for the first time, fully explained. <span class="badge b-verified">verified</span>
+(the arithmetic; see <a href="#coords">the coordinate audit</a>)</p>
+<p>What turned "almost" into "provably" was neither narrator — it was the
+<strong>certificate</strong> (<a href="#part2">Part&nbsp;II</a>): an exact solver whose lower bound climbs
+2881&nbsp;→&nbsp;3273&nbsp;→&nbsp;3439&nbsp;→&nbsp;3475&nbsp;→&nbsp;3477&nbsp;→&nbsp;3527,
+meeting a feasible tour exactly there. Lower&nbsp;=&nbsp;upper&nbsp;=&nbsp;optimum.</p>
+<p><em>The model didn't make this trustworthy. The workflow did — and the workflow only
+caught the data error because a second, disagreeing witness was kept in the room.</em></p>
+</div>
+
+<h2 id="lineage">The lineage graph — where every artifact came from</h2>
+<figure>
+  <object type="image/svg+xml" data="assets/sebd-provenance-clickable.svg"
+          style="max-width:100%; border:1px solid var(--line); background:#fff;">
+    <img src="assets/sebd-provenance-lr.svg" alt="Lineage graph of every artifact in the experiment, from DBLP and coordinate estimates through distances and routes to maps and certificates">
+  </object>
+  <figcaption>The lineage graph — <strong>every node is clickable</strong> and opens the
+  actual artifact it names (code, data, or the derivation log). Everything on this page
+  derives from <code>dblp:conf/sebd/index</code> + coordinate estimates, through distances
+  and routes, to certificates and maps. Machine-queryable versions:
+  <a href="evidence/Claude-artifacts/provenance.pl">provenance.pl</a> (Prolog) and
+  <a href="evidence/GPT-artifacts/provenance.json">provenance.json</a> (JSON).
+  Diagram source: <a href="assets/sebd-provenance-clickable.gv">the .gv file</a>.</figcaption>
+</figure>
+
+<p><strong>And how do you know this graph reflects what actually happened?</strong>
+Mostly, you don't — and it would be against the spirit of this page to pretend
+otherwise. The graph is <em>self-reported</em>: drawn by the same agent that did the
+work, from its own derivation log
+(<a href="evidence/Claude-artifacts/meta-provenance.org">meta-provenance.org</a>). It is
+a record, not a tamper-evident trace — nothing cryptographic binds the arrows to the
+events. Three things still separate it from a just-so story: every node names an
+artifact that <em>exists</em> and is consistent with its claimed inputs (click and
+compare); an <em>independent</em> toolchain reached the same visiting order from the
+same edition list (the GPT bundle, with its own
+<a href="evidence/GPT-artifacts/provenance.json">provenance.json</a> and file hashes) —
+though emphatically <em>not</em> from the same coordinates, which each toolchain
+estimated for itself and which disagreed on 17 of 34 rows, the disagreement that
+eventually exposed our data error; and the whole pipeline is re-runnable from DBLP
+forward, so the graph's claims are reproducible even if its history is unprovable.
+What would upgrade it: append-only signed logs. (Hashes over the Claude-side artifacts
+used to be listed here as missing; they now ship as
+<a href="evidence/Claude-artifacts/SHA256SUMS">SHA256SUMS</a>.)
+<span class="badge b-prose">honest limitation</span></p>
+
+<p><span class="badge b-primary">primary source</span> One trust moment deserves telling
+straight: the <em>first</em> attempt to gather the editions used an AI web-summarizer,
+which quietly <strong>dropped the older editions</strong>. It was distrusted and
+discarded; the list was re-derived from the raw DBLP HTML instead. The data on this
+page was never "just known" by an AI — it was fetched, checked
+(34 editions&nbsp;=&nbsp;2026−1993+1), and its lineage recorded. The blow-by-blow
+derivation log is
+<a href="evidence/Claude-artifacts/meta-provenance.org">meta-provenance.org</a>.</p>
+
+<h2 id="coords">The coordinate audit — where this page was wrong</h2>
+<p>Until 2026-08-01 this page claimed its coordinates were "town centroids, accurate to
+a couple of km," and invited you to spot-check them against any map. Nobody had. When
+someone finally did — geocoding all 34 stops against
+<a href="https://nominatim.openstreetmap.org/">OpenStreetMap/Nominatim</a> — four were
+wrong, one of them badly:</p>
+<table>
+<tr><th>Edition</th><th>Was</th><th>Should be</th><th>Error</th></tr>
+<tr><td>15 · Torre Canne</td><td>40.84, 17.73</td><td>40.84, 17.47</td><td><strong>22.3 km</strong></td></tr>
+<tr><td>26 · Castellaneta Marina</td><td>40.55, 16.94</td><td>40.47, 16.94</td><td>8.9 km</td></tr>
+<tr><td>1 · Gizzeria Lido</td><td>38.97, 16.17</td><td>38.93, 16.22</td><td>6.1 km</td></tr>
+<tr><td>25 · Squillace Lido</td><td>38.78, 16.53</td><td>38.78, 16.57</td><td>3.6 km</td></tr>
+</table>
+<p>The errors are not random, which is the interesting part. All four stops are coastal
+<em>frazioni</em> — a Lido, a Marina, a beach hamlet — and in every case the coordinate
+had drifted inland toward the parent comune that shares the name. That is exactly the
+failure mode you would predict of a language model recalling a place from its name
+rather than looking it up, and exactly what a gazetteer catches in one pass. The other
+30 stops came back within 1.5 km. <span class="badge b-primary">primary source</span></p>
+<p>What it cost: the certified optimum was <strong>3,541 km</strong> and is now
+<strong>3,527 km</strong>; the chronological comparison moved 15,245&nbsp;→&nbsp;15,209 km.
+What it did <em>not</em> cost: the visiting order is unchanged, and every structural
+claim on this page — the sandwich argument, the six cuts, the 16 co-optima — survived
+verbatim. A certificate proves the tour is shortest <em>for the numbers it was given</em>.
+It has nothing whatever to say about whether those numbers describe Italy. That is not a
+flaw in the method; it is the precise boundary of what the method claims, and this page
+spent two weeks demonstrating it by accident.</p>
+<p>The GPT bundle, for its part, had Torre Canne and Squillace Lido right all along, and
+Castellaneta Marina wrong by 10.0 km and Gizzeria Lido by 3.5 km — so neither toolchain
+was trustworthy on coordinates, and neither was checkable without a third source.
+<span class="badge b-verified">verified</span></p>
+
+<div class="bridge"><p><em>Provenance tells you where a number came from, not whether it
+is true.</em> The lineage graph is the history of this page, mistakes included. Part&nbsp;II
+sets that history aside and asks only what the final claim rests on — and what you would
+have to check in order to believe it.</p></div>
+
+
+<div class="part" id="part2"><span class="num">Part II</span>
+<span class="name">Why you can believe it — evidence</span>
+<p>What the claim rests on, which parts are checked, and which you must simply trust.</p></div>
+
+<h2 id="tree">The evidence (E) — what you actually have to believe</h2>
+<p>Part&nbsp;I traced how each artifact came about. The tree below asks a different
+question: which of those artifacts does the claim <em>depend on</em>? Read it bottom-up.
+The yellow leaves are what you must take on trust; above them sit data files you can open
+and checks you can re-run; the pink root is the claim. Nodes with a thick border are
+clickable and open the file they name.</p>
+<figure class="wide">
+<div class="tree-plate">
+<svg role="img" aria-label="Evidence tree for the claim that the tour is an optimal 3,527 km tour"
+ viewBox="0.00 0.00 1269.28 658.23" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 654.23)">
+<title>evidence</title>
+<!-- root -->
+<g id="node1" class="node">
+<title>root</title>
+<path fill="#f8d7e3" stroke="#b0607e" d="M1177.53,-650.23C1177.53,-650.23 811.62,-650.23 811.62,-650.23 805.62,-650.23 799.62,-644.23 799.62,-638.23 799.62,-638.23 799.62,-619.15 799.62,-619.15 799.62,-613.15 805.62,-607.15 811.62,-607.15 811.62,-607.15 1177.53,-607.15 1177.53,-607.15 1183.53,-607.15 1189.53,-613.15 1189.53,-619.15 1189.53,-619.15 1189.53,-638.23 1189.53,-638.23 1189.53,-644.23 1183.53,-650.23 1177.53,-650.23"/>
+<text text-anchor="start" x="809.7" y="-634.79" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="12.00">Tour </text>
+<text text-anchor="start" x="838.2" y="-634.79" font-family="Times,serif" font-weight="bold" font-style="italic" font-size="12.00">T</text>
+<text text-anchor="start" x="845.7" y="-634.79" font-family="Helvetica,sans-Serif" font-size="12.00">: Gizzeria Lido (1993) → … → Senigallia (2026), all 34 editions</text>
+<text text-anchor="start" x="891.83" y="-622.79" font-family="Times,serif" font-weight="bold" font-size="12.00">|</text>
+<text text-anchor="start" x="894.83" y="-622.79" font-family="Times,serif" font-weight="bold" font-style="italic" font-size="12.00">T</text>
+<text text-anchor="start" x="902.33" y="-622.79" font-family="Times,serif" font-weight="bold" font-size="12.00">|</text>
+<text text-anchor="start" x="905.33" y="-622.79" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="12.00"> = 3,527 km, and no tour is shorter</text>
+<text text-anchor="start" x="843.08" y="-613.64" font-family="Helvetica,sans-Serif" font-size="9.00">(lower bound = upper bound ⇒ optimal; one of exactly 16 co&#45;optimal tours)</text>
+</g>
+<!-- c_valid -->
+<g id="node2" class="node">
+<title>c_valid</title>
+<path fill="#d5efd9" stroke="#7a7a7a" d="M885.66,-555.86C885.66,-555.86 673.5,-555.86 673.5,-555.86 667.5,-555.86 661.5,-549.86 661.5,-543.86 661.5,-543.86 661.5,-531.86 661.5,-531.86 661.5,-525.86 667.5,-519.86 673.5,-519.86 673.5,-519.86 885.66,-519.86 885.66,-519.86 891.66,-519.86 897.66,-525.86 897.66,-531.86 897.66,-531.86 897.66,-543.86 897.66,-543.86 897.66,-549.86 891.66,-555.86 885.66,-555.86"/>
+<text text-anchor="start" x="671.58" y="-539.41" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00">T is a valid tour</text>
+<text text-anchor="start" x="751.83" y="-539.41" font-family="Helvetica,sans-Serif" font-size="11.00"> (1 … 34, each edition once)</text>
+<text text-anchor="start" x="735.33" y="-528.41" font-family="Helvetica,sans-Serif" font-size="11.00">of length 3,527 km</text>
+</g>
+<!-- c_valid&#45;&gt;root -->
+<g id="edge1" class="edge">
+<title>c_valid&#45;&gt;root</title>
+<path fill="none" stroke="#6b6b6b" d="M821.8,-556.3C854.45,-569.79 900.04,-588.63 936.19,-603.56"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="934.95,-605.7 942.35,-606.11 936.82,-601.17 934.95,-605.7"/>
+</g>
+<!-- c_lower -->
+<g id="node3" class="node">
+<title>c_lower</title>
+<path fill="#d5efd9" stroke="#7a7a7a" d="M1054.91,-555.86C1054.91,-555.86 934.25,-555.86 934.25,-555.86 928.25,-555.86 922.25,-549.86 922.25,-543.86 922.25,-543.86 922.25,-531.86 922.25,-531.86 922.25,-525.86 928.25,-519.86 934.25,-519.86 934.25,-519.86 1054.91,-519.86 1054.91,-519.86 1060.91,-519.86 1066.91,-525.86 1066.91,-531.86 1066.91,-531.86 1066.91,-543.86 1066.91,-543.86 1066.91,-549.86 1060.91,-555.86 1054.91,-555.86"/>
+<text text-anchor="start" x="932.33" y="-538.41" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00">Every tour is ≥ 3,527 km</text>
+<text text-anchor="start" x="969.08" y="-529.31" font-family="Helvetica,sans-Serif" font-size="9.00">lower bound</text>
+</g>
+<!-- c_lower&#45;&gt;root -->
+<g id="edge2" class="edge">
+<title>c_lower&#45;&gt;root</title>
+<path fill="none" stroke="#6b6b6b" d="M994.58,-555.99C994.58,-568.01 994.58,-584.39 994.58,-598.46"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="992.13,-598.35 994.58,-605.35 997.03,-598.35 992.13,-598.35"/>
+</g>
+<!-- verify -->
+<g id="node4" class="node">
+<title>verify</title>
+<g id="a_node4"><a xlink:href="evidence/Claude-artifacts/verify.pl" xlink:title="verify.pl: recomputes the tour length and checks the permutation">
+<path fill="#d6e6f7" stroke="#7a7a7a" stroke-width="2.2" d="M742.28,-464.07C742.28,-464.07 590.87,-464.07 590.87,-464.07 584.87,-464.07 578.87,-458.07 578.87,-452.07 578.87,-452.07 578.87,-436.99 578.87,-436.99 578.87,-430.99 584.87,-424.99 590.87,-424.99 590.87,-424.99 742.28,-424.99 742.28,-424.99 748.28,-424.99 754.28,-430.99 754.28,-436.99 754.28,-436.99 754.28,-452.07 754.28,-452.07 754.28,-458.07 748.28,-464.07 742.28,-464.07"/>
+<text text-anchor="start" x="603.2" y="-449.58" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00">verify.pl</text>
+<text text-anchor="start" x="645.2" y="-449.58" font-family="Helvetica,sans-Serif" font-size="11.00"> (Prolog, 22 lines)</text>
+<text text-anchor="start" x="599.83" y="-440.48" font-family="Helvetica,sans-Serif" font-size="9.00">recomputes the length from d(i,j);</text>
+<text text-anchor="start" x="588.95" y="-431.48" font-family="Helvetica,sans-Serif" font-size="9.00">checks the permutation and endpoints</text>
+</a>
+</g>
+</g>
+<!-- verify&#45;&gt;c_valid -->
+<g id="edge3" class="edge">
+<title>verify&#45;&gt;c_valid</title>
+<path fill="none" stroke="#6b6b6b" d="M690.54,-464.9C708.47,-479.39 733.03,-499.24 751.81,-514.42"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="749.78,-515.93 756.77,-518.42 752.86,-512.12 749.78,-515.93"/>
+</g>
+<!-- checkcert -->
+<g id="node5" class="node">
+<title>checkcert</title>
+<g id="a_node5"><a xlink:href="evidence/certificate/check_certificate.pl" xlink:title="check_certificate.pl: checks the optimality certificate, integer arithmetic only">
+<path fill="#d6e6f7" stroke="#7a7a7a" stroke-width="2.2" d="M981.66,-464.07C981.66,-464.07 793.5,-464.07 793.5,-464.07 787.5,-464.07 781.5,-458.07 781.5,-452.07 781.5,-452.07 781.5,-436.99 781.5,-436.99 781.5,-430.99 787.5,-424.99 793.5,-424.99 793.5,-424.99 981.66,-424.99 981.66,-424.99 987.66,-424.99 993.66,-430.99 993.66,-436.99 993.66,-436.99 993.66,-452.07 993.66,-452.07 993.66,-458.07 987.66,-464.07 981.66,-464.07"/>
+<text text-anchor="start" x="791.58" y="-449.58" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00">check_certificate.pl</text>
+<text text-anchor="start" x="892.83" y="-449.58" font-family="Helvetica,sans-Serif" font-size="11.00"> (Prolog, 161 lines)</text>
+<text text-anchor="start" x="830.2" y="-440.48" font-family="Helvetica,sans-Serif" font-size="9.00">integer arithmetic, no solver;</text>
+<text text-anchor="start" x="844.83" y="-431.48" font-family="Helvetica,sans-Serif" font-size="9.00">PASS (1)–(6) in &lt; 1 s</text>
+</a>
+</g>
+</g>
+<!-- checkcert&#45;&gt;c_valid -->
+<g id="edge4" class="edge">
+<title>checkcert&#45;&gt;c_valid</title>
+<path fill="none" stroke="#6b6b6b" d="M864.68,-464.9C847.69,-479.26 824.48,-498.89 806.59,-514.02"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="805.18,-512 801.42,-518.39 808.34,-515.75 805.18,-512"/>
+<text text-anchor="middle" x="852.33" y="-489.77" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#555555">PASS (6)</text>
+</g>
+<!-- checkcert&#45;&gt;c_lower -->
+<g id="edge5" class="edge">
+<title>checkcert&#45;&gt;c_lower</title>
+<path fill="none" stroke="#6b6b6b" d="M910.27,-464.9C927.1,-479.26 950.1,-498.89 967.82,-514.02"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="966.03,-515.71 972.94,-518.39 969.21,-511.98 966.03,-515.71"/>
+<text text-anchor="middle" x="974.58" y="-489.77" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#555555">PASS (1)–(5)</text>
+</g>
+<!-- route -->
+<g id="node6" class="node">
+<title>route</title>
+<g id="a_node6"><a xlink:href="evidence/Claude-artifacts/route_optimized.pl" xlink:title="route_optimized.pl: the published tour">
+<path fill="#e6def5" stroke="#7a7a7a" stroke-width="2.2" d="M448.41,-377.95C448.41,-377.95 354.75,-377.95 354.75,-377.95 348.75,-377.95 342.75,-371.95 342.75,-365.95 342.75,-365.95 342.75,-353.95 342.75,-353.95 342.75,-347.95 348.75,-341.95 354.75,-341.95 354.75,-341.95 448.41,-341.95 448.41,-341.95 454.41,-341.95 460.41,-347.95 460.41,-353.95 460.41,-353.95 460.41,-365.95 460.41,-365.95 460.41,-371.95 454.41,-377.95 448.41,-377.95"/>
+<text text-anchor="start" x="352.83" y="-360.5" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00">route_optimized.pl</text>
+<text text-anchor="start" x="365.2" y="-351.4" font-family="Helvetica,sans-Serif" font-size="9.00">the tour T, 33 legs</text>
+</a>
+</g>
+</g>
+<!-- route&#45;&gt;verify -->
+<g id="edge6" class="edge">
+<title>route&#45;&gt;verify</title>
+<path fill="none" stroke="#6b6b6b" d="M459.08,-378.87C499.35,-391.42 553.4,-408.26 596.24,-421.61"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="595.24,-423.87 602.66,-423.61 596.7,-419.19 595.24,-423.87"/>
+</g>
+<!-- route&#45;&gt;checkcert -->
+<g id="edge10" class="edge">
+<title>route&#45;&gt;checkcert</title>
+<path fill="none" stroke="#6b6b6b" d="M461.12,-377.04C464.99,-377.91 468.83,-378.74 472.58,-379.49 601.96,-405.31 636.41,-399.03 766.58,-420.49 770.69,-421.17 774.88,-421.88 779.11,-422.61"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="778.48,-424.98 785.8,-423.78 779.32,-420.16 778.48,-424.98"/>
+</g>
+<!-- cert -->
+<g id="node7" class="node">
+<title>cert</title>
+<g id="a_node7"><a xlink:href="evidence/certificate/certificate.pl" xlink:title="certificate.pl: the 226&#45;leaf lower&#45;bound proof">
+<path fill="#e6def5" stroke="#7a7a7a" stroke-width="2.2" d="M952.03,-379.49C952.03,-379.49 823.12,-379.49 823.12,-379.49 817.12,-379.49 811.12,-373.49 811.12,-367.49 811.12,-367.49 811.12,-352.41 811.12,-352.41 811.12,-346.41 817.12,-340.41 823.12,-340.41 823.12,-340.41 952.03,-340.41 952.03,-340.41 958.03,-340.41 964.03,-346.41 964.03,-352.41 964.03,-352.41 964.03,-367.49 964.03,-367.49 964.03,-373.49 958.03,-379.49 952.03,-379.49"/>
+<text text-anchor="start" x="835.08" y="-365" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00">certificate.pl</text>
+<text text-anchor="start" x="899.58" y="-365" font-family="Helvetica,sans-Serif" font-size="11.00"> (99 KB)</text>
+<text text-anchor="start" x="821.2" y="-355.9" font-family="Helvetica,sans-Serif" font-size="9.00">226&#45;leaf branch&#45;and&#45;bound tree:</text>
+<text text-anchor="start" x="826.45" y="-346.9" font-family="Helvetica,sans-Serif" font-size="9.00">node potentials + subtour cuts</text>
+</a>
+</g>
+</g>
+<!-- cert&#45;&gt;checkcert -->
+<g id="edge8" class="edge">
+<title>cert&#45;&gt;checkcert</title>
+<path fill="none" stroke="#6b6b6b" d="M887.58,-380.1C887.58,-390.76 887.58,-404.21 887.58,-415.99"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="885.13,-415.68 887.58,-422.68 890.03,-415.68 885.13,-415.68"/>
+</g>
+<!-- dist -->
+<g id="node8" class="node">
+<title>dist</title>
+<g id="a_node8"><a xlink:href="evidence/Claude-artifacts/distance.pl" xlink:title="distance.pl: the 561 distances">
+<path fill="#e6def5" stroke="#7a7a7a" stroke-width="2.2" d="M614.03,-377.95C614.03,-377.95 497.12,-377.95 497.12,-377.95 491.12,-377.95 485.12,-371.95 485.12,-365.95 485.12,-365.95 485.12,-353.95 485.12,-353.95 485.12,-347.95 491.12,-341.95 497.12,-341.95 497.12,-341.95 614.03,-341.95 614.03,-341.95 620.03,-341.95 626.03,-347.95 626.03,-353.95 626.03,-353.95 626.03,-365.95 626.03,-365.95 626.03,-371.95 620.03,-377.95 614.03,-377.95"/>
+<text text-anchor="start" x="527.08" y="-360.5" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00">distance.pl</text>
+<text text-anchor="start" x="495.2" y="-351.4" font-family="Helvetica,sans-Serif" font-size="9.00">561 distances d(i,j), whole km</text>
+</a>
+</g>
+</g>
+<!-- dist&#45;&gt;verify -->
+<g id="edge7" class="edge">
+<title>dist&#45;&gt;verify</title>
+<path fill="none" stroke="#6b6b6b" d="M579.67,-378.87C595.54,-390.68 616.52,-406.29 633.9,-419.22"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="632.31,-421.09 639.39,-423.3 635.24,-417.16 632.31,-421.09"/>
+</g>
+<!-- dist&#45;&gt;checkcert -->
+<g id="edge9" class="edge">
+<title>dist&#45;&gt;checkcert</title>
+<path fill="none" stroke="#6b6b6b" d="M626.95,-362.39C682.29,-365.57 759.99,-374.62 823.58,-399.49 835.84,-404.29 848.06,-411.83 858.48,-419.32"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="856.76,-421.1 863.84,-423.31 859.69,-417.17 856.76,-421.1"/>
+</g>
+<!-- coords -->
+<g id="node9" class="node">
+<title>coords</title>
+<g id="a_node9"><a xlink:href="evidence/Claude-artifacts/sebd.pl" xlink:title="sebd.pl: editions, cities, coordinates">
+<path fill="#e6def5" stroke="#7a7a7a" stroke-width="2.2" d="M303.16,-210.58C303.16,-210.58 148,-210.58 148,-210.58 142,-210.58 136,-204.58 136,-198.58 136,-198.58 136,-186.58 136,-186.58 136,-180.58 142,-174.58 148,-174.58 148,-174.58 303.16,-174.58 303.16,-174.58 309.16,-174.58 315.16,-180.58 315.16,-186.58 315.16,-186.58 315.16,-198.58 315.16,-198.58 315.16,-204.58 309.16,-210.58 303.16,-210.58"/>
+<text text-anchor="start" x="146.08" y="-193.13" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00">sebd(No, Year, City, Lat, Long)</text>
+<text text-anchor="start" x="147.58" y="-184.03" font-family="Helvetica,sans-Serif" font-size="9.00">34 facts (sebd.pl; same table in trip.py)</text>
+</a>
+</g>
+</g>
+<!-- project -->
+<g id="node10" class="node">
+<title>project</title>
+<g id="a_node10"><a xlink:href="evidence/Claude-artifacts/trip.py" xlink:title="trip.py: projection and rounding">
+<path fill="#d6e6f7" stroke="#7a7a7a" stroke-width="2.2" d="M613.66,-290.66C613.66,-290.66 461.5,-290.66 461.5,-290.66 455.5,-290.66 449.5,-284.66 449.5,-278.66 449.5,-278.66 449.5,-263.58 449.5,-263.58 449.5,-257.58 455.5,-251.58 461.5,-251.58 461.5,-251.58 613.66,-251.58 613.66,-251.58 619.66,-251.58 625.66,-257.58 625.66,-263.58 625.66,-263.58 625.66,-278.66 625.66,-278.66 625.66,-284.66 619.66,-290.66 613.66,-290.66"/>
+<text text-anchor="start" x="481.33" y="-276.17" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00">trip.py</text>
+<text text-anchor="start" x="515.08" y="-276.17" font-family="Helvetica,sans-Serif" font-size="11.00">: project + round</text>
+<text text-anchor="start" x="459.58" y="-267.07" font-family="Helvetica,sans-Serif" font-size="9.00">equirectangular at 42°N, R = 6371 km,</text>
+<text text-anchor="start" x="485.45" y="-258.07" font-family="Helvetica,sans-Serif" font-size="9.00">Euclidean, rounded to km</text>
+</a>
+</g>
+</g>
+<!-- coords&#45;&gt;project -->
+<g id="edge18" class="edge">
+<title>coords&#45;&gt;project</title>
+<path fill="none" stroke="#6b6b6b" d="M298.73,-211.53C343.93,-222.61 402.22,-236.91 449.89,-248.61"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="449.2,-250.96 456.58,-250.25 450.37,-246.2 449.2,-250.96"/>
+</g>
+<!-- project&#45;&gt;dist -->
+<g id="edge17" class="edge">
+<title>project&#45;&gt;dist</title>
+<path fill="none" stroke="#6b6b6b" d="M541.57,-291.39C544.11,-303.6 547.41,-319.56 550.18,-332.89"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="547.78,-333.37 551.6,-339.73 552.57,-332.38 547.78,-333.37"/>
+</g>
+<!-- search -->
+<g id="node11" class="node">
+<title>search</title>
+<g id="a_node11"><a xlink:href="evidence/Claude-artifacts/trip.py" xlink:title="trip.py: the 2&#45;opt search that found the tour">
+<path fill="#eeeeee" stroke="#9a9a9a" stroke-width="2.2" stroke-dasharray="5,2" d="M412.41,-289.12C412.41,-289.12 276.75,-289.12 276.75,-289.12 270.75,-289.12 264.75,-283.12 264.75,-277.12 264.75,-277.12 264.75,-265.12 264.75,-265.12 264.75,-259.12 270.75,-253.12 276.75,-253.12 276.75,-253.12 412.41,-253.12 412.41,-253.12 418.41,-253.12 424.41,-259.12 424.41,-265.12 424.41,-265.12 424.41,-277.12 424.41,-277.12 424.41,-283.12 418.41,-289.12 412.41,-289.12"/>
+<text text-anchor="start" x="274.83" y="-271.67" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#555555">trip.py</text>
+<text text-anchor="start" x="308.58" y="-271.67" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#555555">: 2&#45;opt / Or&#45;opt search</text>
+<text text-anchor="start" x="297.7" y="-262.57" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#555555">proposed T; not trusted</text>
+</a>
+</g>
+</g>
+<!-- search&#45;&gt;route -->
+<g id="edge23" class="edge">
+<title>search&#45;&gt;route</title>
+<path fill="none" stroke="#a0a0a0" stroke-dasharray="5,2" d="M356.39,-290.11C364.72,-302.8 375.99,-319.97 385.19,-333.98"/>
+<polygon fill="#a0a0a0" stroke="#a0a0a0" points="383.06,-335.21 388.95,-339.72 387.16,-332.52 383.06,-335.21"/>
+<text text-anchor="middle" x="387.2" y="-311.86" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#555555">found</text>
+</g>
+<!-- mkcert -->
+<g id="node12" class="node">
+<title>mkcert</title>
+<g id="a_node12"><a xlink:href="evidence/certificate/make_certificate.py" xlink:title="make_certificate.py: generated the certificate with HiGHS">
+<path fill="#eeeeee" stroke="#9a9a9a" stroke-width="2.2" stroke-dasharray="5,2" d="M959.91,-289.12C959.91,-289.12 815.25,-289.12 815.25,-289.12 809.25,-289.12 803.25,-283.12 803.25,-277.12 803.25,-277.12 803.25,-265.12 803.25,-265.12 803.25,-259.12 809.25,-253.12 815.25,-253.12 815.25,-253.12 959.91,-253.12 959.91,-253.12 965.91,-253.12 971.91,-259.12 971.91,-265.12 971.91,-265.12 971.91,-277.12 971.91,-277.12 971.91,-283.12 965.91,-289.12 959.91,-289.12"/>
+<text text-anchor="start" x="813.33" y="-271.67" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#555555">make_certificate.py</text>
+<text text-anchor="start" x="914.58" y="-271.67" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#555555"> + HiGHS</text>
+<text text-anchor="start" x="833.2" y="-262.57" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#555555">found the proof; not trusted</text>
+</a>
+</g>
+</g>
+<!-- mkcert&#45;&gt;cert -->
+<g id="edge24" class="edge">
+<title>mkcert&#45;&gt;cert</title>
+<path fill="none" stroke="#a0a0a0" stroke-dasharray="5,2" d="M887.58,-290.11C887.58,-301.93 887.58,-317.63 887.58,-331.05"/>
+<polygon fill="#a0a0a0" stroke="#a0a0a0" points="885.13,-330.96 887.58,-337.96 890.03,-330.96 885.13,-330.96"/>
+<text text-anchor="middle" x="899.2" y="-311.86" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#555555">found</text>
+</g>
+<!-- exact -->
+<g id="node13" class="node">
+<title>exact</title>
+<g id="a_node13"><a xlink:href="evidence/Claude-artifacts/exact_tsp.py" xlink:title="exact_tsp.py: the first optimality proof">
+<path fill="#eeeeee" stroke="#9a9a9a" stroke-width="2.2" stroke-dasharray="5,2" d="M1164.28,-468.57C1164.28,-468.57 1030.87,-468.57 1030.87,-468.57 1024.87,-468.57 1018.87,-462.57 1018.87,-456.57 1018.87,-456.57 1018.87,-432.49 1018.87,-432.49 1018.87,-426.49 1024.87,-420.49 1030.87,-420.49 1030.87,-420.49 1164.28,-420.49 1164.28,-420.49 1170.28,-420.49 1176.28,-426.49 1176.28,-432.49 1176.28,-432.49 1176.28,-456.57 1176.28,-456.57 1176.28,-462.57 1170.28,-468.57 1164.28,-468.57"/>
+<text text-anchor="start" x="1040.95" y="-454.08" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#555555">exact_tsp.py</text>
+<text text-anchor="start" x="1106.95" y="-454.08" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#555555"> + HiGHS</text>
+<text text-anchor="start" x="1028.95" y="-444.98" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#555555">first optimality proof (2026&#45;06&#45;18);</text>
+<text text-anchor="start" x="1041.7" y="-435.98" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#555555">also finds a co&#45;optimal tour;</text>
+<text text-anchor="start" x="1039.08" y="-426.98" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#555555">superseded by the certificate</text>
+</a>
+</g>
+</g>
+<!-- exact&#45;&gt;c_lower -->
+<g id="edge25" class="edge">
+<title>exact&#45;&gt;c_lower</title>
+<path fill="none" stroke="#a0a0a0" stroke-dasharray="5,2" d="M1070.52,-469.53C1055.08,-483.21 1035.83,-500.28 1020.57,-513.81"/>
+<polygon fill="#a0a0a0" stroke="#a0a0a0" points="1019.05,-511.89 1015.43,-518.37 1022.3,-515.56 1019.05,-511.89"/>
+<text text-anchor="middle" x="1070.95" y="-489.77" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#555555">superseded</text>
+</g>
+<!-- gpt -->
+<g id="node14" class="node">
+<title>gpt</title>
+<g id="a_node14"><a xlink:href="evidence/GPT-artifacts/EVIDENCE.md" xlink:title="ChatGPT bundle: EVIDENCE.md">
+<path fill="#eeeeee" stroke="#9a9a9a" stroke-width="2.2" stroke-dasharray="5,2" d="M1249.28,-557.4C1249.28,-557.4 1103.88,-557.4 1103.88,-557.4 1097.88,-557.4 1091.88,-551.4 1091.88,-545.4 1091.88,-545.4 1091.88,-530.32 1091.88,-530.32 1091.88,-524.32 1097.88,-518.32 1103.88,-518.32 1103.88,-518.32 1249.28,-518.32 1249.28,-518.32 1255.28,-518.32 1261.28,-524.32 1261.28,-530.32 1261.28,-530.32 1261.28,-545.4 1261.28,-545.4 1261.28,-551.4 1255.28,-557.4 1249.28,-557.4"/>
+<text text-anchor="start" x="1133.45" y="-542.91" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#555555">ChatGPT bundle</text>
+<text text-anchor="start" x="1101.95" y="-533.81" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#555555">independent run: same visiting order</text>
+<text text-anchor="start" x="1126.7" y="-524.81" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#555555">(own metric: 3,546.9 km)</text>
+</a>
+</g>
+</g>
+<!-- gpt&#45;&gt;root -->
+<g id="edge26" class="edge">
+<title>gpt&#45;&gt;root</title>
+<path fill="none" stroke="#a0a0a0" stroke-dasharray="5,2" d="M1136.64,-558.35C1109.74,-571.48 1074.05,-588.9 1045.17,-603"/>
+<polygon fill="#a0a0a0" stroke="#a0a0a0" points="1044.18,-600.76 1038.96,-606.03 1046.33,-605.16 1044.18,-600.76"/>
+<text text-anchor="middle" x="1122.45" y="-578.6" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#555555">corroborates</text>
+</g>
+<!-- airecall -->
+<g id="node15" class="node">
+<title>airecall</title>
+<path fill="#eeeeee" stroke="#9a9a9a" stroke-dasharray="5,2" d="M305.41,-36C305.41,-36 145.75,-36 145.75,-36 139.75,-36 133.75,-30 133.75,-24 133.75,-24 133.75,-12 133.75,-12 133.75,-6 139.75,0 145.75,0 145.75,0 305.41,0 305.41,0 311.41,0 317.41,-6 317.41,-12 317.41,-12 317.41,-24 317.41,-24 317.41,-30 311.41,-36 305.41,-36"/>
+<text text-anchor="start" x="164.83" y="-18.55" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#555555">AI&#45;recalled coordinates</text>
+<text text-anchor="start" x="143.83" y="-9.45" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#555555">2026&#45;06&#45;18; 4 of 34 wrong (up to 22 km)</text>
+</g>
+<!-- osm -->
+<g id="node17" class="node">
+<title>osm</title>
+<g id="a_node17"><a xlink:href="https://www.openstreetmap.org/" xlink:title="OpenStreetMap">
+<path fill="#fbf0c4" stroke="#b39b3c" stroke-width="2.2" d="M300.53,-123.29C300.53,-123.29 150.62,-123.29 150.62,-123.29 144.62,-123.29 138.62,-117.29 138.62,-111.29 138.62,-111.29 138.62,-99.29 138.62,-99.29 138.62,-93.29 144.62,-87.29 150.62,-87.29 150.62,-87.29 300.53,-87.29 300.53,-87.29 306.53,-87.29 312.53,-93.29 312.53,-99.29 312.53,-99.29 312.53,-111.29 312.53,-111.29 312.53,-117.29 306.53,-123.29 300.53,-123.29"/>
+<text text-anchor="start" x="185.08" y="-105.84" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#333333">OpenStreetMap</text>
+<text text-anchor="start" x="148.7" y="-96.74" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#333333">34 coordinates (checked 2026&#45;08&#45;01)</text>
+</a>
+</g>
+</g>
+<!-- airecall&#45;&gt;osm -->
+<g id="edge27" class="edge">
+<title>airecall&#45;&gt;osm</title>
+<path fill="none" stroke="#a0a0a0" stroke-dasharray="5,2" d="M225.58,-36.26C225.58,-50.86 225.58,-71.71 225.58,-86.47"/>
+<text text-anchor="middle" x="250.7" y="-57.2" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#555555">corrected by</text>
+</g>
+<!-- dblp -->
+<g id="node16" class="node">
+<title>dblp</title>
+<g id="a_node16"><a xlink:href="https://dblp.org/db/conf/sebd/index.html" xlink:title="DBLP: SEBD proceedings index">
+<path fill="#fbf0c4" stroke="#b39b3c" stroke-width="2.2" d="M101.16,-123.29C101.16,-123.29 12,-123.29 12,-123.29 6,-123.29 0,-117.29 0,-111.29 0,-111.29 0,-99.29 0,-99.29 0,-93.29 6,-87.29 12,-87.29 12,-87.29 101.16,-87.29 101.16,-87.29 107.16,-87.29 113.16,-93.29 113.16,-99.29 113.16,-99.29 113.16,-111.29 113.16,-111.29 113.16,-117.29 107.16,-123.29 101.16,-123.29"/>
+<text text-anchor="start" x="10.08" y="-105.84" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#333333">DBLP</text>
+<text text-anchor="start" x="40.83" y="-105.84" font-family="Helvetica,sans-Serif" font-size="11.00" fill="#333333"> SEBD index</text>
+<text text-anchor="start" x="14.2" y="-96.74" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#333333">editions, years, cities</text>
+</a>
+</g>
+</g>
+<!-- dblp&#45;&gt;coords -->
+<g id="edge21" class="edge">
+<title>dblp&#45;&gt;coords</title>
+<path fill="none" stroke="#6b6b6b" d="M92.01,-124.17C118.49,-137.53 154.8,-155.86 182.88,-170.03"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="181.49,-172.08 188.85,-173.04 183.7,-167.7 181.49,-172.08"/>
+</g>
+<!-- osm&#45;&gt;coords -->
+<g id="edge22" class="edge">
+<title>osm&#45;&gt;coords</title>
+<path fill="none" stroke="#6b6b6b" d="M225.58,-123.96C225.58,-135.89 225.58,-151.84 225.58,-165.26"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="223.13,-165.12 225.58,-172.12 228.03,-165.12 223.13,-165.12"/>
+<text text-anchor="middle" x="240.58" y="-146.03" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#555555">lat/long</text>
+</g>
+<!-- model -->
+<g id="node18" class="node">
+<title>model</title>
+<path fill="#fbf0c4" stroke="#b39b3c" d="M481.16,-124.83C481.16,-124.83 350,-124.83 350,-124.83 344,-124.83 338,-118.83 338,-112.83 338,-112.83 338,-97.75 338,-97.75 338,-91.75 344,-85.75 350,-85.75 350,-85.75 481.16,-85.75 481.16,-85.75 487.16,-85.75 493.16,-91.75 493.16,-97.75 493.16,-97.75 493.16,-112.83 493.16,-112.83 493.16,-118.83 487.16,-124.83 481.16,-124.83"/>
+<text text-anchor="start" x="375.08" y="-110.34" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#333333">Distance model</text>
+<text text-anchor="start" x="348.08" y="-101.24" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#333333">straight lines, not roads or ferries;</text>
+<text text-anchor="start" x="376.2" y="-92.24" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#333333">whole&#45;km rounding</text>
+</g>
+<!-- model&#45;&gt;project -->
+<g id="edge19" class="edge">
+<title>model&#45;&gt;project</title>
+<path fill="none" stroke="#6b6b6b" d="M429.57,-125.08C451.37,-154.35 493.48,-210.9 518.19,-244.08"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="516.13,-245.42 522.28,-249.57 520.06,-242.5 516.13,-245.42"/>
+</g>
+<!-- pyarith -->
+<g id="node19" class="node">
+<title>pyarith</title>
+<path fill="#fbf0c4" stroke="#b39b3c" d="M645.28,-123.29C645.28,-123.29 529.87,-123.29 529.87,-123.29 523.87,-123.29 517.87,-117.29 517.87,-111.29 517.87,-111.29 517.87,-99.29 517.87,-99.29 517.87,-93.29 523.87,-87.29 529.87,-87.29 529.87,-87.29 645.28,-87.29 645.28,-87.29 651.28,-87.29 657.28,-93.29 657.28,-99.29 657.28,-99.29 657.28,-111.29 657.28,-111.29 657.28,-117.29 651.28,-123.29 645.28,-123.29"/>
+<text text-anchor="start" x="527.95" y="-105.84" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#333333">Python float arithmetic</text>
+<text text-anchor="start" x="554.58" y="-96.74" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#333333">(projection only)</text>
+</g>
+<!-- pyarith&#45;&gt;project -->
+<g id="edge20" class="edge">
+<title>pyarith&#45;&gt;project</title>
+<path fill="none" stroke="#6b6b6b" d="M582.32,-123.51C573.68,-151.84 556.39,-208.5 546.01,-242.48"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="543.68,-241.75 543.98,-249.16 548.36,-243.18 543.68,-241.75"/>
+</g>
+<!-- formulation -->
+<g id="node20" class="node">
+<title>formulation</title>
+<path fill="#fbf0c4" stroke="#b39b3c" d="M829.03,-124.83C829.03,-124.83 694.12,-124.83 694.12,-124.83 688.12,-124.83 682.12,-118.83 682.12,-112.83 682.12,-112.83 682.12,-97.75 682.12,-97.75 682.12,-91.75 688.12,-85.75 694.12,-85.75 694.12,-85.75 829.03,-85.75 829.03,-85.75 835.03,-85.75 841.03,-91.75 841.03,-97.75 841.03,-97.75 841.03,-112.83 841.03,-112.83 841.03,-118.83 835.03,-124.83 829.03,-124.83"/>
+<text text-anchor="start" x="707.58" y="-110.34" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#333333">Problem formulation</text>
+<text text-anchor="start" x="692.2" y="-101.24" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#333333">Hamiltonian path, fixed start 1993,</text>
+<text text-anchor="start" x="731.2" y="-92.24" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#333333">fixed end 2026</text>
+</g>
+<!-- formulation&#45;&gt;verify -->
+<g id="edge13" class="edge">
+<title>formulation&#45;&gt;verify</title>
+<path fill="none" stroke="#6b6b6b" d="M716.31,-125.19C690.63,-139.24 663.58,-161.24 663.58,-191.58 663.58,-191.58 663.58,-191.58 663.58,-360.95 663.58,-379.23 664.32,-399.77 665.07,-415.79"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="662.62,-415.8 665.41,-422.67 667.51,-415.56 662.62,-415.8"/>
+</g>
+<!-- formulation&#45;&gt;checkcert -->
+<g id="edge14" class="edge">
+<title>formulation&#45;&gt;checkcert</title>
+<path fill="none" stroke="#6b6b6b" d="M839.03,-125.33C911.79,-144.33 1009.58,-173.28 1009.58,-191.58 1009.58,-191.58 1009.58,-191.58 1009.58,-360.95 1009.58,-388.65 987.74,-407.69 962.55,-420.45"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="961.63,-418.17 956.37,-423.39 963.74,-422.59 961.63,-418.17"/>
+</g>
+<!-- swipl -->
+<g id="node21" class="node">
+<title>swipl</title>
+<path fill="#fbf0c4" stroke="#b39b3c" d="M977.41,-123.29C977.41,-123.29 877.75,-123.29 877.75,-123.29 871.75,-123.29 865.75,-117.29 865.75,-111.29 865.75,-111.29 865.75,-99.29 865.75,-99.29 865.75,-93.29 871.75,-87.29 877.75,-87.29 877.75,-87.29 977.41,-87.29 977.41,-87.29 983.41,-87.29 989.41,-93.29 989.41,-99.29 989.41,-99.29 989.41,-111.29 989.41,-111.29 989.41,-117.29 983.41,-123.29 977.41,-123.29"/>
+<text text-anchor="start" x="897.58" y="-105.84" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#333333">SWI&#45;Prolog</text>
+<text text-anchor="start" x="875.83" y="-96.74" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#333333">integer arithmetic, list ops</text>
+</g>
+<!-- swipl&#45;&gt;verify -->
+<g id="edge11" class="edge">
+<title>swipl&#45;&gt;verify</title>
+<path fill="none" stroke="#6b6b6b" d="M865.47,-122.14C861.45,-123.08 857.46,-123.98 853.58,-124.83 806.32,-135.16 787.11,-118.41 746.58,-144.83 725.49,-158.58 714.58,-166.4 714.58,-191.58 714.58,-191.58 714.58,-191.58 714.58,-360.95 714.58,-382.13 702.63,-402.74 690.65,-418.07"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="689.05,-416.16 686.51,-423.13 692.84,-419.26 689.05,-416.16"/>
+</g>
+<!-- swipl&#45;&gt;checkcert -->
+<g id="edge12" class="edge">
+<title>swipl&#45;&gt;checkcert</title>
+<path fill="none" stroke="#6b6b6b" d="M989.8,-121.03C1024.41,-133.34 1060.58,-154.96 1060.58,-191.58 1060.58,-191.58 1060.58,-191.58 1060.58,-360.95 1060.58,-383.56 1047.32,-387.85 1028.58,-400.49 1016.23,-408.82 1002.2,-415.59 987.9,-421.07"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="987.09,-418.76 981.36,-423.47 988.77,-423.36 987.09,-418.76"/>
+</g>
+<!-- checkers -->
+<g id="node22" class="node">
+<title>checkers</title>
+<path fill="#fbf0c4" stroke="#b39b3c" d="M1196.28,-123.29C1196.28,-123.29 1026.87,-123.29 1026.87,-123.29 1020.87,-123.29 1014.87,-117.29 1014.87,-111.29 1014.87,-111.29 1014.87,-99.29 1014.87,-99.29 1014.87,-93.29 1020.87,-87.29 1026.87,-87.29 1026.87,-87.29 1196.28,-87.29 1196.28,-87.29 1202.28,-87.29 1208.28,-93.29 1208.28,-99.29 1208.28,-99.29 1208.28,-111.29 1208.28,-111.29 1208.28,-117.29 1202.28,-123.29 1196.28,-123.29"/>
+<text text-anchor="start" x="1024.95" y="-105.84" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00" fill="#333333">Prolog validator rules are correct</text>
+<text text-anchor="start" x="1028.33" y="-96.74" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#333333">183 lines, same author as the generators</text>
+</g>
+<!-- checkers&#45;&gt;verify -->
+<g id="edge15" class="edge">
+<title>checkers&#45;&gt;verify</title>
+<path fill="none" stroke="#6b6b6b" d="M1022.93,-123.79C920.41,-144.65 765.58,-178.34 765.58,-191.58 765.58,-191.58 765.58,-191.58 765.58,-360.95 765.58,-387 745.11,-406.44 722.79,-419.88"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="721.68,-417.7 716.81,-423.29 724.11,-421.95 721.68,-417.7"/>
+</g>
+<!-- checkers&#45;&gt;checkcert -->
+<g id="edge16" class="edge">
+<title>checkers&#45;&gt;checkcert</title>
+<path fill="none" stroke="#6b6b6b" d="M1111.58,-123.61C1111.58,-140.84 1111.58,-168.04 1111.58,-191.58 1111.58,-191.58 1111.58,-191.58 1111.58,-360.95 1111.58,-387.42 1055.83,-408.03 999.95,-422.04"/>
+<polygon fill="#6b6b6b" stroke="#6b6b6b" points="999.4,-419.66 993.18,-423.7 1000.56,-424.41 999.4,-419.66"/>
+</g>
+</g>
+</svg>
+</div>
+<ul class="treelegend">
+<li><span style="background:#fbf0c4"></span>assumption (leaf)</li>
+<li><span style="background:#e6def5"></span>artifact (data)</li>
+<li><span style="background:#d6e6f7"></span>trusted check / computation</li>
+<li><span style="background:#d5efd9"></span>derived claim</li>
+<li><span style="background:#f8d7e3"></span>result (root)</li>
+<li><span style="background:#eeeeee;border-style:dashed"></span>untrusted helper: found something a check re-verifies</li>
+</ul>
+<figcaption>The evidence tree for the tour. Solid arrows mean <em>supports</em>; dashed
+arrows record how something was <em>found</em>, corroborated, or corrected. Diagram source:
+<a href="assets/evidence-tree-SEBD-tour.gv">the .gv file</a>.</figcaption>
+</figure>
+<p>The tree's central distinction is between <em>found</em> and <em>trusted</em>. The 2-opt
+search found the tour; HiGHS found the proofs, first the cutting-plane run and then the
+226-leaf certificate. All of them appear only as grey, dashed helpers. Nothing above them
+depends on their being correct, because two short Prolog checkers re-verify what they
+produced. That is why the trust base is small: seven leaves, two of them about Prolog.</p>
+<p>Some things are deliberately <em>not</em> in the support structure. The ChatGPT bundle
+corroborates the result but supports nothing; remove it and the claim still stands. The
+AI-recalled coordinates appear only as what OpenStreetMap corrected: the one leaf that
+failed, and the reason for <a href="#coords">the coordinate audit</a>. And most of
+Part&nbsp;I is absent altogether. The lineage graph records how things happened; the tree
+records what the claim depends on. The evidence would stand even if the history were
+misreported.</p>
+<p>The sections below take the tree apart: the two green claims (<a href="#sandwich">the
+sandwich</a>), the blue checks (<a href="#trustbase">the trust table</a>), the
+certificate branch (<a href="#nosolver">a proof with no solver in it</a>), and the yellow
+leaves (<a href="#gaps">known gaps</a>).</p>
+
+<h2 id="sandwich">Why believe "optimal" without trying every tour?</h2>
+<p>A fair objection: nobody enumerated the alternatives. With endpoints fixed, the
+32 intermediate editions can be ordered in 32!&nbsp;≈&nbsp;2.6&nbsp;×&nbsp;10<sup>35</sup>
+ways. At a billion tours checked per second, exhaustive search would take about
+8&nbsp;×&nbsp;10<sup>18</sup> years — some 600&nbsp;million times the age of the
+universe. Exhaustion is not merely slow; it is not a thing that happens.
+<span class="badge b-verified">verified</span> (arithmetic you can redo on a napkin)</p>
+<p>The proof works differently — it is a <em>sandwich</em>, not a search. Two
+independent facts are produced:</p>
+<ul>
+<li><strong>An upper bound:</strong> a concrete valid tour of length 3,527 km exists
+(check it: sum its legs — <code>verify.pl</code> does exactly this).</li>
+<li><strong>A lower bound:</strong> <em>no</em> tour — seen or unseen — can be shorter
+than 3,527 km.</li>
+</ul>
+<p>The lower bound comes from <em>relaxation</em>: drop the requirement "the edges form
+one connected tour" and demand only "every stop touches exactly 2 edges." (A path has
+two endpoints of degree 1, so <code>exact_tsp.py</code> first closes ours into a cycle
+with a zero-cost dummy stop joined to editions 1 and 34 — degree 2 then forces both free
+edges in, and the cheapest cycle is exactly the cheapest path.) Every real tour satisfies
+these weaker constraints, so the minimum over this larger set can only be ≤ the best tour
+— a valid bound. The first relaxation yields 2,881 km, but its "solution" is six
+disconnected mini-loops. So a <em>subtour-elimination cut</em> is added — a linear
+inequality saying "at least 2 edges must cross this mini-loop's boundary," which is
+self-evidently true of every genuine tour, so the bound stays valid — and the relaxation
+is re-solved. Six iterations
+(2881&nbsp;→&nbsp;3273&nbsp;→&nbsp;3439&nbsp;→&nbsp;3475&nbsp;→&nbsp;3477&nbsp;→&nbsp;3527)
+replace 10<sup>35</sup> evaluations; at 3,527 the relaxation's own solution <em>is</em> a
+single tour, so lower&nbsp;=&nbsp;upper&nbsp;=&nbsp;optimum. This is the Dantzig–Fulkerson–Johnson
+method (1954), the engine inside the record-holding Concorde TSP solver.
+<span class="badge b-verified">verified</span></p>
+<p>And a footnote the proof itself supplies: the optimal <em>value</em> is unique, the
+optimal <em>tour</em> is not. Rimini (editions 2, 18), Venice (9, 20), and Villasimius
+(28, 32) each repeat at identical coordinates, so swapping any twin pair changes nothing
+— 2³&nbsp;=&nbsp;8 relabellings of any optimal tour. This page used to stop there and
+admit it had not checked for others. It has now been enumerated, which took about a
+minute: re-solve with a <em>no-good cut</em> forbidding each optimum already found, until
+the solver's best answer exceeds 3,527. It does so at 3,529, and the complete list is
+<strong>exactly 16 optimal tours</strong> — two genuinely different routes, each in 8
+twin-relabellings. The second route differs only at the very end, arriving
+Rimini&nbsp;→&nbsp;Portonovo&nbsp;→&nbsp;Ancona&nbsp;→&nbsp;Senigallia instead of
+Rimini&nbsp;→&nbsp;Ancona&nbsp;→&nbsp;Portonovo&nbsp;→&nbsp;Senigallia; Ancona and
+Portonovo are 9&nbsp;km apart and the detour cancels exactly.
+<span class="badge b-verified">verified</span></p>
+<p>Which is why, if you run <code>exact_tsp.py</code> yourself, its last line prints a
+visiting order that is <em>not</em> the one published above. Both are in the 16. The
+solver reports whichever optimum it reaches first; the route file records the one the
+heuristic found. Nothing is wrong — but it is exactly the kind of discrepancy that
+should be stated in advance rather than discovered by a suspicious reader.</p>
+
+<h2 id="trustbase">"But how do I trust the <em>code</em>?"</h2>
+<p>The right question — and the answer is that the workflow is arranged so you have to
+trust remarkably little of it — the blue nodes of <a href="#tree">the tree</a>. Sorted
+from easiest to hardest:</p>
+<table>
+<tr><th>To believe…</th><th>You need to trust…</th><th>How to shrink that trust</th></tr>
+<tr><td>the tour is valid and 3,527 km</td><td><a href="evidence/Claude-artifacts/verify.pl">verify.pl</a> — 22 lines of Prolog</td><td>Read it (it only sums <code>distance/3</code> facts and checks a permutation), or ignore it and sum the <a href="evidence/GPT-artifacts/sebd_distances.csv">561-row CSV</a> in a spreadsheet.</td></tr>
+<tr><td>the distance table itself</td><td>the equirectangular formula + coordinates</td><td>Recompute any entry from the published lat/longs with any tool; spot-check coordinates against any map — which is precisely the check that caught four wrong ones. See <a href="#coords">the coordinate audit</a>.</td></tr>
+<tr><td>the tour is <em>optimal</em></td><td>NOT the <em>search</em> in <a href="evidence/Claude-artifacts/exact_tsp.py">exact_tsp.py</a> — but you do need (a) the ~25 lines that build the model (edge list, cost vector, degree matrix, dummy node), (b) that each subtour cut is a valid inequality, and (c) that HiGHS correctly solves each of the six integer programs</td><td>(a) and (b) are checkable by eye, and (a) is the part this page previously — and wrongly — claimed you could skip. (c) <em>was</em> the genuine residual until 2026-08-04, when it was removed: the lower bound now ships as a <a href="#nosolver">solver-free certificate</a> that 161 lines of Prolog check in 0.6 s, using integer arithmetic and nothing else.</td></tr>
+</table>
+<p>That is the asymmetry the talk turns on: the <em>solver</em> may be a thousand lines
+of heuristics and floating point — irrelevant, because what it emits is a witness whose
+checking burden is tiny. How the tour was <em>found</em> (2-opt? simulated annealing?
+divine inspiration?) never enters the argument. Trust the certificate, not the solver.</p>
+
+<h2 id="nosolver">A proof with no solver in it</h2>
+<p>"Trust the certificate, not the solver" was, until 2026-08-04, an <em>aspiration</em> on
+this page: the tour was checkable by hand, but <em>optimality</em> still went through
+HiGHS. That residual is now closed. In
+<a href="evidence/certificate/">evidence/certificate/</a> there is a proof object that
+needs no solver, no linear algebra, no floating point — only integer arithmetic:</p>
+<pre><code>cd evidence/certificate
+swipl -q -g run -t halt check_certificate.pl</code></pre>
+<p>Actual output on 2026-08-04 (macOS, SWI-Prolog 9.0.4, 0.6 s):</p>
+<pre><code>PASS (1) 563 edges = 561 published distances + 2 dummy edges
+PASS (2) node 35 joins only stops 1 and 34, at zero cost
+PASS (3) all 34 cuts are proper subsets (2 =&lt; |S| =&lt; 33)
+PASS (4) the 226 leaves form a complete binary tree -- exhaustive
+PASS (5) all 226 leaves bound every tour above 3526 km, so &gt;= 3527 km
+PASS (6) the published route is a valid 1..34 tour of 3527 km
+
+VERIFIED: no tour of the 34 SEBD editions is shorter than 3527 km,
+and a tour of exactly 3527 km exists.  3527 km is optimal.</code></pre>
+<p>The whole thing rests on one inequality. Give every stop a number
+<em>y<sub>v</sub></em> (any numbers) and every subtour cut a weight
+<em>z<sub>S</sub></em>&nbsp;≥&nbsp;0 (any weights), and give each edge a
+<em>reduced cost</em></p>
+<pre><code>d_e  =  c_e - y_u - y_v - (sum of z_S over the cuts that edge e crosses)</code></pre>
+<p>Then <em>every</em> tour costs at least</p>
+<pre><code>2*(sum of all y_v)  +  2*(sum of all z_S)  +  (sum of min(0, d_e) over all edges)</code></pre>
+<p>Why: every stop has exactly two tour edges, every tour crosses every cut at least twice,
+and a 0/1 variable can only hurt you where <em>d<sub>e</sub></em> is negative. Three lines
+of algebra — and, crucially, <em>no assumption about where the numbers came from</em>. A certificate that would break if its numbers came from a
+liar is not a certificate. <span class="badge b-verified">verified</span></p>
+<p>One such inequality is not enough, and the shortfall is worth knowing: the best bound
+any single page of potentials can give — 35 numbers and 7 cuts, the full Held–Karp
+relaxation — is <strong>3,447 km</strong>, some 80 km short. So the proof becomes a case
+analysis: a binary tree splitting on "this edge is used / is not used," where each branch
+is closed by its own inequality. Ours has <strong>226 leaves</strong>, maximum depth 16, a
+pool of 34 cuts, about 16,000 integers, 99 KB. <span class="badge b-verified">verified</span></p>
+<p>That size <em>is</em> the finding, and it sharpens the talk's thesis rather than
+softening it: a napkin proves the tour exists; a small book proves that nothing beats it;
+and checking the small book still takes 0.6 seconds against 8&nbsp;×&nbsp;10<sup>18</sup>
+years of exhaustive search. Note what check (4) does — it verifies the case analysis has no
+<em>hole</em>. A missing leaf is not an error in a proof; it is an unexamined case, which is
+exactly the failure a plausible-looking certificate would hide.</p>
+<p>And to answer the obvious suspicion — does the checker actually bite, or does it pass
+everything? Six tampered copies were run against it:</p>
+<table>
+<tr><th>Tampering</th><th>Response</th></tr>
+<tr><td>delete one leaf</td><td><code>FAIL (4) the case analysis has a hole</code></td></tr>
+<tr><td>zero out one leaf's potentials</td><td><code>FAIL (5) a leaf does not close</code></td></tr>
+<tr><td>make a cut multiplier negative</td><td><code>FAIL (5) a leaf does not close</code></td></tr>
+<tr><td>claim 3,528 km instead</td><td><code>FAIL (5) a leaf does not close</code></td></tr>
+<tr><td>falsify one edge cost (645&nbsp;→&nbsp;545 km)</td><td><code>FAIL (1) an edge disagrees with distance.pl</code></td></tr>
+<tr><td>enlarge a cut to the whole node set</td><td><code>FAIL (3) a cut set is not a proper subset</code></td></tr>
+</table>
+<p>One tampering is <em>accepted</em>, and should be: nudge a potential by a few units and
+you still have a valid proof, just a different one. A checker that rejected that would be
+policing provenance, not validity. <span class="badge b-verified">verified</span> (all seven
+runs; see <a href="evidence/certificate/README.org">README.org</a>)</p>
+<p>What is still trusted, stated plainly: SWI-Prolog's integer arithmetic; the 161-line
+checker itself (short enough to read, but written by the same agent that wrote the
+generator — a second checker in another language, by another author, is the next honest
+step); and, as ever, the 561 distances, which are a claim about a model, not about Italy.</p>
+
+<h2 id="distrust">How to distrust this page</h2>
+<p>Please do. Both artifact bundles are included under <a href="evidence/">evidence/</a>,
+byte-for-byte as hashed on 2026-08-01, with one documented exception: three files of the
+Claude bundle were corrected on 2026-10-12, and <a href="evidence/Claude-artifacts/CORRECTIONS.org">CORRECTIONS.org</a> says which, why, and with which hashes
+before and after; the originals are kept beside them. Re-run the checkers; don't take our
+word:</p>
+
+<pre><code># 1. Check the tour certificate (SWI-Prolog) — recomputes the length
+#    from the distance table and validates the permutation:
+cd evidence/Claude-artifacts
+swipl -q -g run -t halt verify.pl
+</code></pre>
+<p>Actual output on 2026-08-01 (macOS, SWI-Prolog):</p>
+<pre><code>PASS: valid 1..34 permutation; recomputed = published = 3527 km</code></pre>
+
+<pre><code># 2. Prove optimality yourself (Python + scipy/HiGHS, &lt;1 s):
+python3 exact_tsp.py
+</code></pre>
+<p>Actual output on 2026-08-01 (tail):</p>
+<pre><code>  iter  6: cost   3527.0  subtours 1
+
+=== EXACT RESULT ===
+proven optimum (lower = upper bound): 3527 km
+recovered optimal path length check : 3527 km   (start 1, end 34)
+heuristic tour (route_optimized.pl) : 3527 km
+==&gt; heuristic is OPTIMAL: True
+optimal order: 1 29 21 25 24 15 26 19 11 16 12 28 32 33 22 3 23 8 27
+10 4 30 17 7 13 5 31 9 20 2 18 14 6 34</code></pre>
+<p>That last line is one of the other 15 optimal tours, not the one published above —
+see the co-optimality footnote. Both are 3,527 km.</p>
+
+<pre><code># 3. Check optimality WITHOUT trusting any solver (SWI-Prolog, 0.6 s):
+cd ../certificate
+swipl -q -g run -t halt check_certificate.pl
+</code></pre>
+<p>Actual output on 2026-08-04 — six checks, quoted in full
+<a href="#nosolver">above</a>, ending:</p>
+<pre><code>VERIFIED: no tour of the 34 SEBD editions is shorter than 3527 km,
+and a tour of exactly 3527 km exists.  3527 km is optimal.</code></pre>
+<p>This is the one to run if you believe only arithmetic. Try breaking it, too — the
+<a href="evidence/certificate/README.org">README</a> lists six tamperings and what each
+one trips.</p>
+
+<pre><code># 4. Reproduce the independent GPT bundle (fixed seed 20260618),
+#    and check its file hashes:
+cd ../GPT-artifacts
+shasum -a 256 -c SHA256SUMS
+./run.sh
+</code></pre>
+<p>Actual output on 2026-08-01: all 11 files <code>OK</code>, then:</p>
+<pre><code>Chronological total: 15263.9 km
+Optimized total:     3546.9 km</code></pre>
+<p>— and the freshly reproduced route tables matched the shipped ones exactly. (The GPT
+bundle is untouched by the coordinate correction: it was always keyed to its own
+coordinate estimates, and its numbers stand exactly as first published.)</p>
+
+<pre><code># 4. Check the Claude bundle's own hashes (added 2026-08-01):
+cd ../Claude-artifacts
+shasum -a 256 -c SHA256SUMS
+</code></pre>
+<p>Actual output on 2026-08-01: all 23 files <code>OK</code>. On 2026-10-12 the map
+script and its two renderings were corrected and their three entries re-stamped (see
+<a href="evidence/Claude-artifacts/CORRECTIONS.org">CORRECTIONS.org</a>); re-run that day, all 23 files <code>OK</code> again. Note what that does and does
+not show. A hash list proves the files match the list, not that the list is original:
+whoever edits a file can re-stamp its hash. So the original three files and the original
+<code>SHA256SUMS</code> are kept in
+<a href="evidence/Claude-artifacts/original-2026-08-01/">original-2026-08-01/</a>, where
+they still check.</p>
+
+<p>Still suspicious? Good — that's the right instinct. The distance tables are plain
+text (<a href="evidence/Claude-artifacts/distance.pl">561 Prolog facts</a>,
+<a href="evidence/GPT-artifacts/sebd_distances.csv">561 CSV rows</a>); sum any tour by
+hand. If this page and its evidence ever disagree, believe the evidence.</p>
+
+<h2 id="gaps">Known gaps — and whether they matter</h2>
+<p>A trust artifact should list what it <em>doesn't</em> establish. Most gaps are leaves
+of <a href="#tree">the evidence tree</a>; the one that isn't is worth noticing. Our ledger:</p>
+<table>
+<tr><th>Gap</th><th>In the tree</th><th>Does it matter?</th></tr>
+<tr><td><s><strong>No machine-checked proof of the lower bound.</strong> The optimality
+certificate rests on HiGHS's arithmetic — no dual certificates extracted, no Lean/Coq
+check.</s> <strong>Closed 2026-08-04:</strong> the lower bound is now a
+<a href="#nosolver">solver-free certificate</a> — 226 leaves of node potentials, checked
+by 161 lines of Prolog in integer arithmetic.</td>
+<td>HiGHS — now a grey helper</td>
+<td>It mattered: this was the one link where "trust the certificate" quietly included
+"trust a solver." Closing it cost 99 KB of proof for a 4-digit answer — which is the
+honest exchange rate, and worth knowing before you promise anyone a one-page proof.</td></tr>
+<tr><td><strong>The Claude bundle was edited after it was hashed.</strong> Three files
+(the map script and its two renderings) changed on 2026-10-12, and their hashes were
+re-stamped.</td>
+<td>— (packaging; the map supports nothing in the tree)</td>
+<td>Not for any number: the change is one title string, and every plotted point is
+identical. It matters on principle. A re-stamped hash is exactly what a quiet edit looks
+like, so the change is logged in <a href="evidence/Claude-artifacts/CORRECTIONS.org">CORRECTIONS.org</a> with both hashes, and the originals are kept. Signed
+or externally timestamped hashes (a DOI-archived snapshot, say) would close this
+properly.</td></tr>
+<tr><td><strong>The new checker was written by the same agent as the generator</strong>,
+and SWI-Prolog's integer arithmetic is now the trusted base.</td>
+<td>leaves: <em>Prolog validator rules</em>, <em>SWI-Prolog</em></td>
+<td>Smaller than what it replaced — bignum addition and comparison, versus a MILP solver
+— but it is the residual that remains. A second checker, in another language, by another
+author, would close it; the certificate format is public and 161 lines is not a large ask.</td></tr>
+<tr><td><strong>The optimum is of the model, not of Italy.</strong> Distances are
+straight lines — ferries, roads, and the Apennines are ignored.</td>
+<td>leaf: <em>Distance model</em></td>
+<td>Matters if you book tickets; not for the demonstration. The certificate proves
+"shortest <em>given these 561 numbers</em>." Change the numbers and the proof machinery
+re-runs unchanged — that portability is the point, and on 2026-08-01 we got to prove it
+the hard way. See <a href="#coords">the coordinate audit</a>.</td></tr>
+<tr><td><strong>Coordinates are now gazetteer-checked, but only once, and only against
+one gazetteer.</strong> All 34 were geocoded against OpenStreetMap; four were corrected.
+The remaining 30 agree to within 1.5 km, but "OSM says so" is a second opinion, not
+ground truth, and no coordinate here has been checked against a national cadastral
+source.</td>
+<td>leaf: <em>OpenStreetMap</em></td>
+<td>Small. A 1 km coordinate error moves the total by well under the 2 km rounding
+already acknowledged. But this <em>was</em> the gap that actually bit, so it is now the
+gap most worth watching.</td></tr>
+<tr><td><strong>Provenance is self-reported</strong> (see <a href="#lineage">Part&nbsp;I</a>): no cryptographic or
+append-only trail binds the lineage graph to the actual session.</td>
+<td>not in the tree: history, not support</td>
+<td>Matters for the strong claim "this is what happened"; mitigated by artifact
+consistency, an independent second witness, and reproducibility.</td></tr>
+<tr><td><strong>The remaining leaves:</strong> DBLP's edition list, the problem
+formulation, Python's floating point.</td>
+<td>leaves: <em>DBLP</em>, <em>Problem formulation</em>, <em>Python float arithmetic</em></td>
+<td>Small. The edition list is checked by count (34&nbsp;=&nbsp;2026−1993+1) and was
+reproduced by the independent GPT bundle; the fixed endpoints are stated in
+<a href="#q">the question</a>; floating point touches only the projection, where its error
+is many orders of magnitude below the whole-kilometre rounding.</td></tr>
+<tr><td><s><strong>The LP arithmetic is unaudited</strong> — the six solves are integer
+programs, so the trusted component is HiGHS's branch-and-bound, not just its simplex.</s>
+<strong>Superseded 2026-08-04:</strong> HiGHS is no longer on the critical path. It still
+<em>found</em> the numbers; nothing now depends on it having found them correctly.</td>
+<td>HiGHS — now a grey helper</td>
+<td>The distinction is the whole thesis in one row: a solver that produces a checkable
+witness needs no audit, and one that produces only an answer needs a complete one.</td></tr>
+<tr><td><s><strong>Integrity hashes cover only the GPT bundle.</strong></s>
+<strong>Closed 2026-08-01:</strong> the Claude bundle now ships
+<a href="evidence/Claude-artifacts/SHA256SUMS">SHA256SUMS</a> too (23 files).</td>
+<td>— (packaging)</td>
+<td>It was a three-second fix listed as a known gap for two weeks, which is its own
+small lesson about ledgers.</td></tr>
+<tr><td><s><strong>The set of optimal tours is not enumerated.</strong></s>
+<strong>Closed 2026-08-01:</strong> there are exactly 16.</td>
+<td>root note: “one of exactly 16”</td>
+<td>Didn't matter — the certified <em>value</em> is unique — but it was cheap to settle,
+and settling it turned up the discrepancy between the published route and the one
+<code>exact_tsp.py</code> prints.</td></tr>
+<tr><td><strong>The prose is unverified</strong> — dedication, jokes, this very
+sentence.</td>
+<td>— (not evidence)</td>
+<td>That's why the badges exist. Charm is not evidence; here they are kept visibly
+distinct.</td></tr>
+</table>
+
+<h2>Legend — what kind of claim is this?</h2>
+<div class="legend">
+<p><span class="badge b-primary">primary source</span> — fact from an external primary
+source (DBLP), checkable there.</p>
+<p><span class="badge b-model">modeling choice</span> — a documented approximation
+(centroid coordinates, straight-line metric); not wrong, but a choice you should know about.</p>
+<p><span class="badge b-verified">AI-generated, verified</span> — produced by an AI,
+then independently checked by a program whose output is quoted verbatim above.</p>
+<p><span class="badge b-prose">AI prose, unverified</span> — narrative flavor.
+Charming, we hope; evidence, it is not.</p>
+<p style="margin-top:.8rem">These badges label the <em>epistemic status of a sentence</em>.
+The colours in <a href="#tree">the evidence tree</a> label something else: a node's
+<em>role in the argument</em> — assumption, data, check, claim, or helper.</p>
+</div>
+
+<h2 id="asp">Appendix: a side experiment from the ASP world</h2>
+<p>One cross-check deserves a footnote:
+a generic clingo (answer-set programming) encoding of the tour problem
+(<a href="evidence/Claude-artifacts/tsp.lp">tsp.lp</a>) reached only 6,709 km after 90
+seconds — corroborating, never competing. That feebleness is a known <em>encoding</em>
+issue, not an ASP one: Bertagnon &amp; Gavanelli (Univ. Ferrara) give new TSP encodings
+in clingo[DL] — constraint ASP over difference logic — that are orders of magnitude
+faster, with a further geometric speedup for exactly our case, Euclidean instances with
+known coordinates (<a href="https://doi.org/10.1093/logcom/exaf072"><em>J. Logic and
+Computation</em> 36(2), 2026, open access</a>). <span class="badge b-primary">primary
+source</span> (the paper's claim).</p>
+<p>In this page's spirit, we ran the experiment rather than just citing it
+(2026-07-18, same laptop; files in
+<a href="evidence/DL-experiment/">evidence/DL-experiment/</a>) — and report an honest
+<em>negative</em>: our adaptation of the paper's SDLT and DLEB encodings
+(<a href="evidence/DL-experiment/sdlt.lp">sdlt.lp</a>,
+<a href="evidence/DL-experiment/dleb.lp">dleb.lp</a>, transcribed from Listings 1+5+6
+and 1+7+8) returned <code>UNKNOWN</code> in every 90-second run — unable even to
+<em>confirm</em> a tour of 3,541 km exists, where naive clingo at least reached
+7,592 km. (Those two runs used the pre-correction distance table; the corrected
+instance re-runs naive clingo to 6,709 km, but <code>clingo-dl</code> is no longer
+installed on this machine, so the SDLT/DLEB runs have <em>not</em> been repeated and
+their numbers are quoted as of 2026-07-18. <span class="badge b-prose">stale</span>)
+This does <strong>not</strong> refute the paper; it measures the gap between
+citing a method and reproducing one. Known differences: our clingo-dl 1.5 build lacks
+the <code>--minimize-variable</code> option their tooling uses (we substituted an outer
+binary search on the bound); our instance is a <em>path</em>-TSP closed by a zero-cost
+dummy node; and we implemented none of their geometric (convex-hull) enhancements.
+Any of these may be decisive — finding out is a conversation to have with the authors,
+which seems fitting for a memento. <span class="badge b-verified">AI-generated,
+verified</span> (the runs happened as described)
+<span class="badge b-prose">unverified</span> (any explanation of <em>why</em>)</p>
+
+<div class="colophon">
+<p>From the SEBD'26 closing talk,
+<em>"Towards Explainable &amp; Trustworthy AI: Database Provenance meets Computational
+Argumentation"</em> (Bertram Ludäscher, UIUC). The tour is the talk's first trust
+regime — formal certificates — in miniature; the talk's second half pairs it with
+defeasible argumentation. The demo drinks its own champagne: the provenance system's
+provenance is itself on this page.</p>
+<p>Provenance of this page — reported precisely, since it preaches precision: drafted
+by Claude Code under <strong>Opus 4.8</strong> (<code>claude-opus-4-8</code>) on
+2026-07-17 (the session had been asked to run Fable 5 but fell back for billing
+reasons — even bylines need provenance); revised — optimality argument, trust-boundary
+table, clickable lineage graph, gaps ledger — by <strong>Fable 5</strong>
+(<code>claude-fable-5</code>) on 2026-07-18; audited and corrected by
+<strong>Opus 5</strong> (<code>claude-opus-5[1m]</code>) on 2026-08-01, which
+re-derived every number on the page, geocoded all 34 stops against OpenStreetMap, found
+four bad coordinates and a false explanation of the GPT/Claude gap, enumerated the 16
+co-optima, and rewrote the affected passages; extended on 2026-08-04 by the same model,
+which built the <a href="#nosolver">solver-free certificate</a> and its Prolog checker
+after Bertram asked what, exactly, would convince a skeptic. Built from the artifact
+bundles in <a href="evidence/">evidence/</a>; reviewed by Bertram Ludäscher before
+publication. All verification outputs above were produced by actually running the commands
+on the dates given, not copied from documentation. This public edition (2026-10-12, Claude
+Code under <strong>Opus 5.5</strong>, <code>claude-opus-5-5</code>) drops a personal
+dedication, splits the page into provenance (Part&nbsp;I) and evidence (Part&nbsp;II), and
+adds <a href="#tree">the evidence tree</a>. It also fixed one leftover of the audit: the
+map's title still said 3,541&nbsp;km, hard-coded in <code>make_map_italy.py</code> although
+the plotted coordinates were already corrected. The map was re-rendered, its three
+<code>SHA256SUMS</code> entries were updated, and the change is logged in <a href="evidence/Claude-artifacts/CORRECTIONS.org">CORRECTIONS.org</a> with the
+originals kept beside it; no other number changed. Two stale mentions of 3,541&nbsp;km
+inside the bundle (<code>tsp.lp</code>, <code>provenance.pl</code>) were deliberately left
+untouched and are explained in the same file.</p>
+<p>Four drafts in, the page has been wrong about a coordinate, wrong about why two
+toolchains disagreed, and wrong about how many optimal tours exist — while the one thing
+it staked its argument on, the certificate, was right every time, and has now been put
+beyond the reach of the solver that found it. Make of that what you will; we think it is
+the whole point.</p>
+</div>
+
+</main>
+</body>
+</html>

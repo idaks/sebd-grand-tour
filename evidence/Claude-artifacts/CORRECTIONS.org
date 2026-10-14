@@ -1,0 +1,39 @@
+#+TITLE: Corrections to this bundle after 2026-08-01
+#+UPDATED: 2026-10-13 Tue 00:34 CDT
+#+AGENT: Claude Code — Opus 5.5, model id claude-opus-5-5
+
+This bundle was frozen on 2026-08-01, when SHA256SUMS was written. Any file
+changed after that date is listed here: what changed, why, and the hashes before
+and after. The original files are kept, unchanged, in [[file:original-2026-08-01/][original-2026-08-01/]],
+together with the original SHA256SUMS, so both versions can be checked:
+
+#+begin_example
+shasum -a 256 -c SHA256SUMS                               # current bundle
+cd original-2026-08-01 && grep -E 'make_map_italy|sebd_route_italy' SHA256SUMS | shasum -a 256 -c
+#+end_example
+
+* 2026-10-12 — map title still said 3,541 km
+- *What:* =make_map_italy.py= line 156, the hard-coded title text
+  "3,541 km" → "3,527 km". The map was re-rendered from the script.
+- *Why:* the 2026-08-01 coordinate audit changed the optimum from 3,541 to
+  3,527 km. The map was re-rendered that day with the corrected coordinates, but
+  its title is a literal string, not computed from the route, so it kept the old
+  number. Nothing else in the script changed (one-line diff).
+- *Files and SHA-256:*
+  | file                 | 2026-08-01 (original) | 2026-10-12 (current) |
+  |----------------------+-----------------------+----------------------|
+  | make_map_italy.py    | d1d55c764952aab5…     | 922161d04529b767…    |
+  | sebd_route_italy.png | 7c1ac59d1383ae86…     | 16e5fa0fecdd75eb…    |
+  | sebd_route_italy.svg | 143966678ffa9c74…     | 40408f7f7d8dd055…    |
+  Full hashes: [[file:SHA256SUMS][SHA256SUMS]] (current), [[file:original-2026-08-01/SHA256SUMS][original-2026-08-01/SHA256SUMS]].
+- *Who:* Claude Code (Opus 5.5) while preparing the public edition of the page.
+  The stale title was spotted in a screenshot of the page; the decision to log
+  the change here instead of silently re-hashing came from a review note.
+
+* Known stale numbers, deliberately left unchanged
+- =provenance.pl=, checks =s5b=, =s5c=, =s9=: record 3,541 km. These are records
+  of checks as they ran on 2026-06-18, before the audit, and are true as history.
+- =tsp.lp=, header comment: "exact_tsp.py PROVES the optimum = 3541 km", plus the
+  example command =--opt-mode=optN,3541=. Out of date since 2026-08-01; with the
+  corrected distances the optimum is 3,527. Left as is so the file still matches
+  its hash; this note is the correction.

@@ -1,0 +1,172 @@
+#+TITLE: Meta-Provenance — a blow-by-blow record of the SEBD experiment
+#+DATE: [2026-06-18 Thu]
+#+OPTIONS: toc:2
+
+/Provenance of the provenance discussion./ This is a derivation log of how the
+SEBD experiment artifacts in this folder came to be: what triggered each step,
+what it consumed (lineage), what it produced, and how it was checked. A
+machine-queryable version of the same graph lives in [[file:provenance.pl][provenance.pl]] — you can run
+why-provenance over our own work.
+
+How to read each step:
+- *Trigger* — the user request (the "query").
+- *Action / decision* — what was done, and the design choices made.
+- *Used* — input artifacts/sources (lineage).
+- *Produced* — output artifacts.
+- *Checked* — how the result was verified (if at all).
+
+* S0 · Root (context, not part of the experiment proper)
+- *Trigger:* "Look at this carefully: SEBD26-talk.org" → focus the SEBD'26 talk.
+- *Action:* read the TAIR paper, AI4EVIR slides, and the GPT storyboard/notes;
+  chose a TAIR-spine + DB-on-ramp; wrote a slide-by-slide outline.
+- *Produced:* =SEBD26-outline.org= (in the parent folder).
+- The experiment below /branched/ from this: the talk wanted a conference-history
+  angle, which led to the DBLP extraction.
+
+* S1 · Extract the 34 SEBD editions (the seed data)
+- *Trigger:* =/remote-control= — extract all SEBD locations+years from the DBLP index.
+- *Action / decision:* first tried =WebFetch=; its small-model summary *dropped the
+  older editions and most locations* (unreliable). Distrusted it and re-derived
+  from the *raw source*: =curl= the DBLP HTML + =grep= the proceedings titles →
+  authoritative 1993–2025. Appended 2026 Senigallia (user-supplied).
+- *Used:* =dblp:conf/sebd/index= (raw), =user:senigallia-2026=.
+- *Produced:* =sebd-list-34= (the numbered list, 1 Gizzeria Lido … 34 Senigallia).
+- *Checked:* count = 34 = (2026−1993+1); SEBD is annual ⇒ year ↔ edition number.
+- *Provenance note:* this is already a /verification/ moment — the summarizer was an
+  untrusted generator; trust was relocated to the primary source.
+
+* S2–S3 · Coordinates + the =sebd/5= relation, saved as Prolog
+- *Trigger:* add approximate (lat,long); extract =sebd(Number,Year,City,Lat,Long)=;
+  then "save it as sebd.pl and add sebd_repeat view".
+- *Action / decision:* attached approximate town-centroid coordinates (Claude
+  knowledge, ±~2 km). Chose *single-quoted atoms* for city names so =​'L\'Aquila'​=
+  is safe regardless of the =double_quotes= flag. =sebd_repeat= via =setof/3= grouping.
+- *Used:* =sebd-list-34=, =claude:latlong-estimates=.
+- *Produced:* =sebd.pl= (34 facts + =sebd_repeat/1=, =sebd_repeat/2=).
+- *Checked:* =swipl=: 34 facts; repeats = Rimini, Venice, Villasimius.
+
+* S4 · Port to clingo; designate the experiments folder
+- *Trigger:* "create the sebd/5 relation also in clingo … compute the same views";
+  make =Claude-artifacts/= the home for SEBD experiments.
+- *Action / decision:* clingo has *no floats* (and =.= ends a rule) ⇒ stored
+  coordinates in *centidegrees* (deg×100), keeping them usable for integer
+  arithmetic. =sebd_repeat= via the =#count= aggregate; =sebd_repeat_year= as a flat
+  relation (ASP has no =setof= list).
+- *Used:* =sebd.pl= (same data, re-encoded).
+- *Produced:* =sebd.lp=.
+- *Checked:* =clingo=: single answer set; same three repeat cities; cross-checked
+  =swipl= at the new path.
+
+* S5 · The trip: distances, routes, certificate
+- *Trigger:* plan a trip 1→34: (a) in order, (b) optimized path-TSP; Euclidean
+  distance from lat/long; build a =distance(CityX,CityY,Km)= table using symmetry.
+- *Action / decisions:*
+  - *Distance:* equirectangular projection (ref lat 42°N, R=6371 km) → 2-D km plane
+    → Euclidean, rounded to whole km. An honest metric (triangle inequality holds).
+  - *Schema choice:* =distance(I,J,Km)= keyed by *edition number*, not city name —
+    because Rimini/Venice/Villasimius repeat and a trip visits 34 *distinct stops*.
+    Stored once with =I<J= (exploit symmetry). 561 = C(34,2) rows.
+  - *Optimization:* nearest-neighbor + 2-opt + Or-opt, 400 restarts, seed 20260618.
+- *Used:* =sebd.pl= (coordinates), =method:equirectangular-projection= (a warrant).
+- *Produced:* =trip.py=, =distance.pl=, =distance.lp=, =route_inorder.pl= (15 245 km),
+  =route_optimized.pl= (3 541 km), =verify.pl=, =tsp.lp=, =README.org=.
+- *Checked (the heart of it):*
+  - =verify.pl= independently *recomputes* the length from =distance/3= and checks a
+    valid 1..34 permutation with the right endpoints → *PASS, 3 541 km*. (It does
+    /not/ trust =total_optimized/1=.) Fixed a stray =:- initialization.= bug.
+  - Cross-checks of optimality: clingo =tsp.lp= branch-and-bound reached only
+    *7 592 km* in 90 s; networkx SA *4 596 km*; ILS with 3 000 double-bridge kicks
+    *could not beat 3 541* ⇒ near-optimal at the time (later *proven* optimal — see
+    S9). Several co-optimal tours exist because the duplicate-coordinate twins are
+    distance 0.
+- *Provenance note:* the route certificate /is/ provenance — the witness for the
+  answer; checking it is a tropical-(min,+) sum (easy) while finding it is NP-hard.
+
+* S6 · Render the map (and resolve an "anomaly" by lineage)
+- *Trigger:* "render the optimized route as a map."
+- *Action / decision:* =make_map.py= reads the *verified* order from
+  =route_optimized.pl= (render the /certified/ route, not a fresh solve) and plots on
+  the same projected km plane with equal aspect.
+- *Used:* =route_optimized.pl= (order), =trip.py= (projection), =claude:latlong-estimates=.
+- *Produced:* =sebd_route_optimized.png=, =sebd_route_compare.png=.
+- *Checked:* a segment-intersection test flagged 2 "crossings"; a one-step
+  *why-provenance trace* showed both are duplicate-coordinate twins (28/32
+  Villasimius, 2/18 Rimini) — zero-length degeneracies, route genuinely 2-opt
+  optimal. /Explanation by lineage, live./
+
+* S7 · Provenance discussion
+- *Trigger:* "let's talk about provenance afterwards."
+- *Action:* mapped the artifacts to why / how (provenance polynomials) / why-not
+  over =sebd_repeat=, and to the *tropical-semiring* unification with the trip;
+  bridged to TAIR (provenance = the verifiable evidence E).
+- *Produced:* (discussion; no file).
+
+* S8 · This meta-provenance record
+- *Trigger:* "create a blow-by-blow provenance record of our conversation."
+- *Produced:* =meta-provenance.org= (this file), =provenance.pl= (queryable graph).
+
+* S9 · Proving the tour optimal (closing the S5 gap)
+- *Trigger:* "can we be sure the 3 541 km tour is optimal? is there a proof in there?"
+- *Action / decision:* there was *no* optimality proof — only a verified upper bound
+  (S5). Built an exact solver: path-TSP → Hamiltonian cycle via a zero-cost dummy
+  node; binary edge vars, degree-2 constraints, *lazy subtour-elimination* cuts,
+  each relaxation solved to proven optimality by HiGHS (=scipy.optimize.milp=).
+- *Used:* =trip.py= (the integer-km matrix), =route_optimized.pl= (the tour to check).
+- *Produced:* =exact_tsp.py=.
+- *Checked:* lower bound climbs 2881 → 3273 → 3439 → 3475 → 3477 → *3 527*, where it
+  meets a feasible tour ⇒ lower = upper = optimum. *3 527 km is provably optimal*
+  (<1 s); the heuristic tour is confirmed optimal (one of exactly 16 co-optima).
+  (Numbers as of the S10 coordinate correction below; before it, the same chain ran
+  2890 → 3283 → 3447 → 3489 → 3491 → 3541.)
+- *Provenance note:* a second certificate appears — the *lower bound* (subtour cuts)
+  proves optimality; verifying a /solution/ is cheap, verifying /optimality/ needs
+  this extra (dual) witness.
+
+* S10 · Coordinate audit and correction (2026-08-01)
+- *Trigger:* "let's do a careful review of all the artifacts and also the /logic/ of
+  the report for Mimo."
+- *Action / decision:* re-derived every published number from the artifacts rather
+  than reading them; then geocoded all 34 stops against OpenStreetMap/Nominatim —
+  the check the memento page had been inviting readers to perform since 2026-07-17,
+  which nobody had performed.
+- *Found:* four coordinates wrong, all of the same kind — a coastal /frazione/ whose
+  position had drifted inland to the parent comune sharing its name:
+  Torre Canne (15) by 22.3 km, Castellaneta Marina (26) by 8.9 km, Gizzeria Lido (1)
+  by 6.1 km, Squillace Lido (25) by 3.6 km. The other 30 were within 1.5 km.
+  These coordinates originated in S2 as =claude:latlong-estimates= — recalled from
+  the place names, never looked up. That is the root cause.
+- *Also found:* (a) the page's stated explanation of the GPT/Claude 5.9 km gap was
+  false — the earth-radius term it blamed is 5 /metres/; the real driver is the
+  projection formula (±20.5 km), and the coordinate errors had been /masking/ it by
+  cancelling ~12.3 km; (b) exactly 16 optimal tours exist, not "at least 8, unknown";
+  (c) =exact_tsp.py= prints a co-optimum different from the published route;
+  (d) the six solves are integer programs, not LP relaxations.
+- *Used:* =sebd.pl= (S2 coordinates), OpenStreetMap/Nominatim (new external source).
+- *Produced:* corrected =sebd.pl= / =sebd.lp= / =trip.py=; regenerated =distance.*=,
+  =route_*.pl=, =verify.pl=, both maps, both provenance graphs; new =SHA256SUMS=.
+- *Checked:* =verify.pl= PASS at 3 527 km; =exact_tsp.py= proves 3 527; co-optima
+  enumerated by repeated no-good cuts until next-best = 3 529.
+- *Provenance note:* the lineage graph was /correct and complete/ throughout and still
+  did not prevent this. It faithfully recorded that the coordinates came from an AI
+  estimate; nothing in the chain checked that estimate against the world. Provenance
+  tells you where a number came from, not whether it is true — the error was caught by
+  a /second source/, which is a different instrument. Note also that the certificate
+  never failed: it correctly proved optimality for the numbers it was given, both
+  before and after.
+
+* The provenance lens — where the concepts showed up in our own process
+| Concept                         | Where it actually occurred                                                     |
+|---------------------------------+--------------------------------------------------------------------------------|
+| why / lineage                   | S6 crossing "anomaly" traced to two stops → one city                           |
+| how / provenance poly.          | =sebd_repeat("Rimini")= = monomial t₂·t₁₈ (the self-join witnesses)            |
+| why-not                         | =sebd_repeat("Ancona")= absent — only one Ancona tuple (S3)                    |
+| schema / curation prov.         | storing "Portonovo" vs "Portonovo (Ancona)"; distance keyed by number          |
+| verification / trust            | S1 distrusting the summarizer; S5 =verify.pl= recomputing the total            |
+| computational asymmetry         | tour check: cheap (S5); prove it optimal: needs a lower-bound certificate (S9) |
+| responsibility / counterfactual | the co-optimal twins (distance-0) ⇒ alternative derivations                    |
+
+* Query the graph
+See [[file:provenance.pl][provenance.pl]]:
+: ?- why('sebd_route_optimized.png', Sources).   % base sources it depends on
+: ?- ancestor('route_optimized.pl', X).          % everything it derives from
+: ?- produced_by('verify.pl', Step).

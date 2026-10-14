@@ -1,0 +1,11 @@
+.vercel
+.env*
+evidence/GPT-artifacts/reproduced/
+__pycache__/
+# Org export byproduct of memento-manuscript.org
+memento-manuscript.html
+
+# Not published: stale notes from the private version, Vercel config
+PUBLISH.org
+.vercelignore
+vercel.json
