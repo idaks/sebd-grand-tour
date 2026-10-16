@@ -1,0 +1,144 @@
+#+TITLE: A solver-free optimality certificate for the SEBD grand tour
+#+DATE: [2026-08-04 Tue]
+#+UPDATED: 2026-08-04 Tue 10:21 CEST
+#+SUBTITLE: Last updated {{{keyword(UPDATED)}}}
+#+HOST: lism07-ludaesch
+#+AGENT: Claude Code — Opus 5 (1M context), model id claude-opus-5[1m]
+#+OPTIONS: toc:2 num:nil
+
+* What this is
+
+=exact_tsp.py= proves that 3527 km is optimal by calling HiGHS six times.
+Believing its answer means believing HiGHS.  This directory removes that
+dependency: a *proof object* that anyone can check with integer arithmetic
+alone — no LP, no branch-and-bound, no floating point, no solver, no Python.
+
+: swipl -q -g run -t halt check_certificate.pl
+
+runs in about 0.6 s and prints, verbatim:
+
+#+begin_example
+PASS (1) 563 edges = 561 published distances + 2 dummy edges
+PASS (2) node 35 joins only stops 1 and 34, at zero cost
+PASS (3) all 34 cuts are proper subsets (2 =< |S| =< 33)
+PASS (4) the 226 leaves form a complete binary tree -- exhaustive
+PASS (5) all 226 leaves bound every tour above 3526 km, so >= 3527 km
+PASS (6) the published route is a valid 1..34 tour of 3527 km
+
+VERIFIED: no tour of the 34 SEBD editions is shorter than 3527 km,
+and a tour of exactly 3527 km exists.  3527 km is optimal.
+#+end_example
+
+* Files
+
+| File                   | What it is                                                       |
+|------------------------+------------------------------------------------------------------|
+| =certificate.pl=       | the proof: 563 edges, 34 cuts, 226 leaves (99 KB of Prolog facts) |
+| =check_certificate.pl= | the checker: 161 lines of Prolog, reads only integers            |
+| =make_certificate.py=  | the generator: LPs used only to *find* the numbers (~2 min)       |
+| =SHA256SUMS=           | hashes of the three files above                                  |
+
+The checker also reads =../Claude-artifacts/distance.pl= and
+=../Claude-artifacts/route_optimized.pl=, so the proof is tied to the *published*
+distance table rather than to a private copy of it.  Run it from this directory.
+
+* The inequality it all rests on
+
+Model: Hamiltonian cycles on 35 nodes — the 34 editions plus a zero-cost dummy
+joined to stops 1 and 34, which turns the path-TSP into a cycle-TSP of equal
+cost (check (2) verifies the dummy really is that and nothing else).
+
+Choose *any* node potentials \(y_v\) and *any* cut multipliers \(z_S \ge 0\), and put
+
+: d_e = c_e - y_u - y_v - sum { z_S : edge e crosses the boundary of S }
+
+Then for every tour \(x\), with the leaf's branch decisions F1 (\(x_e=1\)) and F0 (\(x_e=0\)):
+
+: cost(x)  >=  2*sum_v y_v  +  2*sum_S z_S  +  sum_{e in F1} d_e  +  sum_{e free} min(0, d_e)
+
+Substitute \(d_e\) back and the proof is three lines: the degree of every node is
+exactly 2; a cycle crosses any proper cut at least twice (and \(z_S \ge 0\));
+and a 0/1 variable can only hurt where \(d_e < 0\).
+
+*No duality theorem is invoked.*  If the numbers had been pulled out of a hat the
+inequality would still hold — bad numbers merely give a useless bound.  That is
+what makes the certificate self-contained: it needs no account of where it came
+from.
+
+* One page is not enough
+
+The best bound obtainable from a single such inequality — i.e. the full
+subtour-elimination (Held–Karp) relaxation, 35 potentials and 7 cuts, which would
+fit on one page — is *3447 km*.  That is 80 km, 2.3%, short of 3527.
+
+Closing the gap therefore needs a case analysis: a binary tree that splits on
+"edge \(e\) is used / is not used".  The tree here has *451 nodes, 226 leaves, maximum
+depth 16*, and a pool of 34 subtour cuts; each leaf carries its own potentials.
+All potentials are scaled by 1000 and stored as integers, so the checker never
+leaves integer arithmetic.  Total: about 16 000 integers, 99 KB.
+
+/A napkin proves the tour exists.  A small book proves nothing beats it./
+
+* What the checker actually verifies
+
+1. The 563 model edges are exactly the 561 published distances plus the two
+   zero-cost dummy edges — so the proof is about *this* distance table.
+2. Node 35 has exactly two incident edges, both free, to stops 1 and 34 — hence
+   the path/cycle translation is sound in both directions.
+3. Every cut set is a proper subset with 2 =< |S| =< 33, which is what makes
+   "a tour crosses it at least twice" true.
+4. The 226 leaves form a *complete* binary tree over the branch decisions — the
+   case analysis has no hole.  (This is the check that a certificate format is
+   easiest to get wrong: a missing leaf is an unexamined case, not an error.)
+5. Every leaf's multipliers are nonnegative and its bound exceeds 3526.  Since
+   all costs are integers, every tour is therefore >= 3527 km.
+6. The published route is a valid permutation of stops 1..34, starting at 1 and
+   ending at 34, of length exactly 3527 km.  Lower bound = upper bound.
+
+* Does the checker actually bite?
+
+Tampered copies were run against it (2026-08-04, same machine).  Each was
+rejected, at the check you would want:
+
+| Tampering                                  | Response                                |
+|--------------------------------------------+-----------------------------------------|
+| delete one leaf                            | FAIL (4) the case analysis has a hole   |
+| zero out one leaf's potentials             | FAIL (5) a leaf does not close          |
+| make one cut multiplier negative           | FAIL (5) a leaf does not close          |
+| raise the claim to 3528 km                 | FAIL (5) a leaf does not close          |
+| falsify one edge cost (645 -> 545 km)      | FAIL (1) an edge disagrees with distance.pl |
+| enlarge a cut to the whole node set        | FAIL (3) a cut set is not a proper subset |
+
+One "tampering" is *accepted*, and should be: nudging a potential by a few units
+leaves a valid — if slightly different — proof, because the inequality holds for
+any \(y\).  A certificate that rejected that would be checking provenance, not
+validity.
+
+* What this does NOT establish
+
+- *Nothing about Italy.*  It proves "no tour is shorter, given these 561
+  numbers".  Whether those numbers describe the world is the coordinate
+  question, audited separately on 2026-08-01 (see =meta-provenance.org=, S10).
+- *Nothing about SWI-Prolog.*  Its integer arithmetic is now the trusted base.
+  That is a much smaller thing to trust than a MILP solver — bignum addition
+  and comparison — but it is not nothing.
+- *Nothing about the checker itself.*  161 lines, meant to be read.  A second
+  checker in a different language, written by someone else, would be the next
+  honest step.
+- *Nothing about the 16 co-optima.*  This certifies the optimal *value*.  The
+  claim that exactly 16 tours attain it comes from the no-good-cut enumeration
+  in the 2026-08-01 audit and is not certified here.
+
+* How the numbers were found
+
+=make_certificate.py= runs LP relaxations (scipy/HiGHS) with exact subtour
+separation by global minimum cut (Stoer–Wagner), branches on the most fractional
+edge, and reads the LP duals off each node.  The duals are rounded to
+thousandths and the leaf is *only* closed if the resulting integer arithmetic —
+the same arithmetic the Prolog checker redoes — already exceeds 3526.  So the
+generator can never emit a leaf that fails to verify; if HiGHS returned nonsense
+the tree would simply grow, never close, and the run would not finish.
+
+Generated 2026-08-04 on lism07-ludaesch by Claude Code (Opus 5, =claude-opus-5[1m]=)
+at Bertram Ludäscher's request, after the same question came up twice: /what
+exactly would convince a skeptic?/

@@ -99,9 +99,9 @@ On the morning of the talk, "the" tour length was reported three ways:
   - /Status:/ Deterministic heuristic (seed 20260618); its own bundle says: /not/ an
     optimality certificate. [badge:verified]
 - Claude toolchain
-  - /Length:/ 3,527 km
-  - /Status:/ *Proven optimal* by branch-and-cut (lower bound = upper bound).
-    [badge:verified]
+  - /Length:/ 3,541 km (3,527 km after the [[#coords][coordinate audit]])
+  - /Status:/ *Proven optimal* by branch-and-cut (lower bound = upper bound), for the
+    coordinates it had. [badge:verified]
 
 The two AI toolchains found /essentially the same tour/ — the orders differ only by
 swapping the twin editions held at identical coordinates (Venice 9↔20, Rimini 2↔18),
@@ -130,12 +130,15 @@ ledger:
   - /Contribution:/ /+19.9 km/ (3,546.9 − 3,527)
 
 Almost all of it is one documented modeling choice, which is the outcome you want. But
-note what the old page reported: a gap of only *5.9 km*, and it was smaller for a bad
-reason. Our coordinates were then wrong enough to pull the tour /12.3 km shorter/, which
-happened to cancel most of the 20 km projection difference. The two narrators looked
-like they nearly agreed; in truth two errors were quietly offsetting. Correcting the
-data made the disagreement /larger/ and, for the first time, fully explained.
-[badge:verified] (the arithmetic; see [[#coords][the coordinate audit]])
+note what the old page reported: a gap of only *5.9 km* (3,546.9 − 3,541), and it was
+smaller for a bad reason. Our coordinates were then wrong in a way that made the tour
+/14 km longer/ (3,541 instead of 3,527 on the same visiting order), which happened to
+cancel most of the 20 km projection difference. The two narrators looked like they
+nearly agreed; in truth two errors were quietly offsetting. Correcting the data made the
+disagreement /larger/ and, for the first time, fully explained. [badge:verified] (the
+arithmetic; see [[#coords][the coordinate audit]]). /Corrected 2026-10-16:/ until then
+this paragraph said the wrong coordinates made the tour “12.3 km shorter” — the wrong
+direction, caught by the [[#second-opinion][second review]].
 
 What turned "almost" into "provably" was neither narrator — it was the *certificate*
 ([[#part2][Part II]]): an exact solver whose lower bound climbs 2881 → 3273 → 3439 →
@@ -259,8 +262,10 @@ record how something was /found/, corroborated, or corrected. Diagram source:
 The tree's central distinction is between /found/ and /trusted/. The 2-opt search found
 the tour; HiGHS found the proofs, first the cutting-plane run and then the 226-leaf
 certificate. All of them appear only as grey, dashed helpers. Nothing above them depends
-on their being correct, because two short Prolog checkers re-verify what they produced.
-That is why the trust base is small: seven leaves, two of them about Prolog.
+on their being correct, because two short Prolog checkers re-verify what they produced,
+and since 2026-10-16 a second checker, written in Python by another AI agent,
+re-verifies the lower bound on its own. That is why the trust base is small: seven
+leaves, most of them about arithmetic and checker code.
 
 Some things are deliberately /not/ in the support structure. The ChatGPT bundle
 corroborates the result but supports nothing; remove it and the claim still stands. The
@@ -312,8 +317,11 @@ repeat at identical coordinates, so swapping any twin pair changes nothing — 2
 relabellings of any optimal tour. This page used to stop there and admit it had not
 checked for others. It has now been enumerated, which took about a minute: re-solve with
 a /no-good cut/ forbidding each optimum already found, until the solver's best answer
-exceeds 3,527. It does so at 3,529, and the complete list is *exactly 16 optimal tours*
-— two genuinely different routes, each in 8 twin-relabellings. The second route differs
+exceeds 3,527. It does so at 3,529, and the complete list is *16 optimal tours* — two
+genuinely different routes, each in 8 twin-relabellings. Note the status of that count:
+it was /reported/ by the enumeration run on 2026-08-01, but the enumeration script is
+not in the published bundle and nothing here certifies the count; the certificate proves
+the optimal /value/, not the number of tours that attain it. The second route differs
 only at the very end, arriving Rimini → Portonovo → Ancona → Senigallia instead of
 Rimini → Ancona → Portonovo → Senigallia; Ancona and Portonovo are 9 km apart and the
 detour cancels exactly. [badge:verified]
@@ -334,11 +342,14 @@ easiest to hardest:
 
 # TABLE -- one bullet per row; the sub-bullets are the columns.
 - the tour is valid and 3,527 km
-  - /You need to trust…:/ [[file:evidence/Claude-artifacts/verify.pl][verify.pl]] — 22
+  - /You need to trust…:/ [[file:evidence/Claude-artifacts/verify.pl][verify.pl]] — 38
     lines of Prolog
-  - /How to shrink that trust:/ Read it (it only sums =distance/3= facts and checks a
-    permutation), or ignore it and sum the
-    [[file:evidence/GPT-artifacts/sebd_distances.csv][561-row CSV]] in a spreadsheet.
+  - /How to shrink that trust:/ Read it (it walks the visiting order, sums =distance/3=
+    facts, and checks the permutation and the stored legs), or ignore it and sum the 33
+    legs yourself from [[file:evidence/Claude-artifacts/distance.pl][distance.pl]], one
+    fact per line. (Not from the GPT bundle's
+    [[file:evidence/GPT-artifacts/sebd_distances.csv][561-row CSV]]: that is the other
+    toolchain's distance table, and the same tour sums to 3,546.9 km there.)
 - the distance table itself
   - /You need to trust…:/ the equirectangular formula + coordinates
   - /How to shrink that trust:/ Recompute any entry from the published lat/longs with
@@ -353,8 +364,9 @@ easiest to hardest:
   - /How to shrink that trust:/ (a) and (b) are checkable by eye, and (a) is the part
     this page previously — and wrongly — claimed you could skip. (c) /was/ the genuine
     residual until 2026-08-04, when it was removed: the lower bound now ships as a
-    [[#nosolver][solver-free certificate]] that 161 lines of Prolog check in 0.6 s, using
-    integer arithmetic and nothing else.
+    [[#nosolver][solver-free certificate]] that Prolog checks in under a second, using
+    integer arithmetic and nothing else (161 lines then; 232 since the checker was
+    [[#second-opinion][hardened]] on 2026-10-16).
 
 That is the asymmetry the talk turns on: the /solver/ may be a thousand lines of
 heuristics and floating point — irrelevant, because what it emits is a witness whose
@@ -411,7 +423,9 @@ Then /every/ tour costs at least
 Why: every stop has exactly two tour edges, every tour crosses every cut at least twice,
 and a 0/1 variable can only hurt you where /d_{e}/ is negative. Three lines of algebra —
 and, crucially, /no assumption about where the numbers came from/. A certificate that
-would break if its numbers came from a liar is not a certificate. [badge:verified]
+would break if its numbers came from a liar is not a certificate. [badge:verified] (the
+inequality) — but see [[#second-opinion][a second opinion]]: the /checker/ did not
+enforce the inequality's preconditions until 2026-10-16.
 
 One such inequality is not enough, and the shortfall is worth knowing: the best bound
 any single page of potentials can give — 35 numbers and 7 cuts, the full Held–Karp
@@ -449,20 +463,76 @@ still have a valid proof, just a different one. A checker that rejected that wou
 policing provenance, not validity. [badge:verified] (all seven runs; see
 [[file:evidence/certificate/README.org][README.org]])
 
-What is still trusted, stated plainly: SWI-Prolog's integer arithmetic; the 161-line
-checker itself (short enough to read, but written by the same agent that wrote the
-generator — a second checker in another language, by another author, is the next honest
-step); and, as ever, the 561 distances, which are a claim about a model, not about
-Italy.
+What is still trusted, stated plainly: SWI-Prolog's integer arithmetic; the checker
+itself (short enough to read, but written by the same agent that wrote the generator —
+and, as the next section shows, short enough to read is not the same as correct); and,
+as ever, the 561 distances, which are a claim about a model, not about Italy.
+
+* A second opinion — the checker had a hole
+:PROPERTIES:
+:CUSTOM_ID: second-opinion
+:END:
+On 2026-10-16 another AI agent, OpenAI Codex, reviewed the abstract and this page
+without being told what we already knew. It read the checker, found what it does not
+check, and built a forgery that exploits it: give every leaf of the certificate a 36th
+“potential” for a node that does not exist, and claim the /chronological/ route of
+15,209 km. The bound counts the extra number; no edge ever subtracts it. The 2026-08-04
+checker printed: [badge:verified] (reproduced here)
+
+# VERBATIM -- transcript of an actual run; do not edit the block below.
+#+begin_example
+VERIFIED: no tour of the 34 SEBD editions is shorter than 15209 km,
+and a tour of exactly 15209 km exists.  15209 km is optimal.
+#+end_example
+
+The inequality was never wrong; the checker failed to enforce its preconditions (exactly
+35 potentials, a model fixed in advance) and loaded the certificate as program code
+rather than data. =verify.pl= had a smaller gap of the same kind: it summed the stored
+legs without checking that they follow the visiting order. Six well-chosen tamperings,
+all rejected, had not been enough to show that the checker bites — a familiar lesson
+about tests written by the author of the code.
+
+What survived, and why we know: *the 3,527 km result stands.* The unchanged certificate
+passes the hardened checker, and also a second checker Codex wrote for the review —
+Python, standard library, integer arithmetic, a different author in a different
+language, now shipped as
+[[file:evidence/certificate/independent_check.py][independent_check.py]]. That is
+exactly the step the [[#gaps][gaps ledger]] had listed as “the next honest step” since
+August. [badge:verified]
+
+What changed (2026-10-16): the checker now reads the certificate as data, fixes the
+model's size itself, and runs a new check (0) on the shape of every fact before anything
+else; =verify.pl= computes the length from the visiting order and checks each stored leg
+against it. The forgery and four related ones are now regression tests that must fail
+([[file:evidence/certificate/tests/run_tests.py][tests/run_tests.py]]; run with
+=--original= to watch the August checker accept three of them). Every changed file, with
+hashes before and after, is logged in
+[[file:evidence/certificate/CORRECTIONS.org][certificate/CORRECTIONS.org]] and
+[[file:evidence/Claude-artifacts/CORRECTIONS.org][Claude-artifacts/CORRECTIONS.org]];
+the originals are kept beside them.
+
+The same review also caught four errors in this page's prose: a table that gave the
+post-audit length as if it had been reported on the morning of the talk, a sentence that
+had the direction of the coordinate error backwards, a spreadsheet cross-check pointing
+at the other toolchain's distance table, and an overstated rounding bound. All four are
+corrected above and marked where they were. And it qualified one claim rather than
+correcting it: the count of 16 co-optimal tours is reported, not certified.
+
+So the second opinion did what the page says second witnesses are for. The first time
+(the coordinates, 2026-08-01) a disagreeing source caught bad /data/; this time a
+disagreeing reader caught a bad /checker/. In both cases the certified claim survived,
+and in both cases only because someone other than its author looked.
 
 * How to distrust this page
 :PROPERTIES:
 :CUSTOM_ID: distrust
 :END:
 Please do. Both artifact bundles are included under [[file:evidence/][evidence/]],
-byte-for-byte as hashed on 2026-08-01, with one documented exception: three files of the
-Claude bundle were corrected on 2026-10-12, and
-[[file:evidence/Claude-artifacts/CORRECTIONS.org][CORRECTIONS.org]] says which, why, and
+byte-for-byte as hashed in August, with documented exceptions: the map script and its
+renderings (2026-10-12), and the two checkers after the [[#second-opinion][second
+review]] (2026-10-16). Each bundle's CORRECTIONS.org
+([[file:evidence/Claude-artifacts/CORRECTIONS.org][Claude-artifacts]],
+[[file:evidence/certificate/CORRECTIONS.org][certificate]]) says which files, why, and
 with which hashes before and after; the originals are kept beside them. Re-run the
 checkers; don't take our word:
 
@@ -520,9 +590,32 @@ VERIFIED: no tour of the 34 SEBD editions is shorter than 3527 km,
 and a tour of exactly 3527 km exists.  3527 km is optimal.
 #+end_example
 
-This is the one to run if you believe only arithmetic. Try breaking it, too — the
-[[file:evidence/certificate/README.org][README]] lists six tamperings and what each one
-trips.
+Since 2026-10-16 the hardened checker prints one more line first, and its timing on that
+day was 0.36 s:
+
+# VERBATIM -- transcript of an actual run; do not edit the block below.
+#+begin_example
+PASS (0) well-formed: 35 nodes, 563 edges, 34 cuts, 226 leaves, 35 potentials each
+#+end_example
+
+This is the one to run if you believe only arithmetic. Try breaking it, too — and then
+run the breaking we already tried:
+
+# VERBATIM -- transcript of an actual run; do not edit the block below.
+#+begin_example
+# 3b. Tampering tests, and a second checker by another author (Python 3, no packages):
+python3 tests/run_tests.py
+python3 independent_check.py
+#+end_example
+
+Actual output on 2026-10-16: =13 of 13 tests behave as expected.= (eleven forgeries
+rejected, the original files and one harmless nudge accepted), then:
+
+# VERBATIM -- transcript of an actual run; do not edit the block below.
+#+begin_example
+Independent Python check: 563 edges, 34 proper cuts, 226 leaves, 35 potentials per leaf; complete tree; all exact integer bounds > 3526.
+Minimum scaled bound: 3526500 scale: 1000 maximum tree depth: 16
+#+end_example
 
 # VERBATIM -- transcript of an actual run; do not edit the block below.
 #+begin_example
@@ -562,9 +655,10 @@ its hash. So the original three files and the original =SHA256SUMS= are kept in
 they still check.
 
 Still suspicious? Good — that's the right instinct. The distance tables are plain text
-([[file:evidence/Claude-artifacts/distance.pl][561 Prolog facts]],
-[[file:evidence/GPT-artifacts/sebd_distances.csv][561 CSV rows]]); sum any tour by hand.
-If this page and its evidence ever disagree, believe the evidence.
+([[file:evidence/Claude-artifacts/distance.pl][561 Prolog facts]] for the certified
+tour; [[file:evidence/GPT-artifacts/sebd_distances.csv][561 CSV rows]] for the GPT
+toolchain's own, different distances); sum any tour by hand. If this page and its
+evidence ever disagree, believe the evidence.
 
 * Known gaps — and whether they matter
 :PROPERTIES:
@@ -592,13 +686,18 @@ A trust artifact should list what it /doesn't/ establish. Most gaps are leaves o
     [[file:evidence/Claude-artifacts/CORRECTIONS.org][CORRECTIONS.org]] with both hashes,
     and the originals are kept. Signed or externally timestamped hashes (a DOI-archived
     snapshot, say) would close this properly.
-- *The new checker was written by the same agent as the generator*, and SWI-Prolog's
-  integer arithmetic is now the trusted base.
+- *The checker was written by the same agent as the generator*, and SWI-Prolog's integer
+  arithmetic is the trusted base. *Partly closed 2026-10-16:* an independent review found
+  that this checker accepted a forged certificate ([[#second-opinion][a second opinion]]);
+  it was hardened, and a second checker by another author now re-checks the lower bound.
   - /In the tree:/ leaves: /Prolog validator rules/, /SWI-Prolog/
   - /Does it matter?:/ Smaller than what it replaced — bignum addition and comparison,
     versus a MILP solver — but it is the residual that remains. A second checker, in
     another language, by another author, would close it; the certificate format is public
-    and 161 lines is not a large ask.
+    and 161 lines is not a large ask. /Since 2026-10-16:/ it bit. The second checker
+    exists (Python, by OpenAI Codex), and the hole it exposed is now a regression test.
+    Both checkers were still written by AI agents; one written by a person would be the
+    next step.
 - *The optimum is of the model, not of Italy.* Distances are straight lines — ferries,
   roads, and the Apennines are ignored.
   - /In the tree:/ leaf: /Distance model/
@@ -611,9 +710,13 @@ A trust artifact should list what it /doesn't/ establish. Most gaps are leaves o
   remaining 30 agree to within 1.5 km, but "OSM says so" is a second opinion, not ground
   truth, and no coordinate here has been checked against a national cadastral source.
   - /In the tree:/ leaf: /OpenStreetMap/
-  - /Does it matter?:/ Small. A 1 km coordinate error moves the total by well under the
-    2 km rounding already acknowledged. But this /was/ the gap that actually bit, so it is
-    now the gap most worth watching.
+  - /Does it matter?:/ Probably small, but not bounded by the rounding. Moving one stop
+    by 1 km can change its two legs by up to 2 km in total, several errors add up, and
+    rounding 33 legs to whole kilometres can shift a total by up to 16.5 km in the worst
+    case (the measured effect on this tour is about 2 km). The four errors the audit found
+    moved the optimum by 14 km. This /was/ the gap that actually bit, so it is the gap
+    most worth watching. (/Corrected 2026-10-16:/ this cell used to say a 1 km error moves
+    the total “well under the 2 km rounding”, which is not a bound.)
 - *Provenance is self-reported* (see [[#lineage][Part I]]): no cryptographic or
   append-only trail binds the lineage graph to the actual session.
   - /In the tree:/ not in the tree: history, not support
@@ -639,9 +742,10 @@ A trust artifact should list what it /doesn't/ establish. Most gaps are leaves o
   - /In the tree:/ — (packaging)
   - /Does it matter?:/ It was a three-second fix listed as a known gap for two weeks,
     which is its own small lesson about ledgers.
-- +*The set of optimal tours is not enumerated.*+ *Closed 2026-08-01:* there are exactly
-  16.
-  - /In the tree:/ root note: “one of exactly 16”
+- +*The set of optimal tours is not enumerated.*+ *Closed 2026-08-01:* the enumeration
+  reported 16. /Qualified 2026-10-16:/ reported, not certified — the enumeration script is
+  not in the bundle.
+  - /In the tree:/ root note: “16 reported, not certified”
   - /Does it matter?:/ Didn't matter — the certified /value/ is unique — but it was
     cheap to settle, and settling it turned up the discrepancy between the published route
     and the one =exact_tsp.py= prints.
@@ -729,9 +833,20 @@ kept beside it; no other number changed. Two stale mentions of 3,541 km inside t
 bundle (=tsp.lp=, =provenance.pl=) were deliberately left untouched and are explained in
 the same file.
 
-Four drafts in, the page has been wrong about a coordinate, wrong about why two
-toolchains disagreed, and wrong about how many optimal tours exist — while the one thing
-it staked its argument on, the certificate, was right every time, and has now been put
-beyond the reach of the solver that found it. Make of that what you will; we think it is
-the whole point.
+Revised 2026-10-16 (Claude Code, Opus 5.5) after an independent review of the page and
+of the SEBD abstract by OpenAI Codex, which was given the files and the goal but not our
+own list of known issues. Its findings were reproduced before anything was changed. The
+two checkers were hardened and the review's forgeries became regression tests; Codex's
+own lower-bound check was added as a second checker; four prose errors were corrected
+where they stood, each marked; the count of co-optimal tours was qualified; the evidence
+tree gained the second checker. Every changed evidence file is logged, with hashes
+before and after, and the originals are kept. Since the public edition, this page's own
+history is the [[https://github.com/idaks/sebd-grand-tour/commits/main][commit log]].
+
+Six drafts in, the page has been wrong about a coordinate, wrong about why two
+toolchains disagreed, wrong about how many optimal tours it could vouch for, and wrong
+about its own checker — while the one thing it staked its argument on, the certificate,
+was right every time, and has now been put beyond the reach of both the solver that
+found it and the checker that first vouched for it. Make of that what you will; we think
+it is the whole point.
 

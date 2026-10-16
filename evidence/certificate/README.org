@@ -1,10 +1,25 @@
 #+TITLE: A solver-free optimality certificate for the SEBD grand tour
 #+DATE: [2026-08-04 Tue]
-#+UPDATED: 2026-08-04 Tue 10:21 CEST
+#+UPDATED: 2026-10-16 Fri 08:32 CDT
 #+SUBTITLE: Last updated {{{keyword(UPDATED)}}}
 #+HOST: lism07-ludaesch
-#+AGENT: Claude Code — Opus 5 (1M context), model id claude-opus-5[1m]
+#+AGENT: Claude Code — Opus 5 (1M context), model id claude-opus-5[1m]; revised 2026-10-16 by Claude Code — Opus 5.5, model id claude-opus-5-5
 #+OPTIONS: toc:2 num:nil
+
+* Correction, 2026-10-16: the 2026-08-04 checker could be fooled
+
+An independent review by another AI agent (OpenAI Codex, 2026-10-16) found that
+the original =check_certificate.pl= *accepted a forged certificate*: give every
+leaf a 36th "potential" for a node that does not exist, and the bound counts it
+while no edge ever subtracts it.  With that trick the checker printed
+"15209 km is optimal" for the chronological route.  The inequality below was
+never wrong; the checker failed to enforce its preconditions (exactly 35
+potentials, a fixed model, data instead of code).
+
+*The 3,527 km result stands.*  The unchanged certificate passes the hardened
+checker, and also =independent_check.py=, a second checker in Python written by
+Codex.  What changed, file by file, with hashes before and after: [[file:CORRECTIONS.org][CORRECTIONS.org]].
+The original checker and README are kept in [[file:original-2026-08-04/][original-2026-08-04/]].
 
 * What this is
 
@@ -15,9 +30,10 @@ alone — no LP, no branch-and-bound, no floating point, no solver, no Python.
 
 : swipl -q -g run -t halt check_certificate.pl
 
-runs in about 0.6 s and prints, verbatim:
+runs in under a second (0.36 s on 2026-10-16) and prints, verbatim:
 
 #+begin_example
+PASS (0) well-formed: 35 nodes, 563 edges, 34 cuts, 226 leaves, 35 potentials each
 PASS (1) 563 edges = 561 published distances + 2 dummy edges
 PASS (2) node 35 joins only stops 1 and 34, at zero cost
 PASS (3) all 34 cuts are proper subsets (2 =< |S| =< 33)
@@ -34,9 +50,12 @@ and a tour of exactly 3527 km exists.  3527 km is optimal.
 | File                   | What it is                                                       |
 |------------------------+------------------------------------------------------------------|
 | =certificate.pl=       | the proof: 563 edges, 34 cuts, 226 leaves (99 KB of Prolog facts) |
-| =check_certificate.pl= | the checker: 161 lines of Prolog, reads only integers            |
+| =check_certificate.pl= | the checker: 232 lines of Prolog, reads only integers (hardened 2026-10-16) |
+| =independent_check.py= | a second checker, Python standard library, by OpenAI Codex (2026-10-16) |
+| =tests/run_tests.py=   | 13 tampering tests: must FAIL, except the two that must PASS     |
 | =make_certificate.py=  | the generator: LPs used only to *find* the numbers (~2 min)       |
-| =SHA256SUMS=           | hashes of the three files above                                  |
+| =CORRECTIONS.org=      | what changed after 2026-08-04, why, and hashes before and after  |
+| =SHA256SUMS=           | hashes of the files above                                        |
 
 The checker also reads =../Claude-artifacts/distance.pl= and
 =../Claude-artifacts/route_optimized.pl=, so the proof is tied to the *published*
@@ -81,6 +100,13 @@ leaves integer arithmetic.  Total: about 16 000 integers, 99 KB.
 
 * What the checker actually verifies
 
+0. The certificate is *read as data*: every term must be one of the allowed facts
+   (claim, scale, dummy, node_count, counts, edge, cut, leaf), so it cannot define
+   or redefine a predicate.  The model's size is fixed *in the checker* (35 nodes,
+   dummy 35, 563 edges), not taken from the certificate.  Every leaf has exactly
+   35 integer potentials, nonnegative integer multipliers on existing cuts (each
+   at most once), and decisions on existing edges (each at most once, 0 or 1);
+   edge, cut and leaf ids are unique, and leaf ids are exactly 1..226.
 1. The 563 model edges are exactly the 561 published distances plus the two
    zero-cost dummy edges — so the proof is about *this* distance table.
 2. Node 35 has exactly two incident edges, both free, to stops 1 and 34 — hence
@@ -97,8 +123,18 @@ leaves integer arithmetic.  Total: about 16 000 integers, 99 KB.
 
 * Does the checker actually bite?
 
-Tampered copies were run against it (2026-08-04, same machine).  Each was
-rejected, at the check you would want:
+Since 2026-10-16 this is a test you can run, not just a table:
+
+: python3 tests/run_tests.py              # hardened checkers: 13 of 13 as expected
+: python3 tests/run_tests.py --original   # the same tamperings against the 2026-08-04 checker
+
+The 2026-08-04 checker *accepted* three of the new forgeries: F1 (Codex's extra
+potential, "15209 km is optimal"), F3 (a cut made only of nonexistent nodes) and
+F5 (a certificate that defines its own =dist/3=).  F1 is a false claim; F3 and F5
+were accepted with the true claim, which shows the hole but not a lie.  The
+hardened checker rejects all three at check (0).
+
+The original table, from 2026-08-04 (same machine), kept as it was:
 
 | Tampering                                  | Response                                |
 |--------------------------------------------+-----------------------------------------|
@@ -122,12 +158,16 @@ validity.
 - *Nothing about SWI-Prolog.*  Its integer arithmetic is now the trusted base.
   That is a much smaller thing to trust than a MILP solver — bignum addition
   and comparison — but it is not nothing.
-- *Nothing about the checker itself.*  161 lines, meant to be read.  A second
-  checker in a different language, written by someone else, would be the next
-  honest step.
+- *Nothing about the checker itself.*  232 lines, meant to be read.  The
+  2026-08-04 version (161 lines) had a hole that nobody noticed for ten weeks,
+  which is the point of this bullet.  Since 2026-10-16 there is a second checker
+  in a different language by a different author (=independent_check.py=, OpenAI
+  Codex); it checks the lower bound, not the tour.  Both were written by AI
+  agents; a human-written checker would still be a further step.
 - *Nothing about the 16 co-optima.*  This certifies the optimal *value*.  The
   claim that exactly 16 tours attain it comes from the no-good-cut enumeration
-  in the 2026-08-01 audit and is not certified here.
+  in the 2026-08-01 audit and is not certified here; the enumeration script is
+  not part of the published bundle either.
 
 * How the numbers were found
 

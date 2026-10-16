@@ -1,0 +1,55 @@
+#+TITLE: Corrections to the certificate bundle after 2026-08-04
+#+UPDATED: 2026-10-16 Fri 08:35 CDT
+#+AGENT: Claude Code — Opus 5.5, model id claude-opus-5-5
+
+This bundle was frozen on 2026-08-04, when SHA256SUMS was written. Every file
+changed or added after that date is listed here. The originals are kept, unchanged,
+in [[file:original-2026-08-04/][original-2026-08-04/]] together with the original SHA256SUMS, so both
+versions can be checked:
+
+#+begin_example
+shasum -a 256 -c SHA256SUMS                     # current bundle
+cd original-2026-08-04 && grep -E 'check_certificate|README' SHA256SUMS | shasum -a 256 -c
+#+end_example
+
+* 2026-10-16 — the checker accepted a forged certificate
+- *Found by:* an independent review by OpenAI Codex (2026-10-16), which was given the
+  files and the goal, not a list of known issues. Reproduced by Claude Code the same
+  day, in a scratch copy, before anything was changed.
+- *The hole:* =check_certificate.pl= summed every entry of a leaf's potential list
+  but used only entries 1..35 in the reduced costs, and never checked the list's
+  length. A 36th "potential" for a nonexistent node therefore inflated every bound.
+  With it, the 2026-08-04 checker printed "15209 km is optimal" for the
+  chronological route. It also took the model's size (node count, dummy node, edge
+  count) from the certificate it was checking, and loaded the certificate as program
+  code, so a certificate could define predicates such as =dist/3=.
+- *Not affected:* the certificate itself and the 3,527 km result. The unchanged
+  =certificate.pl= passes the hardened checker and the independent Python check.
+- *What changed:*
+  - =check_certificate.pl=: reads =certificate.pl= term by term as data, against a
+    fixed list of allowed facts; fixes the model (35 nodes, dummy 35, 563 edges) in
+    the checker; new check (0) on the shape of every fact (35 integer potentials per
+    leaf, nonnegative integer multipliers on existing cuts, decisions on existing
+    edges, unique ids, leaf ids exactly 1..226). Checks (1)–(6) are unchanged in
+    substance. 161 → 232 lines.
+  - =README.org=: a correction section at the top; check (0); the new files; the
+    tampering tests; the updated "does NOT establish" list. The 2026-08-04 tampering
+    table is kept as it was.
+  - *New* =independent_check.py=: Codex's lower-bound check from the review, in
+    Python (standard library, integer arithmetic), copied verbatim except for its
+    docstring, the path line, and one closing print line.
+  - *New* =tests/run_tests.py=: 13 tests on temporary copies (the original files, five
+    forgeries F1–F5 including Codex's, the six 2026-08-04 tamperings T1–T6, and one
+    harmless nudge N1). =--original= runs them against the 2026-08-04 checkers, which
+    accept F1, F3 and F5.
+- *Files and SHA-256:*
+  | file                 | 2026-08-04 (original) | 2026-10-16 (current) |
+  |----------------------+-----------------------+----------------------|
+  | check_certificate.pl | fd5811a32e80e587…     | b97afac1a0df407e…    |
+  | README.org           | aa45e45a9644e608…     | ab1bbb53bd0c88f1…    |
+  | independent_check.py | —                     | 414e3a30d835107d…    |
+  | tests/run_tests.py   | —                     | 68549d520a53c918…    |
+  Full hashes: [[file:SHA256SUMS][SHA256SUMS]] (current), [[file:original-2026-08-04/SHA256SUMS][original-2026-08-04/SHA256SUMS]].
+  =certificate.pl= and =make_certificate.py= are unchanged.
+- The companion change to =verify.pl= is logged in
+  [[file:../Claude-artifacts/CORRECTIONS.org][../Claude-artifacts/CORRECTIONS.org]].

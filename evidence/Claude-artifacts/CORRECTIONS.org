@@ -1,5 +1,5 @@
 #+TITLE: Corrections to this bundle after 2026-08-01
-#+UPDATED: 2026-10-13 Tue 00:34 CDT
+#+UPDATED: 2026-10-16 Fri 08:35 CDT
 #+AGENT: Claude Code — Opus 5.5, model id claude-opus-5-5
 
 This bundle was frozen on 2026-08-01, when SHA256SUMS was written. Any file
@@ -37,3 +37,23 @@ cd original-2026-08-01 && grep -E 'make_map_italy|sebd_route_italy' SHA256SUMS |
   example command =--opt-mode=optN,3541=. Out of date since 2026-08-01; with the
   corrected distances the optimum is 3,527. Left as is so the file still matches
   its hash; this note is the correction.
+
+* 2026-10-16 — verify.pl did not tie the stored legs to the visiting order
+- *Found by:* an independent review by OpenAI Codex (2026-10-16); reproduced by Claude
+  Code before the change.
+- *The hole:* =verify.pl= checked that =visit/2= is a permutation of 1..34 and summed
+  the stored legs =route_optimized/4=, but never checked that those legs connect
+  consecutive visits. Reordering =visit/2= while keeping the legs still passed.
+  (=check_certificate.pl= recomputed the length from the visits and was not fooled by
+  this one; its own hole is logged in [[file:../certificate/CORRECTIONS.org][../certificate/CORRECTIONS.org]].)
+- *Not affected:* the published tour and its length, 3,527 km.
+- *What changed:* =verify.pl= now computes the length from consecutive visits via
+  =dist/3=, and requires every stored leg to be exactly the leg between two
+  consecutive visits, with the right distance. 22 → 38 lines. Its output on the
+  published files is unchanged.
+- *Files and SHA-256:*
+  | file      | 2026-08-01 (original) | 2026-10-16 (current) |
+  |-----------+-----------------------+----------------------|
+  | verify.pl | f6458d335ba8f9ca…     | 340698cbb1a6783d…    |
+  The original is kept in [[file:original-2026-08-01/verify.pl][original-2026-08-01/verify.pl]]; its hash is in
+  [[file:original-2026-08-01/SHA256SUMS][original-2026-08-01/SHA256SUMS]].

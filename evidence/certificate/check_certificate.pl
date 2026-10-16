@@ -7,7 +7,23 @@
 %% certificate.pl could have been produced by a solver, by hand, or by a liar --
 %% the check below is valid either way; bad numbers simply fail it.
 %%
-%% What it proves, in six parts:
+%% Hardened 2026-10-16 after an independent review (OpenAI Codex) showed that the
+%% 2026-08-04 version accepted a FORGED certificate: a 36th "potential" for a node
+%% that does not exist inflated every leaf's bound, and the checker never noticed.
+%% The inequality was fine; the checker did not enforce its preconditions.  Now:
+%%   - certificate.pl is READ AS DATA, term by term, against a fixed list of
+%%     allowed facts -- it can no longer define or redefine any predicate;
+%%   - the model's size (35 nodes, dummy node 35, 563 edges) is fixed HERE, not
+%%     taken from the certificate it is supposed to check;
+%%   - check (0) below enforces the shape of every fact before (1)-(6) run.
+%% The original is kept in original-2026-08-04/; see CORRECTIONS.org.
+%%
+%% What it proves, in seven parts:
+%%   (0) the certificate is well-formed: one integer claim and scale > 0;
+%%       unique edge, cut and leaf ids; leaf ids exactly 1..N; every leaf has
+%%       exactly 35 integer potentials, nonnegative integer multipliers on
+%%       existing cuts (each at most once), and decisions on existing edges
+%%       (each at most once, value 0 or 1);
 %%   (1) the model's 563 edges are exactly the 561 published distances plus the
 %%       two zero-cost dummy edges  (so the proof is about THIS distance table);
 %%   (2) node 35 has exactly two incident edges, both free -- hence every
@@ -34,18 +50,71 @@
 %% exactly, |x cap delta(S)| >= 2 with z_S >= 0, and 0 =< x_e =< 1.  Everything
 %% here is scaled by scale/1 so it stays in integers.
 
-:- ['certificate'].
 :- ['../Claude-artifacts/distance'].
 :- ['../Claude-artifacts/route_optimized'].
 
 :- dynamic crosses/2, ycheck/1.
+:- dynamic claim/1, scale/1, dummy/1, node_count/1, counts/3, edge/4, cut/2, leaf/4.
+
+%% The model, fixed by the checker -- NOT read from the certificate.
+model_nodes(35).                 % 34 editions + the dummy node
+model_dummy(35).
+model_edges(563).                % 34*33/2 = 561 pairs + 2 dummy edges
+
+%% ------------------------------------------------- loading the certificate as data
+allowed(claim(_)). allowed(scale(_)). allowed(dummy(_)). allowed(node_count(_)).
+allowed(counts(_, _, _)). allowed(edge(_, _, _, _)). allowed(cut(_, _)).
+allowed(leaf(_, _, _, _)).
+
+load_certificate :-
+    setup_call_cleanup(open('certificate.pl', read, In),
+                       read_facts(In), close(In)).
+read_facts(In) :-
+    read_term(In, T, []),
+    (   T == end_of_file -> true
+    ;   allowed(T), ground(T) -> assertz(T), read_facts(In)
+    ;   format("FAIL: certificate.pl contains a term that is not an allowed fact:~n  ~q~n", [T]),
+        fail ).
+
+%% ------------------------------------------------- (0) the certificate's shape
+one(G) :- findall(G, G, [G]).
+pos_int(X) :- integer(X), X > 0.
+unique_ids(Ids) :- msort(Ids, S), sort(Ids, S).
+
+check_shape :-
+    model_nodes(M), model_dummy(Dm), model_edges(NE),
+    ( one(claim(Cl)), pos_int(Cl), one(scale(Sc)), pos_int(Sc),
+      one(dummy(D)), D == Dm, one(node_count(N)), N == M,
+      one(counts(Ec, cuts(NC), leaves(NL))), Ec == edges(NE), pos_int(NC), pos_int(NL)
+      -> true ; format("FAIL: (0) claim/scale/model size/counts are not as fixed by the checker~n"), fail ),
+    ( findall(I, edge(I, _, _, _), EIs), length(EIs, NE), unique_ids(EIs)
+      -> true ; format("FAIL: (0) edge ids are not ~w distinct ids~n", [NE]), fail ),
+    ( forall(edge(I, U, V, K), (maplist(integer, [I, U, V, K]), K >= 0))
+      -> true ; format("FAIL: (0) an edge is not integer-valued~n"), fail ),
+    ( findall(S, cut(S, _), CIs), length(CIs, NC), unique_ids(CIs)
+      -> true ; format("FAIL: (0) cut ids are not ~w distinct ids~n", [NC]), fail ),
+    ( findall(L, leaf(L, _, _, _), LIs), length(LIs, NL), msort(LIs, LS), numlist(1, NL, LS)
+      -> true ; format("FAIL: (0) leaf ids are not exactly 1..~w~n", [NL]), fail ),
+    ( forall(leaf(_, P, Ys, Zs), leaf_shape(M, NE, P, Ys, Zs))
+      -> true ; format("FAIL: (0) a leaf is malformed~n"), fail ),
+    format("PASS (0) well-formed: ~w nodes, ~w edges, ~w cuts, ~w leaves, ~w potentials each~n",
+           [M, NE, NC, NL, M]).
+
+leaf_shape(M, NE, Path, Ys, Zs) :-
+    is_list(Ys), length(Ys, M), maplist(integer, Ys),
+    is_list(Zs), pairs_keys_values(Zs, ZK, ZV), unique_ids(ZK),
+    forall(member(S, ZK), cut(S, _)),
+    forall(member(Z, ZV), (integer(Z), Z >= 0)),
+    is_list(Path), pairs_keys_values(Path, PE, PB), unique_ids(PE),
+    forall(member(E, PE), (integer(E), E >= 1, E =< NE, edge(E, _, _, _))),
+    forall(member(B, PB), memberchk(B, [0, 1])).
 
 %% ---------------------------------------------------------------- (1) the edges
 check_edges :-
-    counts(edges(NE), _, _),
+    model_edges(NE), model_dummy(Dm),
     findall(I, edge(I, _, _, _), Is), length(Is, NE),
     ( forall(edge(_, U, V, K),
-             ( V =:= 35 -> memberchk(U, [1, 34]), K =:= 0
+             ( V =:= Dm -> memberchk(U, [1, 34]), K =:= 0
              ; U < V, dist(U, V, K) ))
       -> true ; format("FAIL: an edge disagrees with distance.pl~n"), fail ),
     findall(U-V, (between(1, 33, U), U1 is U + 1, between(U1, 34, V)), Pairs),
@@ -57,7 +126,7 @@ check_edges :-
 
 %% ------------------------------------------------- (2) path <-> cycle, honestly
 check_dummy :-
-    dummy(Dm),
+    model_dummy(Dm),
     findall(U-K, edge(_, U, Dm, K), Ds), msort(Ds, Sorted),
     ( Sorted = [1-0, 34-0]
       -> format("PASS (2) node ~w joins only stops 1 and 34, at zero cost~n", [Dm])
@@ -65,7 +134,7 @@ check_dummy :-
 
 %% ----------------------------------------------------------------- (3) the cuts
 check_cuts :-
-    counts(_, cuts(NC), _), node_count(M), Hi is M - 2,
+    counts(_, cuts(NC), _), model_nodes(M), Hi is M - 2,
     ( forall(cut(_, S),
              ( sort(S, S), length(S, L), L >= 2, L =< Hi,
                forall(member(V, S), (integer(V), V >= 1, V =< M)) ))
@@ -154,6 +223,8 @@ tour_len([A, B|T], L) :- dist(A, B, K), tour_len([B|T], R), L is R + K.
 
 %% ---------------------------------------------------------------------- verdict
 run :-
+    ( load_certificate -> true ; format("~nNOT VERIFIED.~n"), fail ),
+    ( check_shape -> true ; format("~nNOT VERIFIED.~n"), fail ),
     claim(Cl),
     ( check_edges, check_dummy, check_cuts, check_tree, check_leaves, check_tour
       -> format("~nVERIFIED: no tour of the 34 SEBD editions is shorter than ~w km,~n", [Cl]),
