@@ -1,6 +1,6 @@
 // Evidence tree for the SEBD Grand Tour: what supports "T is an optimal tour of 3,527 km".
 // Root = derived claim; leaves = what you have to believe; inner nodes = checks/computations.
-// Grey dashed = untrusted helpers: they FOUND something that a trusted check then re-verifies.
+// Gray dashed = untrusted helpers: they FOUND something that a trusted check then re-verifies.
 // Build: dot -Tsvg evidence-tree-SEBD-tour.gv -o evidence-tree-SEBD-tour.svg
 // Links are relative to index.html, where the SVG is inlined (evidence/...).
 // The standalone evidence-tree-SEBD-tour.svg next to this file is rendered with ../evidence/ links.

@@ -119,12 +119,12 @@ inefficient travel). The visiting order, by edition number:</p>
 
 <p><span class="badge b-model">modeling choice</span> Honesty about the metric:
 distances are <em>straight lines</em> on an equirectangular km-plane (reference
-parallel 42°N, R&nbsp;=&nbsp;6371&nbsp;km), rounded to whole kilometres — not roads,
+parallel 42°N, R&nbsp;=&nbsp;6371&nbsp;km), rounded to whole kilometers — not roads,
 not rail, and pointedly <em>not ferries</em>, though the Sicily and Sardinia editions
 cross open water. Because that projection is a genuine plane embedding, the underlying
 real-valued metric satisfies the triangle inequality exactly. The <em>rounded</em>
 matrix we actually ship inherits it only to within the rounding: 22 of the 35,904
-ordered triples violate it, every one of them by a single kilometre. Nothing downstream
+ordered triples violate it, every one of them by a single kilometer. Nothing downstream
 cares — the certificate below is a claim about the shipped integer matrix, whatever its
 geometry — but a page about checkable claims should not round a number and keep the
 adjective. Should you actually take the trip, budget extra for the sea legs.</p>
@@ -152,11 +152,11 @@ about their own world. <span class="badge b-verified">verified</span></p>
 page carried until 2026-08-01, which blamed "pure arithmetic" — floating point versus
 integer rounding, and earth radius 6371.0088 versus 6371. Measured on the identical
 visiting order, that story was simply false: the radius accounts for
-<strong>5&nbsp;metres</strong>. Here is the real ledger:</p>
+<strong>5&nbsp;meters</strong>. Here is the real ledger:</p>
 <table>
 <tr><th>Source of difference</th><th>Contribution</th></tr>
 <tr><td>Projection: GPT scales longitude by the cosine of each pair's <em>mean latitude</em>; we use one fixed reference parallel (42°N)</td><td><strong>+20.51 km</strong></td></tr>
-<tr><td>Our rounding of each leg to whole kilometres</td><td>−2.01 km</td></tr>
+<tr><td>Our rounding of each leg to whole kilometers</td><td>−2.01 km</td></tr>
 <tr><td>Coordinates the two bundles still disagree on</td><td>+1.44 km</td></tr>
 <tr><td>Earth radius 6371.0088 vs 6371 km</td><td>+0.005 km</td></tr>
 <tr><td><em>total</em></td><td><em>+19.9 km</em> (3,546.9 − 3,527)</td></tr>
@@ -256,6 +256,193 @@ spent two weeks demonstrating it by accident.</p>
 Castellaneta Marina wrong by 10.0 km and Gizzeria Lido by 3.5 km — so neither toolchain
 was trustworthy on coordinates, and neither was checkable without a third source.
 <span class="badge b-verified">verified</span></p>
+
+<h2 id="venue1998">An unresolved fact — where was SEBD 1998?</h2>
+<p>The edition table above, like both AI toolchains, follows DBLP: the 6th SEBD (1998) was
+in <strong>Ancona</strong>. On 2026-10-20 a third source turned up that disagrees. The
+symposium's own <a href="https://sebd.inf.uniroma3.it/history.html">history page</a>,
+written by a participant, says: “Nel 1998 siamo tornati al mare, a Portonovo, un posto di
+sogno (scogli e spiaggia) vicino ad Ancona” — <em>in 1998 we went back to the sea, to
+Portonovo, a dream spot (rocks and beach) near Ancona</em>. Portonovo also hosted the 14th
+SEBD in 2006. If 1998 was there too, editions 6 and 14 are a fourth twin pair, and the
+tour's input changes. <span class="badge b-primary">primary source</span></p>
+<p>Searching further did not settle it. The proceedings title says “Ancona”; the official
+<a href="https://sebd.inf.uniroma3.it/index.html#events">events list</a> says “Ancona,
+Marche” but links each edition to DBLP, so it repeats the same witness; papers cite the
+proceedings, not the venue; and an AI assistant (Gemini) offered that the meeting was
+“highly likely” on the Ancona engineering campus, without a source. Portonovo lies within
+the comune of Ancona, so “Ancona” may name the place at a coarser resolution.</p>
+<p>Rather than pick a winner, we wrote the situation down as rules — strict facts for what
+each source says, defeasible rules for “a reliable source saying X supports X, unless
+something defeats it”, and undercutters for sources that only repeat another or cite
+nothing (<a href="evidence/venue-1998/venue1998.lp">venue1998.lp</a>). An answer-set
+solver then reports the readings the evidence allows. The diagram is drawn
+<em>from</em> those rules, node by rule; it is a view of them, not a translation into an
+argumentation framework, which would lose the structure that says <em>why</em> each
+argument stands or falls.</p>
+<figure class="wide"><div class="tree-plate">
+<svg role="img" aria-label="Rules about the 1998 venue: sources, undercutters, two excluding conclusions" style="display:block;width:100%;height:auto"
+ viewBox="0.00 0.00 718.40 273.39" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<g id="graph0" class="graph" transform="scale(1 1) rotate(0) translate(4 269.39)">
+<title>venue1998</title>
+<!-- H -->
+<g id="node1" class="node">
+<title>H</title>
+<g id="a_node1"><a xlink:href="https://sebd.inf.uniroma3.it/history.html" xlink:title="&lt;b&gt;History page&lt;/b&gt; (eyewitness)&lt;br/&gt;&lt;font point&#45;size=&quot;9&quot;&gt;“Nel 1998 siamo tornati al mare,&lt;br/&gt;a Portonovo … vicino ad Ancona”&lt;/font&gt;">
+<path fill="#fbf0c4" stroke="#b39b3c" stroke-width="2.2" d="M166.4,-119.39C166.4,-119.39 36.62,-119.39 36.62,-119.39 30.63,-119.39 24.62,-113.39 24.62,-107.39 24.62,-107.39 24.62,-93.75 24.62,-93.75 24.62,-87.75 30.62,-81.75 36.62,-81.75 36.62,-81.75 166.4,-81.75 166.4,-81.75 172.4,-81.75 178.4,-87.75 178.4,-93.75 178.4,-93.75 178.4,-107.39 178.4,-107.39 178.4,-113.39 172.4,-119.39 166.4,-119.39"/>
+<text text-anchor="start" x="36.26" y="-105.62" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00">History page</text>
+<text text-anchor="start" x="103.01" y="-105.62" font-family="Helvetica,sans-Serif" font-size="11.00"> (eyewitness)</text>
+<text text-anchor="start" x="36.26" y="-96.52" font-family="Helvetica,sans-Serif" font-size="9.00">“Nel 1998 siamo tornati al mare,</text>
+<text text-anchor="start" x="33.26" y="-87.52" font-family="Helvetica,sans-Serif" font-size="9.00">a Portonovo … vicino ad Ancona”</text>
+</a>
+</g>
+</g>
+<!-- P -->
+<g id="node7" class="node">
+<title>P</title>
+<path fill="#d6e6f7" stroke="#7a7a7a" d="M213.03,-192.39C213.03,-192.39 12,-192.39 12,-192.39 6,-192.39 0,-186.39 0,-180.39 0,-180.39 0,-168.39 0,-168.39 0,-162.39 6,-156.39 12,-156.39 12,-156.39 213.03,-156.39 213.03,-156.39 219.03,-156.39 225.03,-162.39 225.03,-168.39 225.03,-168.39 225.03,-180.39 225.03,-180.39 225.03,-186.39 219.03,-192.39 213.03,-192.39"/>
+<text text-anchor="start" x="65.64" y="-174.94" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00">venue(portonovo)</text>
+<text text-anchor="start" x="8.64" y="-165.84" font-family="Helvetica,sans-Serif" font-size="9.00">defeasible: eyewitness, unless venue(ancona_city)</text>
+</g>
+<!-- H&#45;&gt;P -->
+<g id="edge1" class="edge">
+<title>H&#45;&gt;P</title>
+<path fill="none" stroke="black" d="M104.35,-120.07C105.64,-128.51 107.19,-138.64 108.6,-147.8"/>
+<polygon fill="black" stroke="black" points="106.17,-148.15 109.65,-154.69 111.01,-147.4 106.17,-148.15"/>
+</g>
+<!-- T -->
+<g id="node2" class="node">
+<title>T</title>
+<path fill="#fbf0c4" stroke="#b39b3c" d="M326.9,-118.57C326.9,-118.57 212.12,-118.57 212.12,-118.57 206.12,-118.57 200.12,-112.57 200.12,-106.57 200.12,-106.57 200.12,-94.57 200.12,-94.57 200.12,-88.57 206.12,-82.57 212.12,-82.57 212.12,-82.57 326.9,-82.57 326.9,-82.57 332.9,-82.57 338.9,-88.57 338.9,-94.57 338.9,-94.57 338.9,-106.57 338.9,-106.57 338.9,-112.57 332.9,-118.57 326.9,-118.57"/>
+<text text-anchor="start" x="208.76" y="-101.12" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00">Proceedings title</text>
+<text text-anchor="start" x="297.26" y="-101.12" font-family="Helvetica,sans-Serif" font-size="11.00"> (label)</text>
+<text text-anchor="start" x="214.01" y="-92.02" font-family="Helvetica,sans-Serif" font-size="9.00">“SEBD 1998, Ancona, Italy”</text>
+</g>
+<!-- A -->
+<g id="node8" class="node">
+<title>A</title>
+<path fill="#d6e6f7" stroke="#7a7a7a" d="M499.15,-192.39C499.15,-192.39 331.88,-192.39 331.88,-192.39 325.88,-192.39 319.88,-186.39 319.88,-180.39 319.88,-180.39 319.88,-168.39 319.88,-168.39 319.88,-162.39 325.88,-156.39 331.88,-156.39 331.88,-156.39 499.15,-156.39 499.15,-156.39 505.15,-156.39 511.15,-162.39 511.15,-168.39 511.15,-168.39 511.15,-180.39 511.15,-180.39 511.15,-186.39 505.15,-192.39 499.15,-192.39"/>
+<text text-anchor="start" x="364.51" y="-174.94" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00">venue(ancona_city)</text>
+<text text-anchor="start" x="328.51" y="-165.84" font-family="Helvetica,sans-Serif" font-size="9.00">defeasible: label, unless venue(portonovo)</text>
+</g>
+<!-- T&#45;&gt;A -->
+<g id="edge2" class="edge">
+<title>T&#45;&gt;A</title>
+<path fill="none" stroke="black" d="M304.86,-118.96C325.24,-128.98 351.02,-141.66 372.56,-152.26"/>
+<polygon fill="black" stroke="black" points="371.27,-154.36 378.63,-155.25 373.43,-149.96 371.27,-154.36"/>
+</g>
+<!-- M -->
+<g id="node9" class="node">
+<title>M</title>
+<path fill="#d5efd9" stroke="#7a7a7a" d="M367.78,-265.39C367.78,-265.39 171.25,-265.39 171.25,-265.39 165.25,-265.39 159.25,-259.39 159.25,-253.39 159.25,-253.39 159.25,-241.39 159.25,-241.39 159.25,-235.39 165.25,-229.39 171.25,-229.39 171.25,-229.39 367.78,-229.39 367.78,-229.39 373.78,-229.39 379.78,-235.39 379.78,-241.39 379.78,-241.39 379.78,-253.39 379.78,-253.39 379.78,-259.39 373.78,-265.39 367.78,-265.39"/>
+<text text-anchor="start" x="206.89" y="-247.94" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00">at(ancona_municipality)</text>
+<text text-anchor="start" x="167.89" y="-238.84" font-family="Helvetica,sans-Serif" font-size="9.00">strict: follows from either venue, and from the label</text>
+</g>
+<!-- T&#45;&gt;M -->
+<g id="edge7" class="edge">
+<title>T&#45;&gt;M</title>
+<path fill="none" stroke="black" d="M269.51,-119.04C269.51,-144.4 269.51,-191.58 269.51,-220.84"/>
+<polygon fill="black" stroke="black" points="267.07,-220.8 269.52,-227.8 271.97,-220.8 267.07,-220.8"/>
+</g>
+<!-- L -->
+<g id="node3" class="node">
+<title>L</title>
+<g id="a_node3"><a xlink:href="https://sebd.inf.uniroma3.it/index.html#events" xlink:title="&lt;b&gt;Official events list&lt;/b&gt; (label)&lt;br/&gt;&lt;font point&#45;size=&quot;9&quot;&gt;“1998, Ancona, Marche”&lt;/font&gt;">
+<path fill="#fbf0c4" stroke="#b39b3c" stroke-width="2.2" d="M492.15,-118.57C492.15,-118.57 372.88,-118.57 372.88,-118.57 366.88,-118.57 360.88,-112.57 360.88,-106.57 360.88,-106.57 360.88,-94.57 360.88,-94.57 360.88,-88.57 366.88,-82.57 372.88,-82.57 372.88,-82.57 492.15,-82.57 492.15,-82.57 498.15,-82.57 504.15,-88.57 504.15,-94.57 504.15,-94.57 504.15,-106.57 504.15,-106.57 504.15,-112.57 498.15,-118.57 492.15,-118.57"/>
+<text text-anchor="start" x="369.51" y="-101.12" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00">Official events list</text>
+<text text-anchor="start" x="462.51" y="-101.12" font-family="Helvetica,sans-Serif" font-size="11.00"> (label)</text>
+<text text-anchor="start" x="383.39" y="-92.02" font-family="Helvetica,sans-Serif" font-size="9.00">“1998, Ancona, Marche”</text>
+</a>
+</g>
+</g>
+<!-- L&#45;&gt;A -->
+<g id="edge3" class="edge">
+<title>L&#45;&gt;A</title>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M428.31,-119.32C426.24,-128.06 423.71,-138.75 421.45,-148.3"/>
+<polygon fill="black" stroke="black" points="419.13,-147.49 419.9,-154.86 423.9,-148.62 419.13,-147.49"/>
+</g>
+<!-- G -->
+<g id="node4" class="node">
+<title>G</title>
+<path fill="#fbf0c4" stroke="#b39b3c" d="M698.4,-118.57C698.4,-118.57 538.62,-118.57 538.62,-118.57 532.62,-118.57 526.62,-112.57 526.62,-106.57 526.62,-106.57 526.62,-94.57 526.62,-94.57 526.62,-88.57 532.62,-82.57 538.62,-82.57 538.62,-82.57 698.4,-82.57 698.4,-82.57 704.4,-82.57 710.4,-88.57 710.4,-94.57 710.4,-94.57 710.4,-106.57 710.4,-106.57 710.4,-112.57 704.4,-118.57 698.4,-118.57"/>
+<text text-anchor="start" x="572.76" y="-101.12" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00">Gemini</text>
+<text text-anchor="start" x="609.51" y="-101.12" font-family="Helvetica,sans-Serif" font-size="11.00"> (inference)</text>
+<text text-anchor="start" x="535.26" y="-92.02" font-family="Helvetica,sans-Serif" font-size="9.00">“highly likely … the engineering campus”</text>
+</g>
+<!-- G&#45;&gt;A -->
+<g id="edge4" class="edge">
+<title>G&#45;&gt;A</title>
+<path fill="none" stroke="black" stroke-dasharray="1,5" d="M569.12,-119.05C540.03,-129.34 503.11,-142.4 472.75,-153.14"/>
+<polygon fill="black" stroke="black" points="471.99,-150.81 466.21,-155.45 473.63,-155.43 471.99,-150.81"/>
+</g>
+<!-- U1 -->
+<g id="node5" class="node">
+<title>U1</title>
+<path fill="#eeeeee" stroke="#9a9a9a" d="M499.28,-36C499.28,-36 365.75,-36 365.75,-36 359.75,-36 353.75,-30 353.75,-24 353.75,-24 353.75,-12 353.75,-12 353.75,-6 359.75,0 365.75,0 365.75,0 499.28,0 499.28,0 505.28,0 511.28,-6 511.28,-12 511.28,-12 511.28,-24 511.28,-24 511.28,-30 505.28,-36 499.28,-36"/>
+<text text-anchor="start" x="381.51" y="-18.55" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00">copies(events, title)</text>
+<text text-anchor="start" x="362.39" y="-9.45" font-family="Helvetica,sans-Serif" font-size="9.00">links to DBLP: same witness again</text>
+</g>
+<!-- U1&#45;&gt;L -->
+<g id="edge9" class="edge">
+<title>U1&#45;&gt;L</title>
+<path fill="none" stroke="#b0303a" stroke-dasharray="5,2" d="M432.51,-36.48C432.51,-47.28 432.51,-61.34 432.51,-73.45"/>
+<polygon fill="#b0303a" stroke="#b0303a" points="430.07,-73.33 432.52,-80.33 434.97,-73.33 430.07,-73.33"/>
+<text text-anchor="middle" x="452.76" y="-55.2" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#b0303a">undercuts</text>
+</g>
+<!-- U2 -->
+<g id="node6" class="node">
+<title>U2</title>
+<path fill="#eeeeee" stroke="#9a9a9a" d="M676.65,-36C676.65,-36 560.38,-36 560.38,-36 554.38,-36 548.38,-30 548.38,-24 548.38,-24 548.38,-12 548.38,-12 548.38,-6 554.38,0 560.38,0 560.38,0 676.65,0 676.65,0 682.65,0 688.65,-6 688.65,-12 688.65,-12 688.65,-24 688.65,-24 688.65,-30 682.65,-36 676.65,-36"/>
+<text text-anchor="start" x="569.01" y="-18.55" font-family="Helvetica,sans-Serif" font-weight="bold" font-size="11.00">unsourced(gemini)</text>
+<text text-anchor="start" x="557.01" y="-9.45" font-family="Helvetica,sans-Serif" font-size="9.00">a plausibility guess, no source</text>
+</g>
+<!-- U2&#45;&gt;G -->
+<g id="edge10" class="edge">
+<title>U2&#45;&gt;G</title>
+<path fill="none" stroke="#b0303a" stroke-dasharray="5,2" d="M618.51,-36.48C618.51,-47.36 618.51,-61.54 618.51,-73.7"/>
+<polygon fill="#b0303a" stroke="#b0303a" points="616.07,-73.61 618.52,-80.61 620.97,-73.61 616.07,-73.61"/>
+<text text-anchor="middle" x="638.76" y="-55.2" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#b0303a">undercuts</text>
+</g>
+<!-- P&#45;&gt;A -->
+<g id="edge8" class="edge">
+<title>P&#45;&gt;A</title>
+<path fill="none" stroke="#b0303a" d="M233.74,-174.39C259.36,-174.39 286.18,-174.39 311.11,-174.39"/>
+<polygon fill="#b0303a" stroke="#b0303a" points="233.85,-171.94 226.85,-174.39 233.85,-176.84 233.85,-171.94"/>
+<polygon fill="#b0303a" stroke="#b0303a" points="310.97,-176.84 317.97,-174.39 310.97,-171.94 310.97,-176.84"/>
+<text text-anchor="middle" x="272.45" y="-162.84" font-family="Helvetica,sans-Serif" font-size="9.00" fill="#b0303a"> exclude each other</text>
+</g>
+<!-- P&#45;&gt;M -->
+<g id="edge5" class="edge">
+<title>P&#45;&gt;M</title>
+<path fill="none" stroke="black" d="M150.92,-192.76C172.78,-202.64 200.31,-215.09 223.34,-225.51"/>
+<polygon fill="black" stroke="black" points="222.19,-227.68 229.58,-228.33 224.21,-223.21 222.19,-227.68"/>
+</g>
+<!-- A&#45;&gt;M -->
+<g id="edge6" class="edge">
+<title>A&#45;&gt;M</title>
+<path fill="none" stroke="black" d="M379.8,-192.76C359.65,-202.56 334.32,-214.88 313.02,-225.24"/>
+<polygon fill="black" stroke="black" points="311.95,-223.03 306.73,-228.29 314.1,-227.43 311.95,-223.03"/>
+</g>
+</g>
+</svg>
+</div><figcaption>The 1998 venue as rules. Yellow: sources (strict facts); gray: undercutters;
+blue: the two defeasible conclusions, which exclude each other; green: what follows
+strictly either way. Dotted: support from an undercut source.</figcaption></figure>
+<p>The solver finds <strong>two readings</strong>, one per venue. What holds in
+<em>both</em> is what the evidence establishes: the meeting was within the comune of
+Ancona; the events list is not an independent witness; the campus claim carries no weight.
+What it does not establish is Portonovo versus the city. That ambiguity is real, and the
+honest output is to keep both. <span class="badge b-verified">verified</span> (clingo
+5.6.2, 2026-10-20; outputs in the
+<a href="evidence/venue-1998/README.org">README</a>)</p>
+<p>The rules also say what would settle it. Add testimony from a 1998 organizer for either
+venue and one reading remains. Or judge that “Ancona” on the title page only names the
+comune; then the labels say nothing about city versus Portonovo, and the eyewitness stands
+alone. The first is a question for Paolo Atzeni, Luca Cabibbo or Maurizio Panti; the second
+is a judgment, and the rules make visible that it decides the case.</p>
+<p>For the tour, nothing has changed yet: it keeps 1998 at Ancona's coordinates. Under the
+Portonovo reading, edition 6 would move about 9&nbsp;km and become a twin of edition 14,
+and the optimum would have to be re-solved and re-certified. That has not been done.</p>
 
 <div class="bridge"><p><em>Provenance tells you where a number came from, not whether it
 is true.</em> The lineage graph is the history of this page, mistakes included. Part&nbsp;II
@@ -727,7 +914,7 @@ arrows record how something was <em>found</em>, corroborated, or corrected. Diag
 </figure>
 <p>The tree's central distinction is between <em>found</em> and <em>trusted</em>. The 2-opt
 search found the tour; HiGHS found the proofs, first the cutting-plane run and then the
-226-leaf certificate. All of them appear only as grey, dashed helpers. Nothing above them
+226-leaf certificate. All of them appear only as gray, dashed helpers. Nothing above them
 depends on their being correct, because two short Prolog checkers re-verify what they
 produced, and since 2026-10-16 a second checker, written in Python by another AI agent,
 re-verifies the lower bound on its own. That is why the trust base is small: seven
@@ -776,26 +963,55 @@ single tour, so lower&nbsp;=&nbsp;upper&nbsp;=&nbsp;optimum. This is the Dantzig
 method (1954), the engine inside the record-holding Concorde TSP solver.
 <span class="badge b-verified">verified</span></p>
 <p>And a footnote the proof itself supplies: the optimal <em>value</em> is unique, the
-optimal <em>tour</em> is not. Rimini (editions 2, 18), Venice (9, 20), and Villasimius
-(28, 32) each repeat at identical coordinates, so swapping any twin pair changes nothing
-— 2³&nbsp;=&nbsp;8 relabellings of any optimal tour. This page used to stop there and
-admit it had not checked for others. It has now been enumerated, which took about a
-minute: re-solve with a <em>no-good cut</em> forbidding each optimum already found, until
-the solver's best answer exceeds 3,527. It does so at 3,529, and the complete list is
-<strong>16 optimal tours</strong> — two genuinely different routes, each in 8
-twin-relabellings. Note the status of that count: it was <em>reported</em> by the
-enumeration run on 2026-08-01, but the enumeration script is not in the published
-bundle and nothing here certifies the count; the certificate proves the optimal
-<em>value</em>, not the number of tours that attain it. The second route differs only at the very end, arriving
-Rimini&nbsp;→&nbsp;Portonovo&nbsp;→&nbsp;Ancona&nbsp;→&nbsp;Senigallia instead of
-Rimini&nbsp;→&nbsp;Ancona&nbsp;→&nbsp;Portonovo&nbsp;→&nbsp;Senigallia; Ancona and
-Portonovo are 9&nbsp;km apart and the detour cancels exactly.
-<span class="badge b-verified">verified</span></p>
+optimal <em>tour</em> is not. An enumeration run on 2026-08-01 re-solved with a
+<em>no-good cut</em> forbidding each optimum already found, until the solver's best answer
+exceeded 3,527 (it did so at 3,529). It reported <strong>16 optimal tours</strong>: two
+routes, each written 8 ways. Note the status of that count: it was <em>reported</em>, but
+the enumeration script is not in the published bundle and nothing here certifies it. The
+certificate proves the optimal <em>value</em>, not the number of tours that attain it.</p>
+
+<h3 id="same">Two kinds of “the same tour”</h3>
+<p>The 16 are not 16 of one kind. They are 2&nbsp;×&nbsp;8, and the two factors mean quite
+different things.</p>
+<p><strong>The ×8 is a symmetry of the data.</strong> Rimini (editions 2 and 18), Venice
+(9, 20), and Villasimius (28, 32) each hosted twice, at identical coordinates, so each pair
+is 0&nbsp;km apart and the best tour visits them back to back. Writing Venice as
+“9, 20” or “20, 9” is the same trip with the labels swapped; three pairs give
+2³&nbsp;=&nbsp;8 ways to write any tour. This holds under any metric, any rounding, any
+coordinates: it comes from our choice to key the tour by <em>edition</em> rather than by
+city, and it is checkable in one line per pair (<code>distance(2,18,0)</code>,
+<code>distance(9,20,0)</code>, <code>distance(28,32,0)</code> in
+<a href="evidence/Claude-artifacts/distance.pl">distance.pl</a>).</p>
+<p><strong>The ×2 is a coincidence of rounding.</strong> The second route differs only at
+the very end, visiting Portonovo before Ancona instead of after. Ancona and Portonovo are
+9&nbsp;km apart, and with distances rounded to whole kilometers the two endings tie
+exactly. Without the rounding they do not:</p>
+<table>
+<tr><th>Ending</th><th>Rounded legs (km)</th><th>Rounded total</th><th>Unrounded total</th></tr>
+<tr><td>Rimini → Ancona → Portonovo → Senigallia (published)</td><td>93 + 9 + 35</td><td>137</td><td>136.16 km</td></tr>
+<tr><td>Rimini → Portonovo → Ancona → Senigallia</td><td>101 + 9 + 27</td><td>137</td><td>136.54 km</td></tr>
+</table>
+<p>So in the unrounded geometry there is one optimal route, written 8 ways; the second
+route ties only in the rounded model, which is the model the certificate is about. Nudge a
+coordinate or round differently and the tie breaks. <span class="badge b-verified">verified</span>
+(the arithmetic, 2026-10-20, from the coordinates in
+<a href="evidence/Claude-artifacts/sebd.pl">sebd.pl</a> and the projection in
+<a href="evidence/Claude-artifacts/trip.py">trip.py</a>)</p>
+<p>What the evidence covers, and what it does not: the certificate proves that no tour is
+shorter than 3,527&nbsp;km, and <code>verify.pl</code> checks one tour of exactly that
+length. That each of the 16 is 3,527&nbsp;km, and that the twin swaps never change a
+length, would be easy to add as checks; nobody has. That there are <em>no other</em>
+optimal tours would need a different certificate — the same kind of case tree, but proving
+that every tour outside the 16 is at least 3,528&nbsp;km. <em>Added 2026-10-20:</em> until
+then this page described both factors in one breath, as “two genuinely different routes,
+each in 8 twin-relabellings”, and said the detour “cancels exactly” without saying that
+only the rounding makes it cancel.</p>
 <p>Which is why, if you run <code>exact_tsp.py</code> yourself, its last line prints a
-visiting order that is <em>not</em> the one published above. Both are in the 16. The
-solver reports whichever optimum it reaches first; the route file records the one the
-heuristic found. Nothing is wrong — but it is exactly the kind of discrepancy that
-should be stated in advance rather than discovered by a suspicious reader.</p>
+visiting order that is <em>not</em> the one published above: it is the other route, the
+one that ends Portonovo → Ancona. Both are among the 16. The solver reports whichever
+optimum it reaches first; the route file records the one the heuristic found. Nothing is
+wrong — but it is exactly the kind of discrepancy that should be stated in advance rather
+than discovered by a suspicious reader.</p>
 
 <h2 id="trustbase">"But how do I trust the <em>code</em>?"</h2>
 <p>The right question — and the answer is that the workflow is arranged so you have to
@@ -1016,7 +1232,7 @@ certificate rests on HiGHS's arithmetic — no dual certificates extracted, no L
 check.</s> <strong>Closed 2026-08-04:</strong> the lower bound is now a
 <a href="#nosolver">solver-free certificate</a> — 226 leaves of node potentials, checked
 by 161 lines of Prolog in integer arithmetic.</td>
-<td>HiGHS — now a grey helper</td>
+<td>HiGHS — now a gray helper</td>
 <td>It mattered: this was the one link where "trust the certificate" quietly included
 "trust a solver." Closing it cost 99 KB of proof for a 4-digit answer — which is the
 honest exchange rate, and worth knowing before you promise anyone a one-page proof.</td></tr>
@@ -1056,7 +1272,7 @@ source.</td>
 <td>leaf: <em>OpenStreetMap</em></td>
 <td>Probably small, but not bounded by the rounding. Moving one stop by 1&nbsp;km can
 change its two legs by up to 2&nbsp;km in total, several errors add up, and rounding 33
-legs to whole kilometres can shift a total by up to 16.5&nbsp;km in the worst case (the
+legs to whole kilometers can shift a total by up to 16.5&nbsp;km in the worst case (the
 measured effect on this tour is about 2&nbsp;km). The four errors the audit found moved
 the optimum by 14&nbsp;km. This <em>was</em> the gap that actually bit, so it is the gap
 most worth watching. (<em>Corrected 2026-10-16:</em> this cell used to say a 1&nbsp;km
@@ -1066,18 +1282,25 @@ append-only trail binds the lineage graph to the actual session.</td>
 <td>not in the tree: history, not support</td>
 <td>Matters for the strong claim "this is what happened"; mitigated by artifact
 consistency, an independent second witness, and reproducibility.</td></tr>
+<tr><td><strong>The 1998 venue is disputed.</strong> DBLP and the official events list say
+Ancona; the symposium's history page says Portonovo (added 2026-10-20).</td>
+<td>leaf: <em>DBLP</em></td>
+<td>Not for the method; possibly for the number. Under the Portonovo reading the input
+changes and the optimum must be re-certified. See
+<a href="#venue1998">an unresolved fact</a>, where the evidence is written as rules with
+two readings.</td></tr>
 <tr><td><strong>The remaining leaves:</strong> DBLP's edition list, the problem
 formulation, Python's floating point.</td>
 <td>leaves: <em>DBLP</em>, <em>Problem formulation</em>, <em>Python float arithmetic</em></td>
 <td>Small. The edition list is checked by count (34&nbsp;=&nbsp;2026−1993+1) and was
 reproduced by the independent GPT bundle; the fixed endpoints are stated in
 <a href="#q">the question</a>; floating point touches only the projection, where its error
-is many orders of magnitude below the whole-kilometre rounding.</td></tr>
+is many orders of magnitude below the whole-kilometer rounding.</td></tr>
 <tr><td><s><strong>The LP arithmetic is unaudited</strong> — the six solves are integer
 programs, so the trusted component is HiGHS's branch-and-bound, not just its simplex.</s>
 <strong>Superseded 2026-08-04:</strong> HiGHS is no longer on the critical path. It still
 <em>found</em> the numbers; nothing now depends on it having found them correctly.</td>
-<td>HiGHS — now a grey helper</td>
+<td>HiGHS — now a gray helper</td>
 <td>The distinction is the whole thesis in one row: a solver that produces a checkable
 witness needs no audit, and one that produces only an answer needs a complete one.</td></tr>
 <tr><td><s><strong>Integrity hashes cover only the GPT bundle.</strong></s>
@@ -1088,7 +1311,9 @@ witness needs no audit, and one that produces only an answer needs a complete on
 small lesson about ledgers.</td></tr>
 <tr><td><s><strong>The set of optimal tours is not enumerated.</strong></s>
 <strong>Closed 2026-08-01:</strong> the enumeration reported 16. <em>Qualified
-2026-10-16:</em> reported, not certified — the enumeration script is not in the bundle.</td>
+2026-10-16:</em> reported, not certified — the enumeration script is not in the bundle.
+<em>Explained 2026-10-20:</em> 16&nbsp;=&nbsp;8 relabelings of the twin editions ×
+2 routes that tie only after rounding (<a href="#same">two kinds of “the same tour”</a>).</td>
 <td>root note: “16 reported, not certified”</td>
 <td>Didn't matter — the certified <em>value</em> is unique — but it was cheap to settle,
 and settling it turned up the discrepancy between the published route and the one
@@ -1111,7 +1336,7 @@ then independently checked by a program whose output is quoted verbatim above.</
 <p><span class="badge b-prose">AI prose, unverified</span> — narrative flavor.
 Charming, we hope; evidence, it is not.</p>
 <p style="margin-top:.8rem">These badges label the <em>epistemic status of a sentence</em>.
-The colours in <a href="#tree">the evidence tree</a> label something else: a node's
+The colors in <a href="#tree">the evidence tree</a> label something else: a node's
 <em>role in the argument</em> — assumption, data, check, claim, or helper.</p>
 </div>
 

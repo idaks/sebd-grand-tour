@@ -1,0 +1,69 @@
+#+TITLE: Where was SEBD 1998? An unresolved fact, as rules
+#+UPDATED: 2026-10-20 Tue 14:52 CDT
+#+SUBTITLE: Last updated {{{keyword(UPDATED)}}}
+#+AGENT: Claude Code — Opus 5.5, model id claude-opus-5-5 (with Bertram Ludäscher)
+
+* The question
+The tour's input table, like DBLP and the official events list, places the 6th SEBD
+(1998) in *Ancona*. The symposium's own history page, written by a participant, says
+the meeting "went back to the sea, to Portonovo … near Ancona". Portonovo also hosted
+the 14th SEBD (2006). If 1998 was in Portonovo too, editions 6 and 14 are a fourth
+twin pair, and the tour's input changes. As of 2026-10-20 this is unresolved.
+
+* Files
+| File            | What it is                                                         |
+|-----------------+--------------------------------------------------------------------|
+| [[file:venue1998.lp][venue1998.lp]]  | the model: strict facts, defeasible rules, undercutters (clingo)   |
+| [[file:venue1998.gv][venue1998.gv]]  | a diagram drawn /from/ the rules (a view, not a translation)       |
+| [[file:venue1998.svg][venue1998.svg]] | the rendered diagram                                               |
+
+* Why rules, not an argumentation framework
+The sources, the reasons to discount some of them, and the defeasible step from
+"a source says X" to "X" are written as a logic program with default negation. Its
+stable models are the readings of the evidence; what holds in all of them is what
+the evidence establishes. Translating this into an abstract (or bipolar)
+argumentation framework first would discard the rule structure that explains
+/why/ an argument wins or loses (cf. Bowers & Ludäscher, "Lost in Translation",
+COMMA 2026). The diagram is therefore drawn from the rules, node by rule.
+
+* What the solver says (clingo 5.6.2, 2026-10-20)
+: clingo venue1998.lp -n 0
+
+#+begin_example
+Answer: 1
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(portonovo) at(portonovo)
+Answer: 2
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(ancona_city) at(ancona_city)
+SATISFIABLE
+#+end_example
+
+Two readings. In every one (=--enum-mode=cautious=):
+
+#+begin_example
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title)
+#+end_example
+
+So the evidence establishes that the meeting was *within the comune of Ancona*, that
+the events list is not an independent witness (it repeats the proceedings label), and
+that Gemini's campus claim carries no weight (no source). It does /not/ settle
+Portonovo versus the city: that is the ambiguity, and it is a real one.
+
+* What would settle it
+Uncomment one optional fact in =venue1998.lp= (or pipe it in:
+=echo "organizer_says(portonovo)." | clingo venue1998.lp - -n 0=):
+
+| Added evidence                  | Readings | Result                                   |
+|---------------------------------+----------+------------------------------------------|
+| =organizer_says(portonovo).=    | 1        | =venue(portonovo)=                       |
+| =organizer_says(ancona_city).=  | 1        | =venue(ancona_city)=                     |
+| =label_is_municipality_only.=   | 1        | =venue(portonovo)= (the labels are undercut) |
+
+The last row is a judgment, not evidence: if "Ancona" on the title page only names the
+comune, the labels say nothing about city versus Portonovo, and the eyewitness stands
+alone. The natural next step is the first or second row: ask a 1998 organizer
+(Paolo Atzeni, Luca Cabibbo, or Maurizio Panti) or find the printed proceedings.
+
+* What it means for the tour
+Nothing yet: the tour keeps 1998 at Ancona's coordinates, as in DBLP. Under the
+Portonovo reading, edition 6 would move about 9 km and become a twin of edition 14;
+the optimum would have to be re-solved and re-certified. That has not been done.

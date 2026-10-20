@@ -71,11 +71,11 @@ order, by edition number:
 
 [badge:modeling choice] Honesty about the metric: distances are /straight lines/ on an
 equirectangular km-plane (reference parallel 42°N, R = 6371 km), rounded to whole
-kilometres — not roads, not rail, and pointedly /not ferries/, though the Sicily and
+kilometers — not roads, not rail, and pointedly /not ferries/, though the Sicily and
 Sardinia editions cross open water. Because that projection is a genuine plane
 embedding, the underlying real-valued metric satisfies the triangle inequality exactly.
 The /rounded/ matrix we actually ship inherits it only to within the rounding: 22 of the
-35,904 ordered triples violate it, every one of them by a single kilometre. Nothing
+35,904 ordered triples violate it, every one of them by a single kilometer. Nothing
 downstream cares — the certificate below is a claim about the shipped integer matrix,
 whatever its geometry — but a page about checkable claims should not round a number and
 keep the adjective. Should you actually take the trip, budget extra for the sea legs.
@@ -113,14 +113,14 @@ coordinates under GPT's own formula. Both narrators were right about their own w
 So why two numbers? The honest decomposition is more interesting than the one this page
 carried until 2026-08-01, which blamed "pure arithmetic" — floating point versus integer
 rounding, and earth radius 6371.0088 versus 6371. Measured on the identical visiting
-order, that story was simply false: the radius accounts for *5 metres*. Here is the real
+order, that story was simply false: the radius accounts for *5 meters*. Here is the real
 ledger:
 
 # TABLE -- one bullet per row; the sub-bullets are the columns.
 - Projection: GPT scales longitude by the cosine of each pair's /mean latitude/; we use
   one fixed reference parallel (42°N)
   - /Contribution:/ *+20.51 km*
-- Our rounding of each leg to whole kilometres
+- Our rounding of each leg to whole kilometers
   - /Contribution:/ −2.01 km
 - Coordinates the two bundles still disagree on
   - /Contribution:/ +1.44 km
@@ -235,6 +235,56 @@ Castellaneta Marina wrong by 10.0 km and Gizzeria Lido by 3.5 km — so neither 
 was trustworthy on coordinates, and neither was checkable without a third source.
 [badge:verified]
 
+* An unresolved fact — where was SEBD 1998?
+:PROPERTIES:
+:CUSTOM_ID: venue1998
+:END:
+The edition table above, like both AI toolchains, follows DBLP: the 6th SEBD (1998) was
+in *Ancona*. On 2026-10-20 a third source turned up that disagrees. The symposium's own
+[[https://sebd.inf.uniroma3.it/history.html][history page]], written by a participant,
+says: “Nel 1998 siamo tornati al mare, a Portonovo, un posto di sogno (scogli e
+spiaggia) vicino ad Ancona” — /in 1998 we went back to the sea, to Portonovo, a dream
+spot (rocks and beach) near Ancona/. Portonovo also hosted the 14th SEBD in 2006. If
+1998 was there too, editions 6 and 14 are a fourth twin pair, and the tour's input
+changes. [badge:primary source]
+
+Searching further did not settle it. The proceedings title says “Ancona”; the official
+[[https://sebd.inf.uniroma3.it/index.html#events][events list]] says “Ancona, Marche”
+but links each edition to DBLP, so it repeats the same witness; papers cite the
+proceedings, not the venue; and an AI assistant (Gemini) offered that the meeting was
+“highly likely” on the Ancona engineering campus, without a source. Portonovo lies
+within the comune of Ancona, so “Ancona” may name the place at a coarser resolution.
+
+Rather than pick a winner, we wrote the situation down as rules — strict facts for what
+each source says, defeasible rules for “a reliable source saying X supports X, unless
+something defeats it”, and undercutters for sources that only repeat another or cite
+nothing ([[file:evidence/venue-1998/venue1998.lp][venue1998.lp]]). An answer-set solver
+then reports the readings the evidence allows. The diagram is drawn /from/ those rules,
+node by rule; it is a view of them, not a translation into an argumentation framework,
+which would lose the structure that says /why/ each argument stands or falls.
+
+# FIGURE (kept in index.html; caption is editable)
+*Caption:* The 1998 venue as rules. Yellow: sources (strict facts); gray: undercutters;
+blue: the two defeasible conclusions, which exclude each other; green: what follows
+strictly either way. Dotted: support from an undercut source.
+
+The solver finds *two readings*, one per venue. What holds in /both/ is what the
+evidence establishes: the meeting was within the comune of Ancona; the events list is
+not an independent witness; the campus claim carries no weight. What it does not
+establish is Portonovo versus the city. That ambiguity is real, and the honest output is
+to keep both. [badge:verified] (clingo 5.6.2, 2026-10-20; outputs in the
+[[file:evidence/venue-1998/README.org][README]])
+
+The rules also say what would settle it. Add testimony from a 1998 organizer for either
+venue and one reading remains. Or judge that “Ancona” on the title page only names the
+comune; then the labels say nothing about city versus Portonovo, and the eyewitness
+stands alone. The first is a question for Paolo Atzeni, Luca Cabibbo or Maurizio Panti;
+the second is a judgment, and the rules make visible that it decides the case.
+
+For the tour, nothing has changed yet: it keeps 1998 at Ancona's coordinates. Under the
+Portonovo reading, edition 6 would move about 9 km and become a twin of edition 14, and
+the optimum would have to be re-solved and re-certified. That has not been done.
+
 # --- div.bridge ---
 /Provenance tells you where a number came from, not whether it is true./ The lineage
 graph is the history of this page, mistakes included. Part II sets that history aside
@@ -261,7 +311,7 @@ record how something was /found/, corroborated, or corrected. Diagram source:
 
 The tree's central distinction is between /found/ and /trusted/. The 2-opt search found
 the tour; HiGHS found the proofs, first the cutting-plane run and then the 226-leaf
-certificate. All of them appear only as grey, dashed helpers. Nothing above them depends
+certificate. All of them appear only as gray, dashed helpers. Nothing above them depends
 on their being correct, because two short Prolog checkers re-verify what they produced,
 and since 2026-10-16 a second checker, written in Python by another AI agent,
 re-verifies the lower bound on its own. That is why the trust base is small: seven
@@ -312,25 +362,63 @@ is the Dantzig–Fulkerson–Johnson method (1954), the engine inside the record
 Concorde TSP solver. [badge:verified]
 
 And a footnote the proof itself supplies: the optimal /value/ is unique, the optimal
-/tour/ is not. Rimini (editions 2, 18), Venice (9, 20), and Villasimius (28, 32) each
-repeat at identical coordinates, so swapping any twin pair changes nothing — 2³ = 8
-relabellings of any optimal tour. This page used to stop there and admit it had not
-checked for others. It has now been enumerated, which took about a minute: re-solve with
-a /no-good cut/ forbidding each optimum already found, until the solver's best answer
-exceeds 3,527. It does so at 3,529, and the complete list is *16 optimal tours* — two
-genuinely different routes, each in 8 twin-relabellings. Note the status of that count:
-it was /reported/ by the enumeration run on 2026-08-01, but the enumeration script is
-not in the published bundle and nothing here certifies the count; the certificate proves
-the optimal /value/, not the number of tours that attain it. The second route differs
-only at the very end, arriving Rimini → Portonovo → Ancona → Senigallia instead of
-Rimini → Ancona → Portonovo → Senigallia; Ancona and Portonovo are 9 km apart and the
-detour cancels exactly. [badge:verified]
+/tour/ is not. An enumeration run on 2026-08-01 re-solved with a /no-good cut/
+forbidding each optimum already found, until the solver's best answer exceeded 3,527 (it
+did so at 3,529). It reported *16 optimal tours*: two routes, each written 8 ways. Note
+the status of that count: it was /reported/, but the enumeration script is not in the
+published bundle and nothing here certifies it. The certificate proves the optimal
+/value/, not the number of tours that attain it.
+
+** Two kinds of “the same tour”
+The 16 are not 16 of one kind. They are 2 × 8, and the two factors mean quite different
+things.
+
+*The ×8 is a symmetry of the data.* Rimini (editions 2 and 18), Venice (9, 20), and
+Villasimius (28, 32) each hosted twice, at identical coordinates, so each pair is 0 km
+apart and the best tour visits them back to back. Writing Venice as “9, 20” or “20, 9”
+is the same trip with the labels swapped; three pairs give 2³ = 8 ways to write any
+tour. This holds under any metric, any rounding, any coordinates: it comes from our
+choice to key the tour by /edition/ rather than by city, and it is checkable in one line
+per pair (=distance(2,18,0)=, =distance(9,20,0)=, =distance(28,32,0)= in
+[[file:evidence/Claude-artifacts/distance.pl][distance.pl]]).
+
+*The ×2 is a coincidence of rounding.* The second route differs only at the very end,
+visiting Portonovo before Ancona instead of after. Ancona and Portonovo are 9 km apart,
+and with distances rounded to whole kilometers the two endings tie exactly. Without the
+rounding they do not:
+
+# TABLE -- one bullet per row; the sub-bullets are the columns.
+- Rimini → Ancona → Portonovo → Senigallia (published)
+  - /Rounded legs (km):/ 93 + 9 + 35
+  - /Rounded total:/ 137
+  - /Unrounded total:/ 136.16 km
+- Rimini → Portonovo → Ancona → Senigallia
+  - /Rounded legs (km):/ 101 + 9 + 27
+  - /Rounded total:/ 137
+  - /Unrounded total:/ 136.54 km
+
+So in the unrounded geometry there is one optimal route, written 8 ways; the second
+route ties only in the rounded model, which is the model the certificate is about. Nudge
+a coordinate or round differently and the tie breaks. [badge:verified] (the arithmetic,
+2026-10-20, from the coordinates in [[file:evidence/Claude-artifacts/sebd.pl][sebd.pl]]
+and the projection in [[file:evidence/Claude-artifacts/trip.py][trip.py]])
+
+What the evidence covers, and what it does not: the certificate proves that no tour is
+shorter than 3,527 km, and =verify.pl= checks one tour of exactly that length. That each
+of the 16 is 3,527 km, and that the twin swaps never change a length, would be easy to
+add as checks; nobody has. That there are /no other/ optimal tours would need a
+different certificate — the same kind of case tree, but proving that every tour outside
+the 16 is at least 3,528 km. /Added 2026-10-20:/ until then this page described both
+factors in one breath, as “two genuinely different routes, each in 8 twin-relabellings”,
+and said the detour “cancels exactly” without saying that only the rounding makes it
+cancel.
 
 Which is why, if you run =exact_tsp.py= yourself, its last line prints a visiting order
-that is /not/ the one published above. Both are in the 16. The solver reports whichever
-optimum it reaches first; the route file records the one the heuristic found. Nothing is
-wrong — but it is exactly the kind of discrepancy that should be stated in advance
-rather than discovered by a suspicious reader.
+that is /not/ the one published above: it is the other route, the one that ends
+Portonovo → Ancona. Both are among the 16. The solver reports whichever optimum it
+reaches first; the route file records the one the heuristic found. Nothing is wrong —
+but it is exactly the kind of discrepancy that should be stated in advance rather than
+discovered by a suspicious reader.
 
 * "But how do I trust the /code/?"
 :PROPERTIES:
@@ -672,7 +760,7 @@ A trust artifact should list what it /doesn't/ establish. Most gaps are leaves o
   HiGHS's arithmetic — no dual certificates extracted, no Lean/Coq check.+ *Closed
   2026-08-04:* the lower bound is now a [[#nosolver][solver-free certificate]] — 226
   leaves of node potentials, checked by 161 lines of Prolog in integer arithmetic.
-  - /In the tree:/ HiGHS — now a grey helper
+  - /In the tree:/ HiGHS — now a gray helper
   - /Does it matter?:/ It mattered: this was the one link where "trust the certificate"
     quietly included "trust a solver." Closing it cost 99 KB of proof for a 4-digit answer
     — which is the honest exchange rate, and worth knowing before you promise anyone a
@@ -712,7 +800,7 @@ A trust artifact should list what it /doesn't/ establish. Most gaps are leaves o
   - /In the tree:/ leaf: /OpenStreetMap/
   - /Does it matter?:/ Probably small, but not bounded by the rounding. Moving one stop
     by 1 km can change its two legs by up to 2 km in total, several errors add up, and
-    rounding 33 legs to whole kilometres can shift a total by up to 16.5 km in the worst
+    rounding 33 legs to whole kilometers can shift a total by up to 16.5 km in the worst
     case (the measured effect on this tour is about 2 km). The four errors the audit found
     moved the optimum by 14 km. This /was/ the gap that actually bit, so it is the gap
     most worth watching. (/Corrected 2026-10-16:/ this cell used to say a 1 km error moves
@@ -722,18 +810,24 @@ A trust artifact should list what it /doesn't/ establish. Most gaps are leaves o
   - /In the tree:/ not in the tree: history, not support
   - /Does it matter?:/ Matters for the strong claim "this is what happened"; mitigated
     by artifact consistency, an independent second witness, and reproducibility.
+- *The 1998 venue is disputed.* DBLP and the official events list say Ancona; the
+  symposium's history page says Portonovo (added 2026-10-20).
+  - /In the tree:/ leaf: /DBLP/
+  - /Does it matter?:/ Not for the method; possibly for the number. Under the Portonovo
+    reading the input changes and the optimum must be re-certified. See [[#venue1998][an
+    unresolved fact]], where the evidence is written as rules with two readings.
 - *The remaining leaves:* DBLP's edition list, the problem formulation, Python's
   floating point.
   - /In the tree:/ leaves: /DBLP/, /Problem formulation/, /Python float arithmetic/
   - /Does it matter?:/ Small. The edition list is checked by count (34 = 2026−1993+1)
     and was reproduced by the independent GPT bundle; the fixed endpoints are stated in
     [[#q][the question]]; floating point touches only the projection, where its error is
-    many orders of magnitude below the whole-kilometre rounding.
+    many orders of magnitude below the whole-kilometer rounding.
 - +*The LP arithmetic is unaudited* — the six solves are integer programs, so the
   trusted component is HiGHS's branch-and-bound, not just its simplex.+ *Superseded
   2026-08-04:* HiGHS is no longer on the critical path. It still /found/ the numbers;
   nothing now depends on it having found them correctly.
-  - /In the tree:/ HiGHS — now a grey helper
+  - /In the tree:/ HiGHS — now a gray helper
   - /Does it matter?:/ The distinction is the whole thesis in one row: a solver that
     produces a checkable witness needs no audit, and one that produces only an answer
     needs a complete one.
@@ -744,7 +838,8 @@ A trust artifact should list what it /doesn't/ establish. Most gaps are leaves o
     which is its own small lesson about ledgers.
 - +*The set of optimal tours is not enumerated.*+ *Closed 2026-08-01:* the enumeration
   reported 16. /Qualified 2026-10-16:/ reported, not certified — the enumeration script is
-  not in the bundle.
+  not in the bundle. /Explained 2026-10-20:/ 16 = 8 relabelings of the twin editions × 2
+  routes that tie only after rounding ([[#same][two kinds of “the same tour”]]).
   - /In the tree:/ root note: “16 reported, not certified”
   - /Does it matter?:/ Didn't matter — the certified /value/ is unique — but it was
     cheap to settle, and settling it turned up the discrepancy between the published route
@@ -766,7 +861,7 @@ program whose output is quoted verbatim above.
 
 [badge:AI prose, unverified] — narrative flavor. Charming, we hope; evidence, it is not.
 
-These badges label the /epistemic status of a sentence/. The colours in [[#tree][the
+These badges label the /epistemic status of a sentence/. The colors in [[#tree][the
 evidence tree]] label something else: a node's /role in the argument/ — assumption,
 data, check, claim, or helper.
 

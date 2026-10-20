@@ -1,0 +1,42 @@
+// venue1998.gv -- a VIEW of the rules in venue1998.lp, not a translation of them.
+// Each node names the fact or rule it stands for; the semantics live in the .lp file.
+// Build: dot -Tsvg venue1998.gv -o venue1998.svg
+digraph venue1998 {
+  rankdir=BT; nodesep=0.3; ranksep=0.5; bgcolor="transparent";
+  node [shape=box, style="rounded,filled", fontname="Helvetica", fontsize=11,
+        color="#7a7a7a", margin="0.12,0.06"];
+  edge [fontname="Helvetica", fontsize=9, fontcolor="#555555", arrowsize=0.7];
+
+  // sources (strict facts)
+  node [fillcolor="#fbf0c4", color="#b39b3c"];
+  H [label=<<b>History page</b> (eyewitness)<br/><font point-size="9">“Nel 1998 siamo tornati al mare,<br/>a Portonovo … vicino ad Ancona”</font>>,
+     URL="https://sebd.inf.uniroma3.it/history.html", penwidth=2.2];
+  T [label=<<b>Proceedings title</b> (label)<br/><font point-size="9">“SEBD 1998, Ancona, Italy”</font>>];
+  L [label=<<b>Official events list</b> (label)<br/><font point-size="9">“1998, Ancona, Marche”</font>>,
+     URL="https://sebd.inf.uniroma3.it/index.html#events", penwidth=2.2];
+  G [label=<<b>Gemini</b> (inference)<br/><font point-size="9">“highly likely … the engineering campus”</font>>];
+
+  // undercutters
+  node [fillcolor="#eeeeee", color="#9a9a9a"];
+  U1 [label=<<b>copies(events, title)</b><br/><font point-size="9">links to DBLP: same witness again</font>>];
+  U2 [label=<<b>unsourced(gemini)</b><br/><font point-size="9">a plausibility guess, no source</font>>];
+
+  // conclusions
+  node [fillcolor="#d6e6f7", color="#7a7a7a"];
+  P [label=<<b>venue(portonovo)</b><br/><font point-size="9">defeasible: eyewitness, unless venue(ancona_city)</font>>];
+  A [label=<<b>venue(ancona_city)</b><br/><font point-size="9">defeasible: label, unless venue(portonovo)</font>>];
+  node [fillcolor="#d5efd9"];
+  M [label=<<b>at(ancona_municipality)</b><br/><font point-size="9">strict: follows from either venue, and from the label</font>>];
+
+  // support
+  H -> P; T -> A; L -> A [style=dotted]; G -> A [style=dotted];
+  P -> M; A -> M; T -> M;
+  // attack and undercut
+  edge [color="#b0303a", fontcolor="#b0303a"];
+  P -> A [dir=both, label=" exclude each other", constraint=false];
+  U1 -> L [label="undercuts", style=dashed];
+  U2 -> G [label="undercuts", style=dashed];
+
+  { rank=same; H; T; L; G; }
+  { rank=same; P; A; }
+}
