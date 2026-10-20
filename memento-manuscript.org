@@ -255,31 +255,56 @@ proceedings, not the venue; and an AI assistant (Gemini) offered that the meetin
 “highly likely” on the Ancona engineering campus, without a source. Portonovo lies
 within the comune of Ancona, so “Ancona” may name the place at a coarser resolution.
 
-Rather than pick a winner, we wrote the situation down as rules — strict facts for what
-each source says, defeasible rules for “a reliable source saying X supports X, unless
-something defeats it”, and undercutters for sources that only repeat another or cite
-nothing ([[file:evidence/venue-1998/venue1998.lp][venue1998.lp]]). An answer-set solver
-then reports the readings the evidence allows. The diagram is drawn /from/ those rules,
-node by rule; it is a view of them, not a translation into an argumentation framework,
-which would lose the structure that says /why/ each argument stands or falls.
+Rather than pick a winner, we wrote the situation down as rules
+([[file:evidence/venue-1998/venue1998.lp][venue1998.lp]]), keeping three kinds of
+statement apart:
+
+- *Known* (strict facts): what each source says; that the events list repeats DBLP and
+  that the Gemini claim cites no source (so both are /undercut/); that Portonovo lies
+  within the comune of Ancona.
+- *Assumed* (an explicit choice, both options left open): what “Ancona” on the title page
+  refers to — the city where the meeting was held, as proceedings titles usually do, or
+  only the comune, which includes Portonovo.
+- *Defeasible*: a reliable source saying X supports X, unless the conflicting venue holds.
+
+An answer-set solver then reports every reading the evidence allows, and which
+assumption each one makes. The diagram is drawn /from/ the rules, node by rule; it is a
+view of them, not a translation into an argumentation framework, which would lose the
+structure that says /why/ each argument stands or falls.
 
 # FIGURE (kept in index.html; caption is editable)
-*Caption:* The 1998 venue as rules. Yellow: sources (strict facts); gray: undercutters;
-blue: the two defeasible conclusions, which exclude each other; green: what follows
-strictly either way. Dotted: support from an undercut source.
+*Caption:* The 1998 venue as rules. Yellow: sources (known); gray: undercutters; orange,
+dashed: the one assumption; blue: the two defeasible conclusions, which exclude each
+other; green: what follows either way. Dotted: support from an undercut source.
 
-The solver finds *two readings*, one per venue. What holds in /both/ is what the
-evidence establishes: the meeting was within the comune of Ancona; the events list is
-not an independent witness; the campus claim carries no weight. What it does not
-establish is Portonovo versus the city. That ambiguity is real, and the honest output is
-to keep both. [badge:verified] (clingo 5.6.2, 2026-10-20; outputs in the
-[[file:evidence/venue-1998/README.org][README]])
+The solver finds three readings:
 
-The rules also say what would settle it. Add testimony from a 1998 organizer for either
-venue and one reading remains. Or judge that “Ancona” on the title page only names the
-comune; then the labels say nothing about city versus Portonovo, and the eyewitness
-stands alone. The first is a question for Paolo Atzeni, Luca Cabibbo or Maurizio Panti;
-the second is a judgment, and the rules make visible that it decides the case.
+# TABLE -- one bullet per row; the sub-bullets are the columns.
+- 1
+  - /Assumption about “Ancona”:/ names only the comune
+  - /Venue:/ Portonovo
+- 2
+  - /Assumption about “Ancona”:/ names the city
+  - /Venue:/ Portonovo (the eyewitness prevails)
+- 3
+  - /Assumption about “Ancona”:/ names the city
+  - /Venue:/ Ancona city (the label prevails)
+
+What holds in /all/ of them is what we know: the meeting was within the comune of
+Ancona, and the events list and the campus claim add no independent weight. What we do
+not know is the venue. Portonovo is possible under either assumption; Ancona city is
+possible only if the label names the city /and/ is preferred over the eyewitness. That
+asymmetry is the honest summary — the evidence leans toward Portonovo — but it is not a
+proof, and the page keeps both. [badge:verified] (clingo 5.6.2, 2026-10-20; outputs in
+the [[file:evidence/venue-1998/README.org][README]])
+
+The rules also say what would settle it. Testimony from a 1998 organizer for either
+venue leaves one answer in every reading — a question for Paolo Atzeni, Luca Cabibbo or
+Maurizio Panti. Fixing the assumption does less: reading the label as the comune leaves
+only Portonovo, but reading it as the city still leaves the question open, because the
+eyewitness disagrees. /Corrected before publication:/ a first version of these rules
+stated as a known fact that “Ancona” names the comune, while also letting it support the
+city; a review note caught the hidden assumption, which is now explicit.
 
 For the tour, nothing has changed yet: it keeps 1998 at Ancona's coordinates. Under the
 Portonovo reading, edition 6 would move about 9 km and become a twin of edition 14, and
@@ -815,7 +840,8 @@ A trust artifact should list what it /doesn't/ establish. Most gaps are leaves o
   - /In the tree:/ leaf: /DBLP/
   - /Does it matter?:/ Not for the method; possibly for the number. Under the Portonovo
     reading the input changes and the optimum must be re-certified. See [[#venue1998][an
-    unresolved fact]], where the evidence is written as rules with two readings.
+    unresolved fact]], where the evidence is written as rules: known facts, one explicit
+    assumption, three readings that lean toward Portonovo.
 - *The remaining leaves:* DBLP's edition list, the problem formulation, Python's
   floating point.
   - /In the tree:/ leaves: /DBLP/, /Problem formulation/, /Python float arithmetic/

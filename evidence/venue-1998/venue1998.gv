@@ -21,15 +21,19 @@ digraph venue1998 {
   U1 [label=<<b>copies(events, title)</b><br/><font point-size="9">links to DBLP: same witness again</font>>];
   U2 [label=<<b>unsourced(gemini)</b><br/><font point-size="9">a plausibility guess, no source</font>>];
 
+  // assumption (explicit, not settled by the evidence)
+  Q [label=<<b>ASSUMED: label_means(city)</b><br/><font point-size="9">“Ancona” on the title page names the city,<br/>not just the comune (open: either may hold)</font>>,
+     fillcolor="#fde2c8", color="#c0782c", style="rounded,filled,dashed", penwidth=1.6];
+
   // conclusions
   node [fillcolor="#d6e6f7", color="#7a7a7a"];
   P [label=<<b>venue(portonovo)</b><br/><font point-size="9">defeasible: eyewitness, unless venue(ancona_city)</font>>];
-  A [label=<<b>venue(ancona_city)</b><br/><font point-size="9">defeasible: label, unless venue(portonovo)</font>>];
+  A [label=<<b>venue(ancona_city)</b><br/><font point-size="9">defeasible: label, IF label_means(city),<br/>unless venue(portonovo)</font>>];
   node [fillcolor="#d5efd9"];
-  M [label=<<b>at(ancona_municipality)</b><br/><font point-size="9">strict: follows from either venue, and from the label</font>>];
+  M [label=<<b>at(ancona_municipality)</b><br/><font point-size="9">known: follows from either venue, and from the label<br/>under either assumption</font>>];
 
   // support
-  H -> P; T -> A; L -> A [style=dotted]; G -> A [style=dotted];
+  H -> P; T -> A; Q -> A [label="needed", color="#c0782c", fontcolor="#c0782c"]; L -> A [style=dotted]; G -> A [style=dotted];
   P -> M; A -> M; T -> M;
   // attack and undercut
   edge [color="#b0303a", fontcolor="#b0303a"];
@@ -39,4 +43,5 @@ digraph venue1998 {
 
   { rank=same; H; T; L; G; }
   { rank=same; P; A; }
+  { rank=same; Q; U1; U2; }
 }
