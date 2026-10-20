@@ -1,0 +1,64 @@
+$ clingo venue1998.lp -n 0
+Answer: 1
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(portonovo) at(portonovo) label_means(municipality)
+Answer: 2
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(ancona_city) label_means(city) at(ancona_city)
+Answer: 3
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(portonovo) label_means(city) at(portonovo)
+SATISFIABLE
+Models       : 3
+
+$ clingo venue1998.lp -n 0 --enum-mode=cautious
+Answer: 1
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(portonovo) at(portonovo) label_means(municipality)
+Consequences: [5;8]
+Answer: 2
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title)
+Consequences: [5;5]
+SATISFIABLE
+Models       : 2
+  Cautious   : yes
+Consequences : 5
+
+$ clingo venue1998.lp -n 0 --enum-mode=brave
+Answer: 1
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(portonovo) at(portonovo) label_means(municipality)
+Consequences: [8;11]
+Answer: 2
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(portonovo) venue(ancona_city) label_means(city) at(portonovo) at(ancona_city) label_means(municipality)
+Consequences: [11;11]
+SATISFIABLE
+Models       : 2
+  Brave      : yes
+Consequences : 11
+
+$ echo 'organizer_says(portonovo).' | clingo venue1998.lp - -n 0
+Answer: 1
+at(ancona_municipality) at(portonovo) undercut(events) undercut(gemini) venue(portonovo) witness(history) witness(title) label_means(municipality)
+Answer: 2
+at(ancona_municipality) at(portonovo) undercut(events) undercut(gemini) venue(portonovo) witness(history) witness(title) label_means(city)
+SATISFIABLE
+Models       : 2
+
+$ echo 'organizer_says(ancona_city).' | clingo venue1998.lp - -n 0
+Answer: 1
+at(ancona_municipality) at(ancona_city) undercut(events) undercut(gemini) venue(ancona_city) witness(history) witness(title) label_means(municipality)
+Answer: 2
+at(ancona_municipality) at(ancona_city) undercut(events) undercut(gemini) venue(ancona_city) witness(history) witness(title) label_means(city)
+SATISFIABLE
+Models       : 2
+
+$ echo ':- label_means(city).' | clingo venue1998.lp - -n 0
+Answer: 1
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(portonovo) at(portonovo) label_means(municipality)
+SATISFIABLE
+Models       : 1
+
+$ echo ':- label_means(municipality).' | clingo venue1998.lp - -n 0
+Answer: 1
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(portonovo) label_means(city) at(portonovo)
+Answer: 2
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(ancona_city) label_means(city) at(ancona_city)
+SATISFIABLE
+Models       : 2
+

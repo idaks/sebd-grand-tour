@@ -45,6 +45,7 @@
   .colophon { margin-top: 3rem; padding-top: 1rem; border-top: 1px solid var(--line);
               font-size: .85rem; color: var(--soft); }
   .order { word-spacing: .15em; }
+  details { margin: 1rem 0; } details summary { cursor: pointer; }
   .part { margin: 3.5rem 0 0; padding: .6rem 0 .4rem; border-top: 3px double var(--accent);
           border-bottom: 1px solid var(--line); }
   .part .num { font-variant: small-caps; letter-spacing: .08em; color: var(--accent); font-size: .95rem; }
@@ -461,6 +462,81 @@ each other; green: what follows either way. Dotted: support from an undercut sou
 <tr><td>2</td><td>names the city</td><td>Portonovo (the eyewitness prevails)</td></tr>
 <tr><td>3</td><td>names the city</td><td>Ancona city (the label prevails)</td></tr>
 </table>
+<details>
+<summary><strong>Solver runs, verbatim</strong> (clingo 5.6.2, 2026-10-20; also in
+<a href="evidence/venue-1998/runs-2026-10-20.txt">runs-2026-10-20.txt</a>)</summary>
+<p>Each <code>Answer</code> is one answer set, a possible world consistent with the rules.
+The plain run finds <strong>three</strong>. <code>--enum-mode=cautious</code> prints what
+holds in <em>every</em> answer set (its last line) and <code>--enum-mode=brave</code> what
+holds in <em>some</em>; in those two modes clingo's “Models” counts its intermediate
+steps, not worlds. The last four runs add one line each: organizer testimony leaves two
+answer sets that differ only in the assumption, with the same venue; fixing the
+assumption to “comune” leaves one; fixing it to “city” leaves two, with different
+venues.</p>
+<pre><code>$ clingo venue1998.lp -n 0
+Answer: 1
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(portonovo) at(portonovo) label_means(municipality)
+Answer: 2
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(ancona_city) label_means(city) at(ancona_city)
+Answer: 3
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(portonovo) label_means(city) at(portonovo)
+SATISFIABLE
+Models       : 3
+
+$ clingo venue1998.lp -n 0 --enum-mode=cautious
+Answer: 1
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(portonovo) at(portonovo) label_means(municipality)
+Consequences: [5;8]
+Answer: 2
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title)
+Consequences: [5;5]
+SATISFIABLE
+Models       : 2
+  Cautious   : yes
+Consequences : 5
+
+$ clingo venue1998.lp -n 0 --enum-mode=brave
+Answer: 1
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(portonovo) at(portonovo) label_means(municipality)
+Consequences: [8;11]
+Answer: 2
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(portonovo) venue(ancona_city) label_means(city) at(portonovo) at(ancona_city) label_means(municipality)
+Consequences: [11;11]
+SATISFIABLE
+Models       : 2
+  Brave      : yes
+Consequences : 11
+
+$ echo &#x27;organizer_says(portonovo).&#x27; | clingo venue1998.lp - -n 0
+Answer: 1
+at(ancona_municipality) at(portonovo) undercut(events) undercut(gemini) venue(portonovo) witness(history) witness(title) label_means(municipality)
+Answer: 2
+at(ancona_municipality) at(portonovo) undercut(events) undercut(gemini) venue(portonovo) witness(history) witness(title) label_means(city)
+SATISFIABLE
+Models       : 2
+
+$ echo &#x27;organizer_says(ancona_city).&#x27; | clingo venue1998.lp - -n 0
+Answer: 1
+at(ancona_municipality) at(ancona_city) undercut(events) undercut(gemini) venue(ancona_city) witness(history) witness(title) label_means(municipality)
+Answer: 2
+at(ancona_municipality) at(ancona_city) undercut(events) undercut(gemini) venue(ancona_city) witness(history) witness(title) label_means(city)
+SATISFIABLE
+Models       : 2
+
+$ echo &#x27;:- label_means(city).&#x27; | clingo venue1998.lp - -n 0
+Answer: 1
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(portonovo) at(portonovo) label_means(municipality)
+SATISFIABLE
+Models       : 1
+
+$ echo &#x27;:- label_means(municipality).&#x27; | clingo venue1998.lp - -n 0
+Answer: 1
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(portonovo) label_means(city) at(portonovo)
+Answer: 2
+at(ancona_municipality) undercut(events) undercut(gemini) witness(history) witness(title) venue(ancona_city) label_means(city) at(ancona_city)
+SATISFIABLE
+Models       : 2</code></pre>
+</details>
 <p>What holds in <em>all</em> of them is what we know: the meeting was within the comune
 of Ancona, and the events list and the campus claim add no independent weight. What we do
 not know is the venue. Portonovo is possible under either assumption; Ancona city is

@@ -16,6 +16,7 @@ twin pair, and the tour's input changes. As of 2026-10-20 this is unresolved.
 | [[file:venue1998.lp][venue1998.lp]]  | the model: strict facts, defeasible rules, undercutters (clingo)   |
 | [[file:venue1998.gv][venue1998.gv]]  | a diagram drawn /from/ the rules (a view, not a translation)       |
 | [[file:venue1998.svg][venue1998.svg]] | the rendered diagram                                               |
+| [[file:runs-2026-10-20.txt][runs-2026-10-20.txt]] | every solver run on this page, verbatim (all, cautious, brave, four what-ifs) |
 
 * Why rules, not an argumentation framework
 The sources, the reasons to discount some of them, and the defeasible step from
