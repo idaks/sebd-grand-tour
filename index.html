@@ -462,6 +462,29 @@ each other; green: what follows either way. Dotted: support from an undercut sou
 <tr><td>2</td><td>names the city</td><td>Portonovo (the eyewitness prevails)</td></tr>
 <tr><td>3</td><td>names the city</td><td>Ancona city (the label prevails)</td></tr>
 </table>
+<div class="legend" id="read-runs">
+<p><strong>How to read the runs, without answer-set programming.</strong></p>
+<p><strong>An answer set is a consistent story.</strong> The solver lists every story that
+respects the rules. A story must contain all the known facts; pick one meaning of
+“Ancona”; conclude a venue only if a reliable source supports it and nothing in the same
+story defeats it; and contain nothing it cannot justify from the rules.</p>
+<p><strong>Why three stories.</strong> If “Ancona” names only the comune, the label says
+nothing about the city, so only the eyewitness speaks: Portonovo — one story. If it names
+the city, the eyewitness and the label each support their venue “unless the other venue
+holds”. Neither rule outranks the other, so both choices are consistent: one story where
+the eyewitness prevails (Portonovo), one where the label does (Ancona city).</p>
+<p><strong>Reading a line.</strong> Each word is one fact of that story:
+<code>witness(history)</code> — the history page counts as a witness;
+<code>undercut(events)</code> — the events list is discounted;
+<code>label_means(city)</code> — this story assumes “Ancona” names the city;
+<code>venue(portonovo)</code> — this story's answer;
+<code>at(ancona_municipality)</code> — the meeting was in the comune.</p>
+<p><strong>Cautious and brave.</strong> Cautious lists what <em>every</em> story agrees on:
+what the evidence establishes. Brave lists what <em>at least one</em> story contains: what
+remains possible.</p>
+<p><strong>The what-ifs.</strong> Adding a fact removes stories. The question is settled
+when every remaining story has the same venue.</p>
+</div>
 <details>
 <summary><strong>Solver runs, verbatim</strong> (clingo 5.6.2, 2026-10-20; also in
 <a href="evidence/venue-1998/runs-2026-10-20.txt">runs-2026-10-20.txt</a>)</summary>

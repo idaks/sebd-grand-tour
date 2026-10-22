@@ -290,6 +290,31 @@ The solver finds three readings:
   - /Assumption about “Ancona”:/ names the city
   - /Venue:/ Ancona city (the label prevails)
 
+# --- div.legend ---
+*How to read the runs, without answer-set programming.*
+
+*An answer set is a consistent story.* The solver lists every story that respects the
+rules. A story must contain all the known facts; pick one meaning of “Ancona”; conclude
+a venue only if a reliable source supports it and nothing in the same story defeats it;
+and contain nothing it cannot justify from the rules.
+
+*Why three stories.* If “Ancona” names only the comune, the label says nothing about the
+city, so only the eyewitness speaks: Portonovo — one story. If it names the city, the
+eyewitness and the label each support their venue “unless the other venue holds”.
+Neither rule outranks the other, so both choices are consistent: one story where the
+eyewitness prevails (Portonovo), one where the label does (Ancona city).
+
+*Reading a line.* Each word is one fact of that story: =witness(history)= — the history
+page counts as a witness; =undercut(events)= — the events list is discounted;
+=label_means(city)= — this story assumes “Ancona” names the city; =venue(portonovo)= —
+this story's answer; =at(ancona_municipality)= — the meeting was in the comune.
+
+*Cautious and brave.* Cautious lists what /every/ story agrees on: what the evidence
+establishes. Brave lists what /at least one/ story contains: what remains possible.
+
+*The what-ifs.* Adding a fact removes stories. The question is settled when every
+remaining story has the same venue.
+
 What holds in /all/ of them is what we know: the meeting was within the comune of
 Ancona, and the events list and the campus claim add no independent weight. What we do
 not know is the venue. Portonovo is possible under either assumption; Ancona city is
