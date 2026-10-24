@@ -56,8 +56,8 @@ SATISFIABLE
 | Reading | Assumption about the label | Venue                        |
 |---------+----------------------------+------------------------------|
 | 1       | names only the comune      | Portonovo                    |
-| 2       | names the city             | Portonovo (eyewitness wins)  |
-| 3       | names the city             | Ancona city (label wins)     |
+| 2       | names the city             | Ancona city (label wins)     |
+| 3       | names the city             | Portonovo (eyewitness wins)  |
 
 In every reading (=--enum-mode=cautious=):
 

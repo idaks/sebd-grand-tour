@@ -277,7 +277,7 @@ structure that says /why/ each argument stands or falls.
 dashed: the one assumption; blue: the two defeasible conclusions, which exclude each
 other; green: what follows either way. Dotted: support from an undercut source.
 
-The solver finds three readings:
+The solver finds three readings, numbered as in its output below:
 
 # TABLE -- one bullet per row; the sub-bullets are the columns.
 - 1
@@ -285,10 +285,10 @@ The solver finds three readings:
   - /Venue:/ Portonovo
 - 2
   - /Assumption about “Ancona”:/ names the city
-  - /Venue:/ Portonovo (the eyewitness prevails)
+  - /Venue:/ Ancona city (the label prevails)
 - 3
   - /Assumption about “Ancona”:/ names the city
-  - /Venue:/ Ancona city (the label prevails)
+  - /Venue:/ Portonovo (the eyewitness prevails)
 
 # --- div.legend ---
 *How to read the runs, without answer-set programming.*
